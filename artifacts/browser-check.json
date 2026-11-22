@@ -1,0 +1,12 @@
+{
+  "roles": [
+    "University",
+    "Course Coordinator",
+    "Faculty"
+  ],
+  "screenshots": 83,
+  "screen_directory": "artifacts\\screenshots",
+  "console_or_page_errors": [],
+  "horizontal_overflow": [],
+  "checker_and_sample_flows": "passed"
+}

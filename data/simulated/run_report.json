@@ -1,0 +1,158 @@
+{
+  "status": "not_run_missing_model_configuration",
+  "label": "SIMULATED",
+  "synthetic": true,
+  "source": "sim_persona",
+  "persona_ids": [
+    "SIM-P01",
+    "SIM-P02",
+    "SIM-P03",
+    "SIM-P04",
+    "SIM-P05",
+    "SIM-P06",
+    "SIM-P07",
+    "SIM-P08",
+    "SIM-P09",
+    "SIM-P10",
+    "SIM-P11",
+    "SIM-P12",
+    "SIM-P13",
+    "SIM-P14",
+    "SIM-P15",
+    "SIM-P16",
+    "SIM-P17",
+    "SIM-P18",
+    "SIM-P19",
+    "SIM-P20"
+  ],
+  "reason": "Missing model configuration. Set STUDY_API_KEY, STUDY_MODEL, and optional STUDY_API_BASE in .env; do not store credentials in this report.",
+  "seed": 731204,
+  "temperature": 0.2,
+  "personas": 20,
+  "calls_completed": 0,
+  "audit": {
+    "counts": {
+      "personas": 20,
+      "templates": 5,
+      "prompts": 0,
+      "ratings": 0,
+      "annotations": 0,
+      "study_runs": 0,
+      "question_scores": 0,
+      "model_calls": 0
+    },
+    "failures": [],
+    "all_simulated_rows_isolated": true
+  },
+  "analysis": {
+    "label": "SIMULATED",
+    "synthetic": true,
+    "source": "sim_persona",
+    "persona_ids": [
+      "SIM-P01",
+      "SIM-P02",
+      "SIM-P03",
+      "SIM-P04",
+      "SIM-P05",
+      "SIM-P06",
+      "SIM-P07",
+      "SIM-P08",
+      "SIM-P09",
+      "SIM-P10",
+      "SIM-P11",
+      "SIM-P12",
+      "SIM-P13",
+      "SIM-P14",
+      "SIM-P15",
+      "SIM-P16",
+      "SIM-P17",
+      "SIM-P18",
+      "SIM-P19",
+      "SIM-P20"
+    ],
+    "status": "awaiting model calls",
+    "rating_analysis": {
+      "n": 0,
+      "personas": 0,
+      "templates": [],
+      "test_retest": {},
+      "rating_distributions": {},
+      "preferences": {}
+    },
+    "annotation_analysis": {
+      "n_items": 0,
+      "n_personas": 0,
+      "pairwise_cohen_kappa": {},
+      "krippendorff_alpha_nominal": {
+        "label": null,
+        "very_easy": null,
+        "expert_level": null,
+        "no_basic": null,
+        "hidden_answers": null,
+        "answer_after_each_q": null,
+        "single_correct": null,
+        "multi_interp": null,
+        "clear_unambiguous": null,
+        "confusing_language": null
+      },
+      "linter_vs_persona_majority_agreement": {
+        "agreement": null,
+        "n": 0,
+        "interpretation": "agreement only, not accuracy"
+      }
+    },
+    "routing_comparison": {
+      "evaluation": "leave-one-persona-out; simulated preference means as labels",
+      "metrics_are_synthetic": true,
+      "methods": {
+        "gaussian_process": {
+          "n_held_out_personas": 0,
+          "top1_accuracy": null,
+          "top3_accuracy": null,
+          "mean_prediction_spread": null,
+          "held_out": []
+        },
+        "lagrange_equispaced": {
+          "n_held_out_personas": 0,
+          "top1_accuracy": null,
+          "top3_accuracy": null,
+          "mean_prediction_spread": null,
+          "held_out": []
+        },
+        "cubic_spline": {
+          "n_held_out_personas": 0,
+          "top1_accuracy": null,
+          "top3_accuracy": null,
+          "mean_prediction_spread": null,
+          "held_out": []
+        },
+        "popularity": {
+          "n_held_out_personas": 0,
+          "top1_accuracy": null,
+          "top3_accuracy": null,
+          "mean_prediction_spread": null,
+          "held_out": []
+        },
+        "random": {
+          "n_held_out_personas": 0,
+          "top1_accuracy": null,
+          "top3_accuracy": null,
+          "mean_prediction_spread": null,
+          "held_out": []
+        }
+      }
+    },
+    "real_faculty_comparison": {
+      "status": "awaiting real faculty scores",
+      "comparisons": {}
+    },
+    "validity_limits": [
+      "All 20 raters use one shared underlying model; agreement is likely inflated.",
+      "The simulated personas have no real-world faculty grounding.",
+      "These observations cannot establish human agreement, factual correctness, educational effectiveness, or system accuracy.",
+      "T3/T4 need anonymous prompt or question text from earlier calls as blinded stimuli; authorship and prior judgments are withheld, but this conflicts with a strict ban on seeing any other persona's raw text."
+    ],
+    "comparison_plan": "Use the same items and rubric with 5 to 8 real faculty, import their item-level scores through /api/simulated/import-real-scores, and compute matched-item agreement."
+  },
+  "source_fixture_status": "Original five faculty prompt texts and source template are unavailable; these items were not invented."
+}

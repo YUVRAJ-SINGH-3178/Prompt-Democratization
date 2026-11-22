@@ -1,0 +1,12 @@
+{
+  "source": "paper appendix annotations as supplied in the brief; original prompt text unavailable because source archive was not provided",
+  "annotator_count": 1,
+  "fixtures": [
+    {"name":"Template","completeness":1.000,"energy":0,"repair":[]},
+    {"name":"Faculty-1","completeness":0.444,"energy":0,"repair":[]},
+    {"name":"Faculty-2","completeness":0.556,"energy":0,"repair":[]},
+    {"name":"Faculty-3","completeness":0.889,"energy":1,"repair":["very_easy"]},
+    {"name":"Faculty-4","completeness":0.889,"energy":1,"repair":["hidden_answers"]},
+    {"name":"Faculty-5","completeness":0.667,"energy":2,"repair":["confusing_language","multi_interp"]}
+  ]
+}

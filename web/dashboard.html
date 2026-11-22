@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark light"><title>Prompt Repository Lab</title>
+  <link rel="stylesheet" href="/auth.css"><link rel="stylesheet" href="/dashboard.css"><link rel="stylesheet" href="/dashboard-fixes.css"><link rel="stylesheet" href="/linear-ui.css"><script src="/dashboard.js" defer></script>
+</head>
+<body class="app-page">
+  <aside class="app-sidebar" id="sidebar">
+    <a class="wordmark" href="#" aria-label="Prompt Lab"><span class="mark">P</span><span>Prompt Lab</span></a>
+    <div class="workspace-label">UNIVERSITY WORKSPACE</div><nav id="roleNav" aria-label="Dashboard navigation"></nav>
+    <div class="sidebar-bottom"><span class="status-dot"></span><span>Local instance</span></div>
+  </aside>
+  <main class="app-main">
+    <header class="app-topbar"><div class="breadcrumb"><span>Prompt Lab</span><span class="muted">/</span><strong id="crumb">Overview</strong></div>
+      <div class="top-actions"><span id="userBadge" class="user-badge"></span><button id="themeToggle" class="icon-button" aria-label="Toggle color theme">◐</button><button id="logoutButton" class="quiet-button">Sign out</button></div>
+    </header>
+    <section class="page-content"><div class="page-title"><div><div id="eyebrow" class="eyebrow">WORKSPACE</div><h1 id="pageTitle">Overview</h1><p id="pageDescription" class="muted"></p></div><div id="pageActions"></div></div><div id="pageBody" aria-live="polite"></div></section>
+  </main>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <dialog id="commandPalette" class="palette"><form method="dialog"><input id="paletteSearch" aria-label="Filter allowed actions" placeholder="Go to an allowed page..."><button class="quiet-button">Close</button></form><div id="paletteItems"></div><p class="muted">Up / down navigate | Enter open | Esc close</p></dialog>
+</body>
+</html>

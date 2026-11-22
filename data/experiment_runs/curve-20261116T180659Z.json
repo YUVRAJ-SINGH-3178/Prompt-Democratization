@@ -1,0 +1,720 @@
+{
+  "run_id": "curve-20261116T180659Z",
+  "created_at": "2026-11-16T18:06:55.360410+00:00",
+  "parameters": {
+    "seed": 42,
+    "repetitions": 100,
+    "lebesgue_grid_points": 20001,
+    "curve_test_points": 400,
+    "sigmas": [
+      0,
+      0.02,
+      0.05,
+      0.1,
+      0.2
+    ],
+    "n_values": [
+      4,
+      6,
+      8,
+      12
+    ]
+  },
+  "versions": {
+    "python": "3.13.5",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3",
+    "scikit_learn": "1.6.1"
+  },
+  "curve": {
+    "results": [
+      {
+        "sigma": 0,
+        "n": 4,
+        "method": "lagrange_equispaced",
+        "rmse_mean": 0.13323008357043,
+        "rmse_sd": 1.891958286872405e-17,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0,
+        "n": 4,
+        "method": "lagrange_chebyshev",
+        "rmse_mean": 0.09980537798074302,
+        "rmse_sd": 1.3947701538996772e-17,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0,
+        "n": 4,
+        "method": "cubic_spline",
+        "rmse_mean": 0.08483097644144573,
+        "rmse_sd": 1.3947701538996772e-17,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0,
+        "n": 4,
+        "method": "gaussian_process",
+        "rmse_mean": 0.05218661590371891,
+        "rmse_sd": 6.973850769498386e-18,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0,
+        "n": 6,
+        "method": "lagrange_equispaced",
+        "rmse_mean": 0.046063630487394945,
+        "rmse_sd": 3.066908962943326e-17,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0,
+        "n": 6,
+        "method": "lagrange_chebyshev",
+        "rmse_mean": 0.02576727273127583,
+        "rmse_sd": 1.1201662999416726e-17,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0,
+        "n": 6,
+        "method": "cubic_spline",
+        "rmse_mean": 0.01022884051558599,
+        "rmse_sd": 0.0,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0,
+        "n": 6,
+        "method": "gaussian_process",
+        "rmse_mean": 0.0058063936544956625,
+        "rmse_sd": 8.717313461872983e-19,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0,
+        "n": 8,
+        "method": "lagrange_equispaced",
+        "rmse_mean": 0.016741268950969123,
+        "rmse_sd": 4.431139998556978e-17,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0,
+        "n": 8,
+        "method": "lagrange_chebyshev",
+        "rmse_mean": 0.005559888066107576,
+        "rmse_sd": 1.0768264123675412e-17,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0,
+        "n": 8,
+        "method": "cubic_spline",
+        "rmse_mean": 0.002565342318733558,
+        "rmse_sd": 0.0,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0,
+        "n": 8,
+        "method": "gaussian_process",
+        "rmse_mean": 0.0018584019260380676,
+        "rmse_sd": 0.0,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0,
+        "n": 12,
+        "method": "lagrange_equispaced",
+        "rmse_mean": 0.0032375992349746247,
+        "rmse_sd": 4.567443584140127e-16,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0,
+        "n": 12,
+        "method": "lagrange_chebyshev",
+        "rmse_mean": 0.0002875353017270972,
+        "rmse_sd": 1.1535093889599879e-17,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0,
+        "n": 12,
+        "method": "cubic_spline",
+        "rmse_mean": 0.0006572037968819379,
+        "rmse_sd": 3.2689925482023687e-19,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0,
+        "n": 12,
+        "method": "gaussian_process",
+        "rmse_mean": 0.0003351493624673852,
+        "rmse_sd": 5.448320913670614e-20,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.02,
+        "n": 4,
+        "method": "lagrange_equispaced",
+        "rmse_mean": 0.13557812107606929,
+        "rmse_sd": 0.009028405830222169,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.02,
+        "n": 4,
+        "method": "lagrange_chebyshev",
+        "rmse_mean": 0.10121795621271813,
+        "rmse_sd": 0.006285190988747673,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.02,
+        "n": 4,
+        "method": "cubic_spline",
+        "rmse_mean": 0.08755470106782993,
+        "rmse_sd": 0.005665355393227981,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.02,
+        "n": 4,
+        "method": "gaussian_process",
+        "rmse_mean": 0.05585504494277036,
+        "rmse_sd": 0.005827673152856915,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.02,
+        "n": 6,
+        "method": "lagrange_equispaced",
+        "rmse_mean": 0.05033567168585937,
+        "rmse_sd": 0.011777158944149498,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.02,
+        "n": 6,
+        "method": "lagrange_chebyshev",
+        "rmse_mean": 0.03142650728370461,
+        "rmse_sd": 0.0055300978164179405,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.02,
+        "n": 6,
+        "method": "cubic_spline",
+        "rmse_mean": 0.020312500223769486,
+        "rmse_sd": 0.0059702151265041675,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.02,
+        "n": 6,
+        "method": "gaussian_process",
+        "rmse_mean": 0.01913800669961623,
+        "rmse_sd": 0.005533431064875941,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.02,
+        "n": 8,
+        "method": "lagrange_equispaced",
+        "rmse_mean": 0.030427504705724008,
+        "rmse_sd": 0.013084406601750361,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.02,
+        "n": 8,
+        "method": "lagrange_chebyshev",
+        "rmse_mean": 0.02029470826762543,
+        "rmse_sd": 0.005804537639498885,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.02,
+        "n": 8,
+        "method": "cubic_spline",
+        "rmse_mean": 0.017867865675228203,
+        "rmse_sd": 0.005023833103353061,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.02,
+        "n": 8,
+        "method": "gaussian_process",
+        "rmse_mean": 0.018787072592928226,
+        "rmse_sd": 0.005082596352154674,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.02,
+        "n": 12,
+        "method": "lagrange_equispaced",
+        "rmse_mean": 0.10232271564303233,
+        "rmse_sd": 0.05874625168270827,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.02,
+        "n": 12,
+        "method": "lagrange_chebyshev",
+        "rmse_mean": 0.01892083517258093,
+        "rmse_sd": 0.004878371475136191,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.02,
+        "n": 12,
+        "method": "cubic_spline",
+        "rmse_mean": 0.018609310554322925,
+        "rmse_sd": 0.0038118408968163577,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.02,
+        "n": 12,
+        "method": "gaussian_process",
+        "rmse_mean": 0.016501362983155413,
+        "rmse_sd": 0.0040106848113408405,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.05,
+        "n": 4,
+        "method": "lagrange_equispaced",
+        "rmse_mean": 0.13712465954612907,
+        "rmse_sd": 0.02084741282769815,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.05,
+        "n": 4,
+        "method": "lagrange_chebyshev",
+        "rmse_mean": 0.10958689898901618,
+        "rmse_sd": 0.016425006118241707,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.05,
+        "n": 4,
+        "method": "cubic_spline",
+        "rmse_mean": 0.09215099894324506,
+        "rmse_sd": 0.01423163318562891,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.05,
+        "n": 4,
+        "method": "gaussian_process",
+        "rmse_mean": 0.0645933680802457,
+        "rmse_sd": 0.013531829210259064,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.05,
+        "n": 6,
+        "method": "lagrange_equispaced",
+        "rmse_mean": 0.06950530798098802,
+        "rmse_sd": 0.026325126567405193,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.05,
+        "n": 6,
+        "method": "lagrange_chebyshev",
+        "rmse_mean": 0.053653416365984044,
+        "rmse_sd": 0.015216421657877876,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.05,
+        "n": 6,
+        "method": "cubic_spline",
+        "rmse_mean": 0.044807543025521965,
+        "rmse_sd": 0.01565327954536421,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.05,
+        "n": 6,
+        "method": "gaussian_process",
+        "rmse_mean": 0.045595602619809376,
+        "rmse_sd": 0.015927691514347156,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.05,
+        "n": 8,
+        "method": "lagrange_equispaced",
+        "rmse_mean": 0.06663743321115054,
+        "rmse_sd": 0.02753349029031318,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.05,
+        "n": 8,
+        "method": "lagrange_chebyshev",
+        "rmse_mean": 0.04751850908967481,
+        "rmse_sd": 0.014041515976474593,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.05,
+        "n": 8,
+        "method": "cubic_spline",
+        "rmse_mean": 0.04313505211413138,
+        "rmse_sd": 0.012609467697199292,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.05,
+        "n": 8,
+        "method": "gaussian_process",
+        "rmse_mean": 0.04270770099351973,
+        "rmse_sd": 0.012869801271784958,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.05,
+        "n": 12,
+        "method": "lagrange_equispaced",
+        "rmse_mean": 0.2601201725025153,
+        "rmse_sd": 0.16098620650879994,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.05,
+        "n": 12,
+        "method": "lagrange_chebyshev",
+        "rmse_mean": 0.048545214144786415,
+        "rmse_sd": 0.010461235562537207,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.05,
+        "n": 12,
+        "method": "cubic_spline",
+        "rmse_mean": 0.04535273354743762,
+        "rmse_sd": 0.010934267264103464,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.05,
+        "n": 12,
+        "method": "gaussian_process",
+        "rmse_mean": 0.037194567940886186,
+        "rmse_sd": 0.011125871399996304,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.1,
+        "n": 4,
+        "method": "lagrange_equispaced",
+        "rmse_mean": 0.15508289978461687,
+        "rmse_sd": 0.037845453027306644,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.1,
+        "n": 4,
+        "method": "lagrange_chebyshev",
+        "rmse_mean": 0.13622502753744328,
+        "rmse_sd": 0.028680563022672023,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.1,
+        "n": 4,
+        "method": "cubic_spline",
+        "rmse_mean": 0.11659011251732393,
+        "rmse_sd": 0.025873713825449222,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.1,
+        "n": 4,
+        "method": "gaussian_process",
+        "rmse_mean": 0.09754318028123685,
+        "rmse_sd": 0.025819456849549585,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.1,
+        "n": 6,
+        "method": "lagrange_equispaced",
+        "rmse_mean": 0.12226931521226725,
+        "rmse_sd": 0.04546037114006972,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.1,
+        "n": 6,
+        "method": "lagrange_chebyshev",
+        "rmse_mean": 0.10136829595450088,
+        "rmse_sd": 0.031277659069365735,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.1,
+        "n": 6,
+        "method": "cubic_spline",
+        "rmse_mean": 0.09354298697096908,
+        "rmse_sd": 0.030988470863894925,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.1,
+        "n": 6,
+        "method": "gaussian_process",
+        "rmse_mean": 0.09403888825110253,
+        "rmse_sd": 0.0307112802570867,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.1,
+        "n": 8,
+        "method": "lagrange_equispaced",
+        "rmse_mean": 0.12951548520299727,
+        "rmse_sd": 0.05360412899459809,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.1,
+        "n": 8,
+        "method": "lagrange_chebyshev",
+        "rmse_mean": 0.09338852741083734,
+        "rmse_sd": 0.02694714368332123,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.1,
+        "n": 8,
+        "method": "cubic_spline",
+        "rmse_mean": 0.0905757455272101,
+        "rmse_sd": 0.0261364679531762,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.1,
+        "n": 8,
+        "method": "gaussian_process",
+        "rmse_mean": 0.08463982809526835,
+        "rmse_sd": 0.02539165494305645,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.1,
+        "n": 12,
+        "method": "lagrange_equispaced",
+        "rmse_mean": 0.49026796388832894,
+        "rmse_sd": 0.28188184628928403,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.1,
+        "n": 12,
+        "method": "lagrange_chebyshev",
+        "rmse_mean": 0.09466115684408952,
+        "rmse_sd": 0.020913530397826046,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.1,
+        "n": 12,
+        "method": "cubic_spline",
+        "rmse_mean": 0.08570893897981974,
+        "rmse_sd": 0.018061073798123158,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.1,
+        "n": 12,
+        "method": "gaussian_process",
+        "rmse_mean": 0.06374929367476026,
+        "rmse_sd": 0.01829128886908391,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.2,
+        "n": 4,
+        "method": "lagrange_equispaced",
+        "rmse_mean": 0.22516654693049293,
+        "rmse_sd": 0.0791353541408685,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.2,
+        "n": 4,
+        "method": "lagrange_chebyshev",
+        "rmse_mean": 0.20319283577006422,
+        "rmse_sd": 0.0628194718644131,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.2,
+        "n": 4,
+        "method": "cubic_spline",
+        "rmse_mean": 0.18867205156048505,
+        "rmse_sd": 0.06791884529780863,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.2,
+        "n": 4,
+        "method": "gaussian_process",
+        "rmse_mean": 0.17134367427705363,
+        "rmse_sd": 0.06602722524690476,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.2,
+        "n": 6,
+        "method": "lagrange_equispaced",
+        "rmse_mean": 0.2139584821174267,
+        "rmse_sd": 0.08275129030672351,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.2,
+        "n": 6,
+        "method": "lagrange_chebyshev",
+        "rmse_mean": 0.18426213035550126,
+        "rmse_sd": 0.05753407318585343,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.2,
+        "n": 6,
+        "method": "cubic_spline",
+        "rmse_mean": 0.1770342535792748,
+        "rmse_sd": 0.057688411420634654,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.2,
+        "n": 6,
+        "method": "gaussian_process",
+        "rmse_mean": 0.16850655269240783,
+        "rmse_sd": 0.055537315005789525,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.2,
+        "n": 8,
+        "method": "lagrange_equispaced",
+        "rmse_mean": 0.2794922040331042,
+        "rmse_sd": 0.11969671367552791,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.2,
+        "n": 8,
+        "method": "lagrange_chebyshev",
+        "rmse_mean": 0.18985138208682567,
+        "rmse_sd": 0.057710024872097386,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.2,
+        "n": 8,
+        "method": "cubic_spline",
+        "rmse_mean": 0.18073723768314542,
+        "rmse_sd": 0.05293999660809926,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.2,
+        "n": 8,
+        "method": "gaussian_process",
+        "rmse_mean": 0.14807508695101995,
+        "rmse_sd": 0.0470706041493245,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.2,
+        "n": 12,
+        "method": "lagrange_equispaced",
+        "rmse_mean": 1.0409195164230562,
+        "rmse_sd": 0.5682370327607013,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.2,
+        "n": 12,
+        "method": "lagrange_chebyshev",
+        "rmse_mean": 0.1941105824919745,
+        "rmse_sd": 0.04156139289062436,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.2,
+        "n": 12,
+        "method": "cubic_spline",
+        "rmse_mean": 0.17873915190481018,
+        "rmse_sd": 0.03734115026225672,
+        "n_repetitions": 100
+      },
+      {
+        "sigma": 0.2,
+        "n": 12,
+        "method": "gaussian_process",
+        "rmse_mean": 0.12542072949314453,
+        "rmse_sd": 0.037494142659657184,
+        "n_repetitions": 100
+      }
+    ],
+    "pattern_checks": [
+      {
+        "check": "GP lowest at n=12, sigma=0",
+        "passed": false
+      },
+      {
+        "check": "GP lowest at n=12, sigma=0.02",
+        "passed": true
+      },
+      {
+        "check": "GP lowest at n=12, sigma=0.05",
+        "passed": true
+      },
+      {
+        "check": "GP lowest at n=12, sigma=0.1",
+        "passed": true
+      },
+      {
+        "check": "GP lowest at n=12, sigma=0.2",
+        "passed": true
+      },
+      {
+        "check": "equispaced worst at n=12, sigma=0.02",
+        "passed": true
+      },
+      {
+        "check": "equispaced worst at n=12, sigma=0.05",
+        "passed": true
+      },
+      {
+        "check": "equispaced worst at n=12, sigma=0.1",
+        "passed": true
+      },
+      {
+        "check": "equispaced worst at n=12, sigma=0.2",
+        "passed": true
+      },
+      {
+        "check": "GP not lowest at n=4, sigma=0.1",
+        "passed": false
+      },
+      {
+        "check": "GP not lowest at n=6, sigma=0.1",
+        "passed": true
+      }
+    ]
+  },
+  "file": "data\\experiment_runs\\curve-20261116T180659Z.json"
+}

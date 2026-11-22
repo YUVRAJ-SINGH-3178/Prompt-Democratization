@@ -1,0 +1,19 @@
+{
+  "created_at": "2026-11-17T08:42:15.983209+00:00",
+  "source": "feedback table, synthetic=false",
+  "seed": 42,
+  "parameters": {
+    "minimum_training_count": 3,
+    "maximum_training_count": 40,
+    "baseline": "per-template training mean"
+  },
+  "versions": {
+    "python": "3.13.5",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3",
+    "scikit_learn": "1.6.1"
+  },
+  "real_rating_count": 0,
+  "break_even_rating_count": null,
+  "measurement_status": "insufficient_real_feedback"
+}

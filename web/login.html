@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark light"><title>Sign in | Prompt Repository Lab</title>
+  <link rel="stylesheet" href="/auth.css"><link rel="stylesheet" href="/linear-ui.css"><script src="/login.js" defer></script>
+</head>
+<body class="login-page">
+  <header class="login-head"><a class="wordmark" href="/" aria-label="Prompt Lab home"><span class="mark">P</span><span>Prompt Lab</span></a><button id="themeToggle" class="icon-button" aria-label="Toggle color theme">◐</button></header>
+  <main class="login-main">
+    <section class="login-card" aria-labelledby="loginTitle">
+      <div class="eyebrow">UNIVERSITY WORKSPACE</div><h1 id="loginTitle">Sign in to Prompt Lab</h1>
+      <p class="muted">Use your local university account.</p>
+      <form id="loginForm" autocomplete="on">
+        <label for="username">Username</label><input id="username" name="username" autocomplete="username" required autofocus>
+        <label for="password">Password</label><input id="password" name="password" type="password" autocomplete="current-password" required>
+        <button class="primary-button" type="submit">Sign in <span aria-hidden="true">→</span></button>
+      </form>
+      <div id="loginError" class="inline-error" role="alert" aria-live="polite"></div>
+      <div class="login-foot"><span class="status-dot"></span> Local authentication | no external provider</div>
+    </section>
+  </main>
+</body>
+</html>

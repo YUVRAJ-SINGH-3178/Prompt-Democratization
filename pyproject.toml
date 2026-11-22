@@ -1,0 +1,19 @@
+[tool.ruff]
+line-length = 120
+target-version = "py313"
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.ruff.lint]
+select = ["E", "F"]
+ignore = ["E501", "E701", "E702"]
+
+[tool.mypy]
+python_version = "3.13"
+files = ["app/linter/core.py", "app/routing/core.py"]
+ignore_missing_imports = true
+check_untyped_defs = false
+allow_untyped_defs = true
+warn_unused_ignores = false
