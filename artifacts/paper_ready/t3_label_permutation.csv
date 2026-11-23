@@ -1,0 +1,2 @@
+seed,template_count,labeling_count,mean_spread,mean_absolute_error,outside_fraction,draft_mean_spread,draft_mae,draft_outside_fraction
+42,2000,24,0.6353,0.1898,0.0341,0.643,0.193,0.0375

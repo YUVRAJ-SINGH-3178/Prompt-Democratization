@@ -72,7 +72,11 @@ async def access_control(request: Request, call_next):
             required = "Faculty"
         elif path.startswith("/api/auth/"):
             required = "all"
-        elif path.startswith("/api/prompt-checker/") or path.startswith("/api/samples"):
+        elif (
+            path.startswith("/api/prompt-checker/")
+            or path.startswith("/api/samples")
+            or path.startswith("/api/real-prompts")
+        ):
             required = "all"
         else:
             required = "University"

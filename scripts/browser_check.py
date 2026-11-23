@@ -91,12 +91,13 @@ async def main():
     env["PROMPT_LAB_AUTH_DB"] = str(DB)
     env["PROMPT_LAB_DB"] = str(ARTIFACTS / "browser-real.sqlite")
     env["SIMULATED_DB_PATH"] = str(ARTIFACTS / "browser-simulated.sqlite")
+    server_log = open(ARTIFACTS / "browser-server.log", "w", encoding="utf-8")
     server = subprocess.Popen(
         [sys.executable, "-m", "uvicorn", "app.main:app", "--host", "127.0.0.1", "--port", "8765"],
         cwd=ROOT,
         env=env,
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL,
+        stdout=server_log,
+        stderr=subprocess.STDOUT,
     )
     errors, overflow, screens = [], [], []
     try:
@@ -108,7 +109,10 @@ async def main():
             except Exception:
                 time.sleep(0.5)
         else:
-            raise RuntimeError("Local UI test server did not start")
+            stdout, stderr = server.communicate(timeout=2)
+            raise RuntimeError(
+                f"Local UI test server did not start. Returncode: {server.returncode}\nStderr: {stderr}\nStdout: {stdout}"
+            )
 
         async with async_playwright() as p:
             browser = await p.chromium.launch()
@@ -157,6 +161,7 @@ async def main():
                                 f"Dashboard did not render for {role}: url={page.url}, title={title}, login_error={login_error}, cookies={cookie_names}, responses={auth_responses}, browser_errors={errors}"
                             ) from exc
                         for name in pages:
+                            print(f"[{role}][{size_label}][{theme}] Navigating to {name}...")
                             await page.locator(f'#roleNav button[data-page="{PAGE_KEYS[name]}"]').click()
                             section_title = {
                                 "Overview": "Repository snapshot"
@@ -185,18 +190,34 @@ async def main():
                                     .wait_for(timeout=8000)
                                 )
                             if name == "Prompt checker":
+                                print(f"[{role}][{size_label}][{theme}] Running prompt check...")
                                 await page.locator("#promptText").fill(
                                     "Create five multiple choice questions about databases. Give four options A to D, mark the correct answer, explain the rationale, and order by difficulty."
                                 )
                                 await page.get_by_role("button", name="Check prompt").click()
                                 await page.get_by_text("Highlighted evidence", exact=True).wait_for(timeout=5000)
                                 await page.get_by_text("Slot completeness", exact=True).wait_for(timeout=5000)
+                                if width == 1440 and theme == "dark" and role == "University":
+                                    print(f"[{role}][{size_label}][{theme}] Running prompt improve...")
+                                    await page.locator("#runImprove").click()
+                                    await page.get_by_role("heading", name="Contradiction Resolutions").wait_for(
+                                        timeout=8000
+                                    )
+                                    await page.get_by_role("heading", name="Prompt Diff (Before vs. After)").wait_for(
+                                        timeout=8000
+                                    )
+                                    improve_path = SHOTS / f"{role.lower().replace(' ', '-')}-checker-improved.png"
+                                    await page.screenshot(path=str(improve_path), full_page=True)
+                                    screens.append(str(improve_path.relative_to(ROOT)))
+                                    await page.locator("#applyImproved").click()
+                                    await page.get_by_text("Highlighted evidence", exact=True).wait_for(timeout=8000)
                             if name == "Sample library":
                                 await (
                                     page.locator("#pageTitle")
                                     .get_by_text("Sample library", exact=True)
                                     .wait_for(timeout=5000)
                                 )
+                                await page.locator(".sample-card").first.wait_for(timeout=8000)
                             if name == "Accuracy":
                                 await page.get_by_text("awaiting annotations", exact=False).wait_for(timeout=5000)
                             dimensions = await page.evaluate(
@@ -211,8 +232,12 @@ async def main():
                             await page.screenshot(path=str(path), full_page=True)
                             screens.append(str(path.relative_to(ROOT)))
                             if name == "Sample library" and width == 1440 and theme == "dark":
-                                await page.get_by_role("button", name="Open in checker").first.click()
-                                await page.locator("#checkerResult .pill.sample").wait_for(timeout=5000)
+                                await asyncio.sleep(0.5)
+                                btn = page.locator(".sample-card").first.get_by_role("button", name="Open in checker")
+                                await btn.wait_for(timeout=8000)
+                                print(f"[{role}][{size_label}][{theme}] Clicking Open in checker...")
+                                await btn.click(force=True)
+                                await page.locator("#checkerResult .pill.sample").wait_for(timeout=12000)
                                 sample_path = SHOTS / f"{role.lower().replace(' ', '-')}-sample-open-in-checker.png"
                                 await page.screenshot(path=str(sample_path), full_page=True)
                                 screens.append(str(sample_path.relative_to(ROOT)))
@@ -239,6 +264,7 @@ async def main():
         except subprocess.TimeoutExpired:
             server.kill()
             server.wait()
+        server_log.close()
     report = {
         "roles": [r[1] for r in ROLES],
         "screenshots": len(screens),

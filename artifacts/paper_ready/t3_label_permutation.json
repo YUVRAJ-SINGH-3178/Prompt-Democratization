@@ -1,0 +1,22 @@
+{
+  "table_id": "T3",
+  "title": "Label Permutation Sensitivity (Mixed Engineering and Medical User)",
+  "seed": 42,
+  "template_count": 2000,
+  "labeling_count": 24,
+  "total_interpolations": 48000,
+  "mean_spread": 0.6353,
+  "mean_absolute_error": 0.1898,
+  "outside_fraction": 0.0341,
+  "draft_reference": {
+    "template_count": 500,
+    "mean_spread": 0.643,
+    "mean_absolute_error": 0.193,
+    "outside_fraction": 0.0375
+  },
+  "difference_from_draft": {
+    "mean_spread": -0.0077,
+    "mean_absolute_error": -0.0032,
+    "outside_fraction": -0.0034
+  }
+}

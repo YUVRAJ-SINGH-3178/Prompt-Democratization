@@ -1,0 +1,542 @@
+[
+  {
+    "prompt_id": "DEV-AUT-01",
+    "prompt": "Act as a university teacher for bachelor students. Create 10 MCQs on database management systems. Four options each labelled A to D, mark the correct answer and explain why. Order from easiest to hardest.",
+    "dataset": "development",
+    "source": "authored",
+    "discipline": "Engineering",
+    "course": "Database Management Systems",
+    "synthetic": 0
+  },
+  {
+    "prompt_id": "DEV-AUT-02",
+    "prompt": "Act as a college professor and prepare 15 MCQs on operating systems for master students. Four options labelled A, B, C, D with one correct answer marked. Include an explanation for every option. In order of increasing difficulty.",
+    "dataset": "development",
+    "source": "authored",
+    "discipline": "Computing",
+    "course": "Operating Systems",
+    "synthetic": 0
+  },
+  {
+    "prompt_id": "DEV-AUT-03",
+    "prompt": "Act as an instructor. Create 20 MCQs about machine learning for undergraduate students. Four choices labelled A to D. Make questions very easy so anyone can pass, but also test advanced research knowledge. Do not include any basic questions.",
+    "dataset": "development",
+    "source": "authored",
+    "discipline": "Computing",
+    "course": "Machine Learning",
+    "synthetic": 0
+  },
+  {
+    "prompt_id": "DEV-AUT-04",
+    "prompt": "Act as an experienced professor for bachelor students. Write 10 MCQs on software engineering with four options. Highlight the correct answer in bold, but do not reveal the correct answer to students. After every question, provide the answer.",
+    "dataset": "development",
+    "source": "authored",
+    "discipline": "Engineering",
+    "course": "Software Engineering",
+    "synthetic": 0
+  },
+  {
+    "prompt_id": "DEV-AUT-05",
+    "prompt": "Act as a university professor. Generate 25 MCQs on computer networks. Every question must have four options. Make wrong answers look correct and use confusing language so students have to think carefully. Options that can be interpreted in multiple ways should be included.",
+    "dataset": "development",
+    "source": "authored",
+    "discipline": "Computing",
+    "course": "Computer Networks",
+    "synthetic": 0
+  },
+  {
+    "prompt_id": "DEV-AUT-06",
+    "prompt": "Act as a university teacher. Create some multiple-choice questions for students about data structures. Provide four choices and mark the right answer. Explain the answers wherever necessary.",
+    "dataset": "development",
+    "source": "authored",
+    "discipline": "Computing",
+    "course": "Data Structures",
+    "synthetic": 0
+  },
+  {
+    "prompt_id": "DEV-AUT-07",
+    "prompt": "Act as an expert professor. Prepare 12 MCQs on computer science. Provide four choices for every question and mark the right answer. Include explanations. Arrange them properly.",
+    "dataset": "development",
+    "source": "authored",
+    "discipline": "Computing",
+    "course": "Computer Science",
+    "synthetic": 0
+  },
+  {
+    "prompt_id": "DEV-AUT-08",
+    "prompt": "Instructor: for undergraduate students, create 10 multiple-choice questions on Normalization. Four options labelled A to D with single correct answer. Provide detailed explanation for each answer. Organize by difficulty from easiest to hardest.",
+    "dataset": "development",
+    "source": "authored",
+    "discipline": "Engineering",
+    "course": "Normalization",
+    "synthetic": 0
+  },
+  {
+    "prompt_id": "DEV-AUT-09",
+    "prompt": "Act as a professor of chemistry for bachelor students. Create 15 questions about organic reactions. Four options, highlight correct answer. Avoid confusing language and ensure questions are clear and unambiguous.",
+    "dataset": "development",
+    "source": "authored",
+    "discipline": "Science",
+    "course": "Organic Chemistry",
+    "synthetic": 0
+  },
+  {
+    "prompt_id": "DEV-AUT-10",
+    "prompt": "Create 30 MCQs for graduate students on distributed systems. Four options labelled A-D. Exactly one correct answer. Keep explanations concise and order by increasing difficulty.",
+    "dataset": "development",
+    "source": "authored",
+    "discipline": "Computing",
+    "course": "Distributed Systems",
+    "synthetic": 0
+  },
+  {
+    "prompt_id": "DEV-AUT-11",
+    "prompt": "Act as a faculty member in physics. Write 10 questions on quantum mechanics for bachelor students. Four choices, mark correct answer. Do not include basic questions; test expert-level knowledge.",
+    "dataset": "development",
+    "source": "authored",
+    "discipline": "Science",
+    "course": "Quantum Mechanics",
+    "synthetic": 0
+  },
+  {
+    "prompt_id": "DEV-AUT-12",
+    "prompt": "Act as a university teacher. Write 15 multiple-choice questions on linear algebra for undergraduate students. Four options labelled A to D. Provide answers at the end in an answer key.",
+    "dataset": "development",
+    "source": "authored",
+    "discipline": "Mathematics",
+    "course": "Linear Algebra",
+    "synthetic": 0
+  },
+  {
+    "prompt_id": "DEV-AUT-13",
+    "prompt": "Act as an instructor. Prepare 20 MCQs on algorithms for master students. Four options, mark right answer. After each question, provide the answer and explanation.",
+    "dataset": "development",
+    "source": "authored",
+    "discipline": "Computing",
+    "course": "Algorithms",
+    "synthetic": 0
+  },
+  {
+    "prompt_id": "DEV-AUT-14",
+    "prompt": "Act as an experienced teacher. Make 10 MCQs on compiler design with four options. Do not make questions very easy; require expert-level problem solving.",
+    "dataset": "development",
+    "source": "authored",
+    "discipline": "Computing",
+    "course": "Compiler Design",
+    "synthetic": 0
+  },
+  {
+    "prompt_id": "DEV-AUT-15",
+    "prompt": "Act as a professor for bachelor students. Write 8 MCQs on digital logic with four choices. Label choices A, B, C, D. Ensure there is only one correct answer.",
+    "dataset": "development",
+    "source": "authored",
+    "discipline": "Engineering",
+    "course": "Digital Logic",
+    "synthetic": 0
+  },
+  {
+    "prompt_id": "DEV-AUT-16",
+    "prompt": "Prepare 15 multiple-choice questions on biochemistry for medical students. Four answer choices, mark correct answer and explain why incorrect options are wrong. Order from easiest to hardest.",
+    "dataset": "development",
+    "source": "authored",
+    "discipline": "Medical",
+    "course": "Biochemistry",
+    "synthetic": 0
+  },
+  {
+    "prompt_id": "DEV-AUT-17",
+    "prompt": "Act as a university teacher. Create 20 MCQs about computer architecture for undergraduate students. Four options labelled A to D. All questions must be very easy, but also test advanced research knowledge.",
+    "dataset": "development",
+    "source": "authored",
+    "discipline": "Engineering",
+    "course": "Computer Architecture",
+    "synthetic": 0
+  },
+  {
+    "prompt_id": "DEV-AUT-18",
+    "prompt": "Act as an instructor. Create 10 MCQs on cryptography. Four options. Keep answers hidden until the end, but show the answer after each question.",
+    "dataset": "development",
+    "source": "authored",
+    "discipline": "Computing",
+    "course": "Cryptography",
+    "synthetic": 0
+  },
+  {
+    "prompt_id": "DEV-AUT-19",
+    "prompt": "Act as a university professor. Write 15 MCQs on artificial intelligence. Four choices. Ensure questions are clear and unambiguous, leaving no room for misinterpretation.",
+    "dataset": "development",
+    "source": "authored",
+    "discipline": "Computing",
+    "course": "Artificial Intelligence",
+    "synthetic": 0
+  },
+  {
+    "prompt_id": "DEV-AUT-20",
+    "prompt": "Act as an educator for bachelor students. Prepare 20 questions on calculus. Four options labelled A to D. Provide answers and detailed explanations. Arrange them properly.",
+    "dataset": "development",
+    "source": "authored",
+    "discipline": "Mathematics",
+    "course": "Calculus",
+    "synthetic": 0
+  },
+  {
+    "prompt_id": "DEV-AUT-21",
+    "prompt": "Write 10 MCQs on microeconomics for undergraduate students. Four options each. Mark the correct answer. Skip the basics and focus on intermediate application.",
+    "dataset": "development",
+    "source": "authored",
+    "discipline": "Business",
+    "course": "Microeconomics",
+    "synthetic": 0
+  },
+  {
+    "prompt_id": "DEV-AUT-22",
+    "prompt": "Act as a professor in finance. Create 12 MCQs for master students. Four options labelled A to D. Single correct answer. Order from easiest to hardest.",
+    "dataset": "development",
+    "source": "authored",
+    "discipline": "Business",
+    "course": "Corporate Finance",
+    "synthetic": 0
+  },
+  {
+    "prompt_id": "DEV-AUT-23",
+    "prompt": "Act as an instructor. Create some multiple-choice questions on statistics. Give four options and provide the answers. Explain wherever necessary.",
+    "dataset": "development",
+    "source": "authored",
+    "discipline": "Mathematics",
+    "course": "Statistics",
+    "synthetic": 0
+  },
+  {
+    "prompt_id": "DEV-AUT-24",
+    "prompt": "Act as a university teacher for bachelor students. Create 15 MCQs on genetics. Four options, highlight the correct answer in bold. Provide clear explanations.",
+    "dataset": "development",
+    "source": "authored",
+    "discipline": "Medical",
+    "course": "Genetics",
+    "synthetic": 0
+  },
+  {
+    "prompt_id": "DEV-AUT-25",
+    "prompt": "Act as an experienced professor. Prepare 25 MCQs on pharmacology for postgraduate students. Four choices labelled A to D. Only one correct answer. Explain why distractors are wrong.",
+    "dataset": "development",
+    "source": "authored",
+    "discipline": "Medical",
+    "course": "Pharmacology",
+    "synthetic": 0
+  },
+  {
+    "prompt_id": "DEV-AUT-26",
+    "prompt": "Act as a teacher. Write 10 MCQs on English literature for undergraduate students. Four options. Mark the right answer and explain rationale. In order of increasing difficulty.",
+    "dataset": "development",
+    "source": "authored",
+    "discipline": "Literature",
+    "course": "English Literature",
+    "synthetic": 0
+  },
+  {
+    "prompt_id": "DEV-AUT-27",
+    "prompt": "Act as an instructor for bachelor students. Create 15 MCQs on world history. Four options labelled A-D. Keep the answers hidden and provide an answer key at the end.",
+    "dataset": "development",
+    "source": "authored",
+    "discipline": "Humanities",
+    "course": "World History",
+    "synthetic": 0
+  },
+  {
+    "prompt_id": "DEV-AUT-28",
+    "prompt": "Act as a university professor. Make 20 MCQs on psychology for master students. Four choices. Make wrong answers look correct and use confusing language. Options that can be interpreted in multiple ways.",
+    "dataset": "development",
+    "source": "authored",
+    "discipline": "Humanities",
+    "course": "Cognitive Psychology",
+    "synthetic": 0
+  },
+  {
+    "prompt_id": "DEV-AUT-29",
+    "prompt": "Act as a faculty member. Generate 10 MCQs on discrete mathematics for bachelor students. Four options labelled A to D. Mark the correct answer. Provide explanations.",
+    "dataset": "development",
+    "source": "authored",
+    "discipline": "Mathematics",
+    "course": "Discrete Mathematics",
+    "synthetic": 0
+  },
+  {
+    "prompt_id": "DEV-AUT-30",
+    "prompt": "Act as an instructor. Prepare 15 MCQs on environmental science for undergraduate students. Four choices each with one correct answer. Order questions from easiest to hardest.",
+    "dataset": "development",
+    "source": "authored",
+    "discipline": "Science",
+    "course": "Environmental Science",
+    "synthetic": 0
+  },
+  {
+    "prompt_id": "DEV-SIM-01",
+    "prompt": "Act as a university teacher tasked with assessing bachelor students in Machine Learning. Create 10 multiple-choice questions on Machine Learning. Each question must have four answer choices, with only one correct answer. Label each choice (A, B, C, D) and mark the correct answer in bold. Provide clear explanations for each option. Organize the questions in order of increasing difficulty.",
+    "dataset": "development",
+    "source": "simulated_persona",
+    "discipline": "Literature",
+    "course": "Machine Learning",
+    "synthetic": 1
+  },
+  {
+    "prompt_id": "DEV-SIM-02",
+    "prompt": "Act as an educator and write some multiple choice questions for students about Database Management Systems. Give four options for each question and provide the answers. Explain wherever necessary.",
+    "dataset": "development",
+    "source": "simulated_persona",
+    "discipline": "Engineering",
+    "course": "Database Management Systems",
+    "synthetic": 1
+  },
+  {
+    "prompt_id": "DEV-SIM-03",
+    "prompt": "Act as a university teacher for undergraduate students. Create 20 MCQs about Operating Systems. Four choices with one correct answer marked. All questions must be very easy so every student can answer them, but they must also test advanced research knowledge and expert-level understanding. Do not include any basic questions.",
+    "dataset": "development",
+    "source": "simulated_persona",
+    "discipline": "Medical",
+    "course": "Operating Systems",
+    "synthetic": 1
+  },
+  {
+    "prompt_id": "DEV-SIM-04",
+    "prompt": "Act as an experienced professor for bachelor students. Write 15 MCQs on Computer Networks with four options labelled A, B, C, D. Highlight the correct answer, but do not reveal the correct answer to students. After every question, provide the answer and explanation.",
+    "dataset": "development",
+    "source": "simulated_persona",
+    "discipline": "Business",
+    "course": "Computer Networks",
+    "synthetic": 1
+  },
+  {
+    "prompt_id": "DEV-SIM-05",
+    "prompt": "Act as a university professor. Create 25 MCQs on Clinical Pathology. Every question must have four options. Use confusing language and tricky statements so students have to think carefully. Include options that can be interpreted in multiple ways.",
+    "dataset": "development",
+    "source": "simulated_persona",
+    "discipline": "Computing",
+    "course": "Clinical Pathology",
+    "synthetic": 1
+  },
+  {
+    "prompt_id": "DEV-SIM-06",
+    "prompt": "Act as a university teacher tasked with assessing bachelor students in Corporate Finance. Create 10 multiple-choice questions on Corporate Finance. Each question must have four answer choices, with only one correct answer. Label each choice (A, B, C, D) and mark the correct answer in bold. Provide clear explanations for each option. Organize the questions in order of increasing difficulty.",
+    "dataset": "development",
+    "source": "simulated_persona",
+    "discipline": "Literature",
+    "course": "Corporate Finance",
+    "synthetic": 1
+  },
+  {
+    "prompt_id": "DEV-SIM-07",
+    "prompt": "Act as an educator and write some multiple choice questions for students about Machine Learning. Give four options for each question and provide the answers. Explain wherever necessary.",
+    "dataset": "development",
+    "source": "simulated_persona",
+    "discipline": "Engineering",
+    "course": "Machine Learning",
+    "synthetic": 1
+  },
+  {
+    "prompt_id": "DEV-SIM-08",
+    "prompt": "Act as a university teacher for undergraduate students. Create 20 MCQs about Database Management Systems. Four choices with one correct answer marked. All questions must be very easy so every student can answer them, but they must also test advanced research knowledge and expert-level understanding. Do not include any basic questions.",
+    "dataset": "development",
+    "source": "simulated_persona",
+    "discipline": "Medical",
+    "course": "Database Management Systems",
+    "synthetic": 1
+  },
+  {
+    "prompt_id": "DEV-SIM-09",
+    "prompt": "Act as an experienced professor for bachelor students. Write 15 MCQs on Operating Systems with four options labelled A, B, C, D. Highlight the correct answer, but do not reveal the correct answer to students. After every question, provide the answer and explanation.",
+    "dataset": "development",
+    "source": "simulated_persona",
+    "discipline": "Business",
+    "course": "Operating Systems",
+    "synthetic": 1
+  },
+  {
+    "prompt_id": "DEV-SIM-10",
+    "prompt": "Act as a university professor. Create 25 MCQs on Computer Networks. Every question must have four options. Use confusing language and tricky statements so students have to think carefully. Include options that can be interpreted in multiple ways.",
+    "dataset": "development",
+    "source": "simulated_persona",
+    "discipline": "Computing",
+    "course": "Computer Networks",
+    "synthetic": 1
+  },
+  {
+    "prompt_id": "DEV-SIM-11",
+    "prompt": "Act as a university teacher tasked with assessing bachelor students in Clinical Pathology. Create 10 multiple-choice questions on Clinical Pathology. Each question must have four answer choices, with only one correct answer. Label each choice (A, B, C, D) and mark the correct answer in bold. Provide clear explanations for each option. Organize the questions in order of increasing difficulty.",
+    "dataset": "development",
+    "source": "simulated_persona",
+    "discipline": "Literature",
+    "course": "Clinical Pathology",
+    "synthetic": 1
+  },
+  {
+    "prompt_id": "DEV-SIM-12",
+    "prompt": "Act as an educator and write some multiple choice questions for students about Corporate Finance. Give four options for each question and provide the answers. Explain wherever necessary.",
+    "dataset": "development",
+    "source": "simulated_persona",
+    "discipline": "Engineering",
+    "course": "Corporate Finance",
+    "synthetic": 1
+  },
+  {
+    "prompt_id": "DEV-SIM-13",
+    "prompt": "Act as a university teacher for undergraduate students. Create 20 MCQs about Machine Learning. Four choices with one correct answer marked. All questions must be very easy so every student can answer them, but they must also test advanced research knowledge and expert-level understanding. Do not include any basic questions.",
+    "dataset": "development",
+    "source": "simulated_persona",
+    "discipline": "Medical",
+    "course": "Machine Learning",
+    "synthetic": 1
+  },
+  {
+    "prompt_id": "DEV-SIM-14",
+    "prompt": "Act as an experienced professor for bachelor students. Write 15 MCQs on Database Management Systems with four options labelled A, B, C, D. Highlight the correct answer, but do not reveal the correct answer to students. After every question, provide the answer and explanation.",
+    "dataset": "development",
+    "source": "simulated_persona",
+    "discipline": "Business",
+    "course": "Database Management Systems",
+    "synthetic": 1
+  },
+  {
+    "prompt_id": "DEV-SIM-15",
+    "prompt": "Act as a university professor. Create 25 MCQs on Operating Systems. Every question must have four options. Use confusing language and tricky statements so students have to think carefully. Include options that can be interpreted in multiple ways.",
+    "dataset": "development",
+    "source": "simulated_persona",
+    "discipline": "Computing",
+    "course": "Operating Systems",
+    "synthetic": 1
+  },
+  {
+    "prompt_id": "DEV-SIM-16",
+    "prompt": "Act as a university teacher tasked with assessing bachelor students in Computer Networks. Create 10 multiple-choice questions on Computer Networks. Each question must have four answer choices, with only one correct answer. Label each choice (A, B, C, D) and mark the correct answer in bold. Provide clear explanations for each option. Organize the questions in order of increasing difficulty.",
+    "dataset": "development",
+    "source": "simulated_persona",
+    "discipline": "Literature",
+    "course": "Computer Networks",
+    "synthetic": 1
+  },
+  {
+    "prompt_id": "DEV-SIM-17",
+    "prompt": "Act as an educator and write some multiple choice questions for students about Clinical Pathology. Give four options for each question and provide the answers. Explain wherever necessary.",
+    "dataset": "development",
+    "source": "simulated_persona",
+    "discipline": "Engineering",
+    "course": "Clinical Pathology",
+    "synthetic": 1
+  },
+  {
+    "prompt_id": "DEV-SIM-18",
+    "prompt": "Act as a university teacher for undergraduate students. Create 20 MCQs about Corporate Finance. Four choices with one correct answer marked. All questions must be very easy so every student can answer them, but they must also test advanced research knowledge and expert-level understanding. Do not include any basic questions.",
+    "dataset": "development",
+    "source": "simulated_persona",
+    "discipline": "Medical",
+    "course": "Corporate Finance",
+    "synthetic": 1
+  },
+  {
+    "prompt_id": "DEV-SIM-19",
+    "prompt": "Act as an experienced professor for bachelor students. Write 15 MCQs on Machine Learning with four options labelled A, B, C, D. Highlight the correct answer, but do not reveal the correct answer to students. After every question, provide the answer and explanation.",
+    "dataset": "development",
+    "source": "simulated_persona",
+    "discipline": "Business",
+    "course": "Machine Learning",
+    "synthetic": 1
+  },
+  {
+    "prompt_id": "DEV-SIM-20",
+    "prompt": "Act as a university professor. Create 25 MCQs on Database Management Systems. Every question must have four options. Use confusing language and tricky statements so students have to think carefully. Include options that can be interpreted in multiple ways.",
+    "dataset": "development",
+    "source": "simulated_persona",
+    "discipline": "Computing",
+    "course": "Database Management Systems",
+    "synthetic": 1
+  },
+  {
+    "prompt_id": "DEV-SIM-21",
+    "prompt": "Act as a university teacher tasked with assessing bachelor students in Operating Systems. Create 10 multiple-choice questions on Operating Systems. Each question must have four answer choices, with only one correct answer. Label each choice (A, B, C, D) and mark the correct answer in bold. Provide clear explanations for each option. Organize the questions in order of increasing difficulty.",
+    "dataset": "development",
+    "source": "simulated_persona",
+    "discipline": "Literature",
+    "course": "Operating Systems",
+    "synthetic": 1
+  },
+  {
+    "prompt_id": "DEV-SIM-22",
+    "prompt": "Act as an educator and write some multiple choice questions for students about Computer Networks. Give four options for each question and provide the answers. Explain wherever necessary.",
+    "dataset": "development",
+    "source": "simulated_persona",
+    "discipline": "Engineering",
+    "course": "Computer Networks",
+    "synthetic": 1
+  },
+  {
+    "prompt_id": "DEV-SIM-23",
+    "prompt": "Act as a university teacher for undergraduate students. Create 20 MCQs about Clinical Pathology. Four choices with one correct answer marked. All questions must be very easy so every student can answer them, but they must also test advanced research knowledge and expert-level understanding. Do not include any basic questions.",
+    "dataset": "development",
+    "source": "simulated_persona",
+    "discipline": "Medical",
+    "course": "Clinical Pathology",
+    "synthetic": 1
+  },
+  {
+    "prompt_id": "DEV-SIM-24",
+    "prompt": "Act as an experienced professor for bachelor students. Write 15 MCQs on Corporate Finance with four options labelled A, B, C, D. Highlight the correct answer, but do not reveal the correct answer to students. After every question, provide the answer and explanation.",
+    "dataset": "development",
+    "source": "simulated_persona",
+    "discipline": "Business",
+    "course": "Corporate Finance",
+    "synthetic": 1
+  },
+  {
+    "prompt_id": "DEV-SIM-25",
+    "prompt": "Act as a university professor. Create 25 MCQs on Machine Learning. Every question must have four options. Use confusing language and tricky statements so students have to think carefully. Include options that can be interpreted in multiple ways.",
+    "dataset": "development",
+    "source": "simulated_persona",
+    "discipline": "Computing",
+    "course": "Machine Learning",
+    "synthetic": 1
+  },
+  {
+    "prompt_id": "DEV-SIM-26",
+    "prompt": "Act as a university teacher tasked with assessing bachelor students in Database Management Systems. Create 10 multiple-choice questions on Database Management Systems. Each question must have four answer choices, with only one correct answer. Label each choice (A, B, C, D) and mark the correct answer in bold. Provide clear explanations for each option. Organize the questions in order of increasing difficulty.",
+    "dataset": "development",
+    "source": "simulated_persona",
+    "discipline": "Literature",
+    "course": "Database Management Systems",
+    "synthetic": 1
+  },
+  {
+    "prompt_id": "DEV-SIM-27",
+    "prompt": "Act as an educator and write some multiple choice questions for students about Operating Systems. Give four options for each question and provide the answers. Explain wherever necessary.",
+    "dataset": "development",
+    "source": "simulated_persona",
+    "discipline": "Engineering",
+    "course": "Operating Systems",
+    "synthetic": 1
+  },
+  {
+    "prompt_id": "DEV-SIM-28",
+    "prompt": "Act as a university teacher for undergraduate students. Create 20 MCQs about Computer Networks. Four choices with one correct answer marked. All questions must be very easy so every student can answer them, but they must also test advanced research knowledge and expert-level understanding. Do not include any basic questions.",
+    "dataset": "development",
+    "source": "simulated_persona",
+    "discipline": "Medical",
+    "course": "Computer Networks",
+    "synthetic": 1
+  },
+  {
+    "prompt_id": "DEV-SIM-29",
+    "prompt": "Act as an experienced professor for bachelor students. Write 15 MCQs on Clinical Pathology with four options labelled A, B, C, D. Highlight the correct answer, but do not reveal the correct answer to students. After every question, provide the answer and explanation.",
+    "dataset": "development",
+    "source": "simulated_persona",
+    "discipline": "Business",
+    "course": "Clinical Pathology",
+    "synthetic": 1
+  },
+  {
+    "prompt_id": "DEV-SIM-30",
+    "prompt": "Act as a university professor. Create 25 MCQs on Corporate Finance. Every question must have four options. Use confusing language and tricky statements so students have to think carefully. Include options that can be interpreted in multiple ways.",
+    "dataset": "development",
+    "source": "simulated_persona",
+    "discipline": "Computing",
+    "course": "Corporate Finance",
+    "synthetic": 1
+  }
+]

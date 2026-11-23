@@ -1,0 +1,211 @@
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+SOURCE_PROJECT_BRIEF = "project_brief"
+
+REAL_TEST_PROMPTS = [
+    {
+        "id": "real-template",
+        "name": "Template",
+        "source": SOURCE_PROJECT_BRIEF,
+        "text": (
+            "Act as a university teacher tasked with assessing bachelor students' knowledge. "
+            "Your job is to create multiple-choice questions that effectively test students' "
+            "understanding of Database Management Systems.\n\n"
+            "Task:\nCreate 10 multiple-choice questions on Normalization.\n\n"
+            "Format:\nEach question must have four answer choices, with only one correct answer. "
+            "Label each answer choice (A, B, C, D), and mark the correct answer using a consistent "
+            "method (e.g. make the correct answer bold).\n"
+            "The distractors (incorrect answers) should be plausible but subtly flawed, to effectively "
+            "test students' understanding. After each question, provide an explanation for why the chosen "
+            "answer is correct and why each incorrect answer is not. Keep these explanations clear and concise. "
+            "Ensure each question is clear and unambiguous, leaving no room for misinterpretation.\n"
+            "The questions must range from testing basic recall to assessing the ability to think critically "
+            "and apply knowledge. Organize the questions in order of increasing difficulty, starting with the "
+            "easiest that test recall and progressing to the hardest that test application and critical thinking."
+        ),
+        "reference": {
+            "slots": {
+                "role": 1.0,
+                "audience": 1.0,
+                "topic": 1.0,
+                "count": 1.0,
+                "n_options": 1.0,
+                "labeling": 1.0,
+                "marking": 1.0,
+                "explanation": 1.0,
+                "ordering": 1.0,
+            },
+            "completeness": 1.000,
+            "atoms": [],
+            "energy": 0,
+            "repair": [],
+            "atoms_note": "Reference manual annotation lists {} for conflict purposes.",
+        },
+    },
+    {
+        "id": "real-faculty-1",
+        "name": "Faculty-1",
+        "source": SOURCE_PROJECT_BRIEF,
+        "text": (
+            "Act as a university teacher and create some multiple-choice questions for students. "
+            "Make the questions useful for their exams. Give four options for each question and "
+            "provide the answers. Make sure the questions are good and cover the important concepts. "
+            "Explain the answers wherever necessary. The questions should be suitable for students "
+            "and should help them understand the subject better."
+        ),
+        "reference": {
+            "slots": {
+                "role": 1.0,
+                "audience": 0.5,
+                "topic": 0.0,
+                "count": 0.0,
+                "n_options": 1.0,
+                "labeling": 0.0,
+                "marking": 1.0,
+                "explanation": 0.5,
+                "ordering": 0.0,
+            },
+            "completeness": 0.444,
+            "atoms": [],
+            "energy": 0,
+            "repair": [],
+            "atoms_note": "Reference manual annotation lists {} for conflict purposes.",
+        },
+    },
+    {
+        "id": "real-faculty-2",
+        "name": "Faculty-2",
+        "source": SOURCE_PROJECT_BRIEF,
+        "text": (
+            "Act as an expert professor and prepare MCQs on computer science. "
+            "Include all the important topics that students should know. "
+            "Make the questions interesting, challenging, and useful for examinations. "
+            "Provide four choices for every question and mark the right answer. "
+            "Include explanations for the answers and make sure the questions are neither too easy "
+            "nor too difficult. Arrange them properly."
+        ),
+        "reference": {
+            "slots": {
+                "role": 1.0,
+                "audience": 0.0,
+                "topic": 0.5,
+                "count": 0.0,
+                "n_options": 1.0,
+                "labeling": 0.0,
+                "marking": 1.0,
+                "explanation": 1.0,
+                "ordering": 0.5,
+            },
+            "completeness": 0.556,
+            "atoms": [],
+            "energy": 0,
+            "repair": [],
+            "atoms_note": "Reference manual annotation lists {} for conflict purposes.",
+        },
+    },
+    {
+        "id": "real-faculty-3",
+        "name": "Faculty-3",
+        "source": SOURCE_PROJECT_BRIEF,
+        "text": (
+            "Act as a university teacher who teaches undergraduate and postgraduate students. "
+            "Create 20 MCQs about machine learning. All questions must be very easy so every student "
+            "can answer them, but they must also test advanced research knowledge, deep critical thinking, "
+            "complex problem-solving, and expert-level understanding. Do not include any basic questions. "
+            "Arrange all questions from the easiest to the hardest. Give four options, the correct answer, "
+            "and an explanation for every option."
+        ),
+        "reference": {
+            "slots": {
+                "role": 1.0,
+                "audience": 1.0,
+                "topic": 1.0,
+                "count": 1.0,
+                "n_options": 1.0,
+                "labeling": 0.0,
+                "marking": 1.0,
+                "explanation": 1.0,
+                "ordering": 1.0,
+            },
+            "completeness": 0.889,
+            "atoms": ["very_easy", "expert_level", "no_basic", "ordered_easy_to_hard"],
+            "energy": 1,
+            "repair": ["very_easy"],
+            "atoms_note": "Exact match with reference atoms.",
+        },
+    },
+    {
+        "id": "real-faculty-4",
+        "name": "Faculty-4",
+        "source": SOURCE_PROJECT_BRIEF,
+        "text": (
+            "Act as an experienced professor and generate 15 MCQs on database management systems for bachelor students. "
+            "Each question should have four options labelled A, B, C, and D. Highlight the correct answer in bold, "
+            "but do not reveal the correct answer to students. After every question, provide the answer and a detailed explanation. "
+            "Do not provide an answer key at the end. Make the questions suitable for a classroom test and ensure students cannot "
+            "easily guess the answers."
+        ),
+        "reference": {
+            "slots": {
+                "role": 1.0,
+                "audience": 1.0,
+                "topic": 1.0,
+                "count": 1.0,
+                "n_options": 1.0,
+                "labeling": 1.0,
+                "marking": 1.0,
+                "explanation": 1.0,
+                "ordering": 0.0,
+            },
+            "completeness": 0.889,
+            "atoms": ["hidden_answers", "answer_after_each_q"],
+            "energy": 1,
+            "repair": ["hidden_answers"],
+            "atoms_note": "Exact match with reference atoms.",
+        },
+    },
+    {
+        "id": "real-faculty-5",
+        "name": "Faculty-5",
+        "source": SOURCE_PROJECT_BRIEF,
+        "text": (
+            "Act as a university professor and create 25 MCQs on operating systems. "
+            "Every question must have four options. Make the wrong answers look almost correct "
+            "and use confusing language so that students have to think carefully. "
+            "Include tricky statements, double negatives, and options that can be interpreted in multiple ways. "
+            "The questions should be difficult enough to confuse students. Give the correct answer and explain "
+            "why the other options are wrong. Make sure there is only one correct answer even if some options seem correct."
+        ),
+        "reference": {
+            "slots": {
+                "role": 1.0,
+                "audience": 0.0,
+                "topic": 1.0,
+                "count": 1.0,
+                "n_options": 1.0,
+                "labeling": 0.0,
+                "marking": 1.0,
+                "explanation": 1.0,
+                "ordering": 0.0,
+            },
+            "completeness": 0.667,
+            "atoms": ["single_correct", "multi_interp", "confusing_language"],
+            "energy": 2,
+            "repair": ["confusing_language", "multi_interp"],
+            "atoms_note": "Exact match with reference atoms.",
+        },
+    },
+]
+
+
+def real_fixtures() -> list[dict]:
+    return [dict(p) for p in REAL_TEST_PROMPTS]
+
+
+def save_real_fixtures_json(target_path: Path | None = None) -> Path:
+    path = target_path or Path(__file__).with_name("real_test_prompts.json")
+    path.write_text(json.dumps(REAL_TEST_PROMPTS, indent=2), encoding="utf-8")
+    return path

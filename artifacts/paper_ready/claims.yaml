@@ -1,0 +1,20 @@
+# Pattern claims evaluated by code against computed data
+# Generated: 2026-11-23T20:29:48.057885+00:00
+# Git commit: 92545225435a80976b1eef17ad112a1483f49617
+claims:
+  - claim_id: gp_most_accurate_at_n_12_all_sigmas
+    statement: "The Gaussian process is the most accurate at n = 12 for every sigma."
+    passed: false
+    evidence: {"0.0": {"gp_mean_rmse": 0.2346, "lowest_method_rmse": 0.0003}, "0.02": {"gp_mean_rmse": 0.2377, "lowest_method_rmse": 0.0182}, "0.05": {"gp_mean_rmse": 0.2279, "lowest_method_rmse": 0.0456}, "0.1": {"gp_mean_rmse": 0.2272, "lowest_method_rmse": 0.0915}, "0.2": {"gp_mean_rmse": 0.2323, "lowest_method_rmse": 0.1816}}
+  - claim_id: equispaced_lagrange_worst_at_n_12_sigma_ge_0_02
+    statement: "Equispaced Lagrange interpolation is worst at n = 12 for sigma >= 0.02."
+    passed: false
+    evidence: {"0.02": {"equispaced_mean_rmse": 0.1013, "highest_method_rmse": 0.2377}, "0.05": {"equispaced_mean_rmse": 0.2467, "highest_method_rmse": 0.2467}, "0.1": {"equispaced_mean_rmse": 0.4957, "highest_method_rmse": 0.4957}, "0.2": {"equispaced_mean_rmse": 1.0264, "highest_method_rmse": 1.0264}}
+  - claim_id: gp_not_most_accurate_at_n_4_6_sigma_0_1
+    statement: "The Gaussian process is not the most accurate at n = 4 and n = 6 at sigma = 0.1."
+    passed: true
+    evidence: {"n_4": {"gp_rmse": 0.2903, "best_method_rmse": 0.1189, "gp_not_lowest": true}, "n_6": {"gp_rmse": 0.2728, "best_method_rmse": 0.0858, "gp_not_lowest": true}}
+  - claim_id: feature_routing_invariant_to_group_labelling
+    statement: "The feature-based routing model gives identical predictions under every group labelling."
+    passed: true
+    evidence: {"base_vector": [1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.2, 1.0, 0.0, 0.0, 0.0, 0.0], "permuted_vector": [1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.2, 1.0, 0.0, 0.0, 0.0, 0.0], "identical": true}

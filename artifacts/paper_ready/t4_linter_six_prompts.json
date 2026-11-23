@@ -1,0 +1,147 @@
+{
+  "table_id": "T4",
+  "title": "Linter Performance on Six Real Prompts Against Reference Annotations",
+  "rows": [
+    {
+      "prompt_name": "Template",
+      "completeness_computed": 1.0,
+      "completeness_reference": 1.0,
+      "energy_computed": 0,
+      "energy_reference": 0,
+      "repair_computed": [],
+      "repair_reference": [],
+      "atoms_computed": [
+        "clear_unambiguous",
+        "ordered_easy_to_hard",
+        "single_correct"
+      ],
+      "atoms_reference": [],
+      "energy_matches": true,
+      "repair_matches": true,
+      "completeness_matches": true
+    },
+    {
+      "prompt_name": "Faculty-1",
+      "completeness_computed": 0.444,
+      "completeness_reference": 0.444,
+      "energy_computed": 0,
+      "energy_reference": 0,
+      "repair_computed": [],
+      "repair_reference": [],
+      "atoms_computed": [],
+      "atoms_reference": [],
+      "energy_matches": true,
+      "repair_matches": true,
+      "completeness_matches": true
+    },
+    {
+      "prompt_name": "Faculty-2",
+      "completeness_computed": 0.556,
+      "completeness_reference": 0.556,
+      "energy_computed": 0,
+      "energy_reference": 0,
+      "repair_computed": [],
+      "repair_reference": [],
+      "atoms_computed": [],
+      "atoms_reference": [],
+      "energy_matches": true,
+      "repair_matches": true,
+      "completeness_matches": true
+    },
+    {
+      "prompt_name": "Faculty-3",
+      "completeness_computed": 0.889,
+      "completeness_reference": 0.889,
+      "energy_computed": 1,
+      "energy_reference": 1,
+      "repair_computed": [
+        "very_easy"
+      ],
+      "repair_reference": [
+        "very_easy"
+      ],
+      "atoms_computed": [
+        "expert_level",
+        "no_basic",
+        "ordered_easy_to_hard",
+        "very_easy"
+      ],
+      "atoms_reference": [
+        "expert_level",
+        "no_basic",
+        "ordered_easy_to_hard",
+        "very_easy"
+      ],
+      "energy_matches": true,
+      "repair_matches": true,
+      "completeness_matches": true
+    },
+    {
+      "prompt_name": "Faculty-4",
+      "completeness_computed": 0.889,
+      "completeness_reference": 0.889,
+      "energy_computed": 1,
+      "energy_reference": 1,
+      "repair_computed": [
+        "hidden_answers"
+      ],
+      "repair_reference": [
+        "hidden_answers"
+      ],
+      "atoms_computed": [
+        "answer_after_each_q",
+        "hidden_answers"
+      ],
+      "atoms_reference": [
+        "answer_after_each_q",
+        "hidden_answers"
+      ],
+      "energy_matches": true,
+      "repair_matches": true,
+      "completeness_matches": true
+    },
+    {
+      "prompt_name": "Faculty-5",
+      "completeness_computed": 0.667,
+      "completeness_reference": 0.667,
+      "energy_computed": 2,
+      "energy_reference": 2,
+      "repair_computed": [
+        "confusing_language",
+        "multi_interp"
+      ],
+      "repair_reference": [
+        "confusing_language",
+        "multi_interp"
+      ],
+      "atoms_computed": [
+        "confusing_language",
+        "multi_interp",
+        "single_correct"
+      ],
+      "atoms_reference": [
+        "confusing_language",
+        "multi_interp",
+        "single_correct"
+      ],
+      "energy_matches": true,
+      "repair_matches": true,
+      "completeness_matches": true
+    }
+  ],
+  "disagreements": [
+    {
+      "prompt": "Template",
+      "field": "atoms",
+      "automatic": [
+        "clear_unambiguous",
+        "ordered_easy_to_hard",
+        "single_correct"
+      ],
+      "reference": [],
+      "classification": "debatable_annotation",
+      "reason": "Reference manual annotation omitted non-conflicting requirement atoms (marked {} for conflict purposes), whereas the automatic linter comprehensively extracts all valid requirements."
+    }
+  ],
+  "energy_and_repair_match_all_six": true
+}

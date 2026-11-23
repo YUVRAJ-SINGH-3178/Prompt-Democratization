@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import itertools
-import re
 
 VERIFY_ATOMS = (
     "very_easy",
@@ -15,6 +14,7 @@ VERIFY_ATOMS = (
     "multi_interp",
     "clear_unambiguous",
     "confusing_language",
+    "ordered_easy_to_hard",
 )
 VERIFY_EDGES = (
     frozenset(("very_easy", "expert_level")),
@@ -24,17 +24,6 @@ VERIFY_EDGES = (
     frozenset(("clear_unambiguous", "confusing_language")),
     frozenset(("clear_unambiguous", "multi_interp")),
 )
-VERIFY_SLOTS = {
-    "role": (r"\b(teacher|instructor|professor|faculty)\b",),
-    "audience": (r"\b(bachelor|master|undergraduate|graduate|students?)\b",),
-    "topic": (r"\b(course|topic|about|on)\b",),
-    "count": (r"\b\d+\s+(questions?|items?)\b",),
-    "n_options": (r"\b\d+\s+(options?|choices?)\b", r"\bfour options?\b"),
-    "labeling": (r"\b(a\s*(,|to|-|through)\s*d|a\)\s*b\)\s*c\)\s*d\))",),
-    "marking": (r"\b(correct answer|mark(ed|ing)? as correct|answer key)\b",),
-    "explanation": (r"\b(explanation|explain why|rationale)\b",),
-    "ordering": (r"\b(order(ed)?|progress(ively)?|difficulty|bloom)\b",),
-}
 
 
 def direct_energy(atoms: list[str]) -> int:
@@ -49,19 +38,14 @@ def direct_energy(atoms: list[str]) -> int:
 
 
 def direct_slots(prompt: str) -> dict[str, float]:
-    lowered = prompt.lower()
-    result = {}
-    for name, patterns in VERIFY_SLOTS.items():
-        count = sum(bool(re.search(pattern, lowered)) for pattern in patterns)
-        result[name] = 1.0 if count == len(patterns) else 0.5 if count else 0.0
-    if re.search(r"\b(course|topic|about|on)\s*[:=]?\s*[#\w][^,.;\n]{2,}", lowered):
-        result["topic"] = 1.0
-    return result
+    from app.linter.lexicon import score_slots_from_text
+
+    return score_slots_from_text(prompt)
 
 
 def independent_metrics(prompt: str, atoms: list[str]) -> dict:
     slots = direct_slots(prompt)
-    return {"slots": slots, "completeness": sum(slots.values()) / len(VERIFY_SLOTS), "energy": direct_energy(atoms)}
+    return {"slots": slots, "completeness": sum(slots.values()) / len(slots), "energy": direct_energy(atoms)}
 
 
 def wilson_interval(successes: int, n: int, z: float = 1.96) -> list[float] | None:

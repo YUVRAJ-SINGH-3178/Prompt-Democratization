@@ -1,4 +1,5 @@
 """Check the local demo credentials through the browser UI without printing them."""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -25,6 +26,7 @@ def main() -> None:
         for username, (route, title) in EXPECTED.items():
             page = browser.new_page(viewport={"width": 1280, "height": 900})
             responses = []
+
             def capture_response(response):
                 name = response.url.split("?")[0].rsplit("/", 1)[-1]
                 detail = response.status
@@ -46,9 +48,15 @@ def main() -> None:
                 page.get_by_role("heading", name=title, exact=True).wait_for(timeout=8000)
                 print(f"{username}: sign-in and {route} dashboard passed")
             except Exception:
-                message = page.locator("#loginError").inner_text() if page.locator("#loginError").count() else "dashboard did not load"
+                message = (
+                    page.locator("#loginError").inner_text()
+                    if page.locator("#loginError").count()
+                    else "dashboard did not load"
+                )
                 cookie_names = [cookie["name"] for cookie in page.context.cookies()]
-                print(f"{username}: sign-in or dashboard failed ({message or 'dashboard did not load'}); path={page.url}; cookies={cookie_names}; responses={responses}")
+                print(
+                    f"{username}: sign-in or dashboard failed ({message or 'dashboard did not load'}); path={page.url}; cookies={cookie_names}; responses={responses}"
+                )
                 failures.append(username)
             page.close()
         browser.close()

@@ -118,13 +118,19 @@ def main():
     rep.add_argument("--seed", type=int, default=42)
     rep.add_argument("--repetitions", type=int, default=100)
     sub.add_parser("measure-break-even")
+    sub.add_parser("paper-artifacts")
     args = parser.parse_args()
-    print(
-        json.dumps(
-            write_run(args.study, args.seed, args.repetitions) if args.command == "reproduce" else measure_break_even(),
-            indent=2,
-        )
-    )
+    if args.command == "reproduce":
+        out = write_run(args.study, args.seed, args.repetitions)
+    elif args.command == "measure-break-even":
+        out = measure_break_even()
+    elif args.command == "paper-artifacts":
+        from app.paper_artifacts import generate_all_paper_artifacts
+
+        out = generate_all_paper_artifacts()
+    else:
+        out = {"error": "unknown command"}
+    print(json.dumps(out, indent=2))
 
 
 if __name__ == "__main__":

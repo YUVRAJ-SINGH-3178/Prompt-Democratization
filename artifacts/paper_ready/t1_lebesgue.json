@@ -1,0 +1,64 @@
+{
+  "table_id": "T1",
+  "title": "Lebesgue Constants on Equispaced and Chebyshev Nodes",
+  "grid_points": 20001,
+  "rows": [
+    {
+      "n": 4,
+      "equispaced": 1.63,
+      "chebyshev": 1.85,
+      "reference_equispaced": 1.63,
+      "reference_chebyshev": 1.85,
+      "matches_reference_2dp": true
+    },
+    {
+      "n": 6,
+      "equispaced": 3.11,
+      "chebyshev": 2.1,
+      "reference_equispaced": 3.11,
+      "reference_chebyshev": 2.1,
+      "matches_reference_2dp": true
+    },
+    {
+      "n": 8,
+      "equispaced": 6.93,
+      "chebyshev": 2.29,
+      "reference_equispaced": 6.93,
+      "reference_chebyshev": 2.29,
+      "matches_reference_2dp": true
+    },
+    {
+      "n": 10,
+      "equispaced": 17.85,
+      "chebyshev": 2.43,
+      "reference_equispaced": 17.85,
+      "reference_chebyshev": 2.43,
+      "matches_reference_2dp": true
+    },
+    {
+      "n": 12,
+      "equispaced": 51.21,
+      "chebyshev": 2.54,
+      "reference_equispaced": 51.21,
+      "reference_chebyshev": 2.54,
+      "matches_reference_2dp": true
+    },
+    {
+      "n": 16,
+      "equispaced": 512.35,
+      "chebyshev": 2.73,
+      "reference_equispaced": 512.35,
+      "reference_chebyshev": 2.73,
+      "matches_reference_2dp": true
+    },
+    {
+      "n": 20,
+      "equispaced": 5889.58,
+      "chebyshev": 2.87,
+      "reference_equispaced": 5889.58,
+      "reference_chebyshev": 2.87,
+      "matches_reference_2dp": true
+    }
+  ],
+  "all_match_reference_2dp": true
+}

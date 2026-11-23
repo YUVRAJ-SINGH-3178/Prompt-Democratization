@@ -1,0 +1,81 @@
+{
+  "manifest_version": "1.0",
+  "generated_at": "2026-11-23T20:29:48.057885+00:00",
+  "git_commit": "92545225435a80976b1eef17ad112a1483f49617",
+  "library_versions": {
+    "python": "3.13.5",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3",
+    "scikit_learn": "1.6.1"
+  },
+  "parameters": {
+    "t1_grid_points": 20001,
+    "t2_seeds": [
+      42,
+      43,
+      44,
+      45,
+      46
+    ],
+    "t2_repetitions": 100,
+    "t2_test_points": 400,
+    "t3_templates": 2000,
+    "t3_seed": 42,
+    "confidence_threshold": 0.8
+  },
+  "all_pattern_claims_passed": false,
+  "files": {
+    "claims.yaml": {
+      "size_bytes": 1940,
+      "sha256": "af63aa4fc80e0ab70b1615afef284330f005fe9e422e86ef0aea93f37ea110b5"
+    },
+    "t1_lebesgue.csv": {
+      "size_bytes": 299,
+      "sha256": "6c88002c531ebe5e4049e912ae691fba528ccaedc1bcf115d88336333d4f2520"
+    },
+    "t1_lebesgue.json": {
+      "size_bytes": 1538,
+      "sha256": "d2e658e07fa338be3c8d0e4c4df4aa9567dd10d570d64d27732696a2145b1727"
+    },
+    "t2_noisy_curve.csv": {
+      "size_bytes": 7440,
+      "sha256": "8dea1ab995106cab49fc57781b10a0bbbffd3302b4596d4129c37259bcf3c4b7"
+    },
+    "t2_noisy_curve.json": {
+      "size_bytes": 30008,
+      "sha256": "f5ad4bc4cd267b5e99e5fb3a0242cf6a5d6394eaf69b3b8001c4b58fb0874722"
+    },
+    "t3_label_permutation.csv": {
+      "size_bytes": 188,
+      "sha256": "6d8a1725894aa7889387f025f0b7f57aa55b2c2f8dd60499186def4a6f7363a0"
+    },
+    "t3_label_permutation.json": {
+      "size_bytes": 585,
+      "sha256": "0a8677499560a4113e1f422237318b979bd660e0c35fc5c9d5bb706301526bf9"
+    },
+    "t4_linter_six_prompts.csv": {
+      "size_bytes": 1108,
+      "sha256": "d74df22e7432ad66b9bb964d51d20c2857437bb7fc0493279bf967afb238e832"
+    },
+    "t4_linter_six_prompts.json": {
+      "size_bytes": 3970,
+      "sha256": "f7918510a821e74062d32c5c22a513ee93aa64c34de4f4019f55f2987280563a"
+    },
+    "t5_extractor_accuracy.csv": {
+      "size_bytes": 253,
+      "sha256": "5c8b08e6d85d477386909a28078d6b93dce683e83ec0147f03138c5119e7bfa8"
+    },
+    "t5_extractor_accuracy.json": {
+      "size_bytes": 474,
+      "sha256": "20070440f8ba3c63687be0bf17fda9916957a29cd2fa86b58b8c5fbfb0513c2a"
+    },
+    "t6_improvement.csv": {
+      "size_bytes": 929,
+      "sha256": "5b4f7f64193a09454e6b6b6090ae591988eb8b02f6caa8da56189d0e257f8661"
+    },
+    "t6_improvement.json": {
+      "size_bytes": 3380,
+      "sha256": "da04c0c8133eaf71cce22c29cd3dd5c5f3a1361f8cac598b54bc88cf4235a684"
+    }
+  }
+}

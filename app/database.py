@@ -35,26 +35,33 @@ CREATE TABLE IF NOT EXISTS llm_ratings(id INTEGER PRIMARY KEY AUTOINCREMENT, run
 """
 
 
+_SCHEMA_INITIALIZED: set[str] = set()
+
+
 def connect() -> sqlite3.Connection:
     DB_PATH.parent.mkdir(parents=True, exist_ok=True)
-    db = sqlite3.connect(DB_PATH, factory=ClosingConnection)
+    db = sqlite3.connect(DB_PATH, timeout=30.0, factory=ClosingConnection)
     db.row_factory = sqlite3.Row
-    db.executescript(SCHEMA)
-    columns = {row[1] for row in db.execute("PRAGMA table_info(experiment_runs)")}
-    if "synthetic" not in columns:
-        db.execute("ALTER TABLE experiment_runs ADD COLUMN synthetic INTEGER NOT NULL DEFAULT 0")
-    for table in (
-        "users",
-        "courses",
-        "user_courses",
-        "topics",
-        "templates",
-        "template_versions",
-        "linter_extraction_runs",
-    ):
-        columns = {row[1] for row in db.execute(f"PRAGMA table_info({table})")}
+    path_key = str(DB_PATH.resolve())
+    if path_key not in _SCHEMA_INITIALIZED:
+        db.execute("PRAGMA journal_mode=WAL;")
+        db.executescript(SCHEMA)
+        columns = {row[1] for row in db.execute("PRAGMA table_info(experiment_runs)")}
         if "synthetic" not in columns:
-            db.execute(f"ALTER TABLE {table} ADD COLUMN synthetic INTEGER NOT NULL DEFAULT 0")
+            db.execute("ALTER TABLE experiment_runs ADD COLUMN synthetic INTEGER NOT NULL DEFAULT 0")
+        for table in (
+            "users",
+            "courses",
+            "user_courses",
+            "topics",
+            "templates",
+            "template_versions",
+            "linter_extraction_runs",
+        ):
+            columns = {row[1] for row in db.execute(f"PRAGMA table_info({table})")}
+            if "synthetic" not in columns:
+                db.execute(f"ALTER TABLE {table} ADD COLUMN synthetic INTEGER NOT NULL DEFAULT 0")
+        _SCHEMA_INITIALIZED.add(path_key)
     return db
 
 

@@ -1,0 +1,139 @@
+{
+  "table_id": "T6",
+  "title": "Prompt Improvement Before and After Verification",
+  "six_prompts": [
+    {
+      "prompt_name": "Template",
+      "verified": true,
+      "rejection_reason": null,
+      "completeness_before": 1.0,
+      "completeness_after": 1.0,
+      "delta_completeness": 0.0,
+      "energy_before": 0,
+      "energy_after": 0,
+      "delta_energy": 0,
+      "dropped_atoms": [],
+      "retained_atoms": [
+        "clear_unambiguous",
+        "ordered_easy_to_hard",
+        "single_correct"
+      ],
+      "filled_slots": []
+    },
+    {
+      "prompt_name": "Faculty-1",
+      "verified": true,
+      "rejection_reason": null,
+      "completeness_before": 0.444,
+      "completeness_after": 1.0,
+      "delta_completeness": 0.556,
+      "energy_before": 0,
+      "energy_after": 0,
+      "delta_energy": 0,
+      "dropped_atoms": [],
+      "retained_atoms": [],
+      "filled_slots": [
+        "audience",
+        "topic",
+        "count",
+        "labeling",
+        "explanation",
+        "ordering"
+      ]
+    },
+    {
+      "prompt_name": "Faculty-2",
+      "verified": true,
+      "rejection_reason": null,
+      "completeness_before": 0.556,
+      "completeness_after": 1.0,
+      "delta_completeness": 0.444,
+      "energy_before": 0,
+      "energy_after": 0,
+      "delta_energy": 0,
+      "dropped_atoms": [],
+      "retained_atoms": [],
+      "filled_slots": [
+        "audience",
+        "topic",
+        "count",
+        "labeling",
+        "ordering"
+      ]
+    },
+    {
+      "prompt_name": "Faculty-3",
+      "verified": true,
+      "rejection_reason": null,
+      "completeness_before": 0.889,
+      "completeness_after": 1.0,
+      "delta_completeness": 0.111,
+      "energy_before": 1,
+      "energy_after": 0,
+      "delta_energy": -1,
+      "dropped_atoms": [
+        "very_easy"
+      ],
+      "retained_atoms": [
+        "expert_level",
+        "no_basic",
+        "ordered_easy_to_hard"
+      ],
+      "filled_slots": [
+        "labeling"
+      ]
+    },
+    {
+      "prompt_name": "Faculty-4",
+      "verified": true,
+      "rejection_reason": null,
+      "completeness_before": 0.889,
+      "completeness_after": 1.0,
+      "delta_completeness": 0.111,
+      "energy_before": 1,
+      "energy_after": 0,
+      "delta_energy": -1,
+      "dropped_atoms": [
+        "hidden_answers"
+      ],
+      "retained_atoms": [
+        "answer_after_each_q"
+      ],
+      "filled_slots": [
+        "ordering"
+      ]
+    },
+    {
+      "prompt_name": "Faculty-5",
+      "verified": true,
+      "rejection_reason": null,
+      "completeness_before": 0.667,
+      "completeness_after": 1.0,
+      "delta_completeness": 0.333,
+      "energy_before": 2,
+      "energy_after": 0,
+      "delta_energy": -2,
+      "dropped_atoms": [
+        "confusing_language",
+        "multi_interp"
+      ],
+      "retained_atoms": [
+        "single_correct"
+      ],
+      "filled_slots": [
+        "audience",
+        "labeling",
+        "ordering"
+      ]
+    }
+  ],
+  "development_set_summary": {
+    "total_prompts": 60,
+    "verified_count": 60,
+    "failed_count": 0,
+    "mean_delta_completeness": 0.3806,
+    "mean_delta_energy": -0.5333,
+    "min_delta_completeness": 0.0,
+    "max_delta_completeness": 0.611
+  }
+}

@@ -1,0 +1,7 @@
+prompt_name,completeness_computed,completeness_reference,energy_computed,energy_reference,repair_computed,repair_reference,atoms_computed,atoms_reference,energy_matches,repair_matches,completeness_matches
+Template,1.0,1.0,0,0,[],[],"[""clear_unambiguous"", ""ordered_easy_to_hard"", ""single_correct""]",[],True,True,True
+Faculty-1,0.444,0.444,0,0,[],[],[],[],True,True,True
+Faculty-2,0.556,0.556,0,0,[],[],[],[],True,True,True
+Faculty-3,0.889,0.889,1,1,"[""very_easy""]","[""very_easy""]","[""expert_level"", ""no_basic"", ""ordered_easy_to_hard"", ""very_easy""]","[""expert_level"", ""no_basic"", ""ordered_easy_to_hard"", ""very_easy""]",True,True,True
+Faculty-4,0.889,0.889,1,1,"[""hidden_answers""]","[""hidden_answers""]","[""answer_after_each_q"", ""hidden_answers""]","[""answer_after_each_q"", ""hidden_answers""]",True,True,True
+Faculty-5,0.667,0.667,2,2,"[""confusing_language"", ""multi_interp""]","[""confusing_language"", ""multi_interp""]","[""confusing_language"", ""multi_interp"", ""single_correct""]","[""confusing_language"", ""multi_interp"", ""single_correct""]",True,True,True

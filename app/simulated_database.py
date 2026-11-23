@@ -61,11 +61,18 @@ class ClosingConnection(sqlite3.Connection):
             self.close()
 
 
+_SCHEMA_INITIALIZED: set[str] = set()
+
+
 def connect() -> sqlite3.Connection:
     DB_PATH.parent.mkdir(parents=True, exist_ok=True)
-    db = sqlite3.connect(DB_PATH, factory=ClosingConnection)
+    db = sqlite3.connect(DB_PATH, timeout=30.0, factory=ClosingConnection)
     db.row_factory = sqlite3.Row
-    db.executescript(SCHEMA)
+    path_key = str(DB_PATH.resolve())
+    if path_key not in _SCHEMA_INITIALIZED:
+        db.execute("PRAGMA journal_mode=WAL;")
+        db.executescript(SCHEMA)
+        _SCHEMA_INITIALIZED.add(path_key)
     return db
 
 

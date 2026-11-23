@@ -1,0 +1,2 @@
+status,extractor_version,heldout_prompts_total,heldout_double_annotated_n,confidence_threshold,manual_review_policy
+awaiting annotations,rule-linter-0.2.0,30,0,0.8,Atom extractions below 80% confidence are routed to manual review rather than guessed.

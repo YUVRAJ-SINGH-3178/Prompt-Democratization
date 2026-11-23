@@ -1,0 +1,14 @@
+{
+  "table_id": "T5",
+  "title": "Extractor Accuracy on Held-Out Set",
+  "status": "awaiting annotations",
+  "extractor_version": "rule-linter-0.2.0",
+  "heldout_prompts_n": 30,
+  "heldout_prompts_total": 30,
+  "heldout_two_annotators_n": 0,
+  "heldout_double_annotated_n": 0,
+  "required_n": 30,
+  "confidence_threshold": 0.8,
+  "manual_review_policy": "Atom extractions below 80% confidence are routed to manual review rather than guessed.",
+  "metrics": {}
+}

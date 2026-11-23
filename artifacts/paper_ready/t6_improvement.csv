@@ -1,0 +1,7 @@
+prompt_name,verified,rejection_reason,completeness_before,completeness_after,delta_completeness,energy_before,energy_after,delta_energy,dropped_atoms,retained_atoms,filled_slots
+Template,True,,1.0,1.0,0.0,0,0,0,[],"[""clear_unambiguous"", ""ordered_easy_to_hard"", ""single_correct""]",[]
+Faculty-1,True,,0.444,1.0,0.556,0,0,0,[],[],"[""audience"", ""topic"", ""count"", ""labeling"", ""explanation"", ""ordering""]"
+Faculty-2,True,,0.556,1.0,0.444,0,0,0,[],[],"[""audience"", ""topic"", ""count"", ""labeling"", ""ordering""]"
+Faculty-3,True,,0.889,1.0,0.111,1,0,-1,"[""very_easy""]","[""expert_level"", ""no_basic"", ""ordered_easy_to_hard""]","[""labeling""]"
+Faculty-4,True,,0.889,1.0,0.111,1,0,-1,"[""hidden_answers""]","[""answer_after_each_q""]","[""ordering""]"
+Faculty-5,True,,0.667,1.0,0.333,2,0,-2,"[""confusing_language"", ""multi_interp""]","[""single_correct""]","[""audience"", ""labeling"", ""ordering""]"

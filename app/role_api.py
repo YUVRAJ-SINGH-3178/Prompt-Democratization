@@ -11,7 +11,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from fastapi import APIRouter, HTTPException, Request
+from fastapi import APIRouter, File, HTTPException, Request, UploadFile
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
 
@@ -87,6 +87,19 @@ class PromptCheckBody(BaseModel):
     template_id: str | None = None
     course_id: str | None = None
     sample_id: str | None = None
+
+
+class PromptImproveBody(BaseModel):
+    prompt: str | None = Field(default=None, max_length=20000)
+    sample_id: str | None = None
+    template_id: str | None = None
+    course_id: str | None = None
+    topic_id: str | None = None
+    cohort: str | None = None
+    count: int | None = None
+    user_choices: dict[str, str] | None = None
+    use_llm: bool = False
+    model: str | None = None
 
 
 class BuilderBody(BaseModel):
@@ -634,79 +647,58 @@ def admin_import_accuracy(body: dict, request: Request):
     return _accuracy_report()
 
 
+@router.post("/api/admin/accuracy/import-csv")
+async def admin_import_accuracy_csv(request: Request, file: UploadFile = File(...)):
+    actor = who(request)
+    if actor["role"] != "University":
+        raise HTTPException(403, "University role required")
+    content = (await file.read()).decode("utf-8-sig")
+    reader = csv.DictReader(io.StringIO(content))
+    errors = []
+    imported = 0
+    with connect() as db:
+        for line, row in enumerate(reader, start=2):
+            try:
+                pid = row.get("prompt_id")
+                dataset = row.get("dataset", "heldout")
+                aid = row.get("annotator_id")
+                if not pid or not aid:
+                    raise ValueError("prompt_id and annotator_id are required")
+                atoms_raw = row.get("atoms", "[]")
+                atoms = (
+                    json.loads(atoms_raw)
+                    if isinstance(atoms_raw, str) and atoms_raw.startswith("[")
+                    else [a.strip() for a in atoms_raw.split(",") if a.strip()]
+                )
+                if any(a not in ATOMS for a in atoms):
+                    raise ValueError(f"Unknown atom in {atoms}")
+                if "slots" in row and row["slots"]:
+                    slots = json.loads(row["slots"])
+                else:
+                    slots = {s: float(row.get(s, 0.0)) for s in SLOTS}
+                prompt_text = row.get("prompt")
+                if prompt_text:
+                    db.execute(
+                        "INSERT OR IGNORE INTO accuracy_prompts(prompt_id,prompt,dataset,source,synthetic) VALUES(?,?,?,'real_annotator',0)",
+                        (pid, prompt_text, dataset),
+                    )
+                db.execute(
+                    "INSERT OR REPLACE INTO accuracy_annotations(prompt_id,dataset,annotator_id,atoms_json,slots_json,source,synthetic) VALUES(?,?,?,?,?,'real_annotator',0)",
+                    (pid, dataset, aid, json.dumps(atoms), json.dumps(slots)),
+                )
+                imported += 1
+            except Exception as e:
+                errors.append({"row": line, "error": str(e)})
+        db.commit()
+    audit(actor["username"], actor["role"], "import_accuracy_csv", f"imported:{imported}:errors:{len(errors)}")
+    return {"imported": imported, "errors": errors, "report": _accuracy_report()}
+
+
 def _accuracy_report() -> dict:
-    from app.verification import wilson_interval
+    from app.linter.datasets import evaluate_heldout_dataset
 
     with connect() as db:
-        held = db.execute(
-            "SELECT prompt_id,prompt FROM accuracy_prompts WHERE dataset='heldout' AND synthetic=0"
-        ).fetchall()
-        annotations = db.execute(
-            "SELECT prompt_id,annotator_id,atoms_json,slots_json FROM accuracy_annotations WHERE dataset='heldout' AND synthetic=0 ORDER BY prompt_id,annotator_id"
-        ).fetchall()
-        dev_n = db.execute(
-            "SELECT COUNT(*) FROM accuracy_prompts WHERE dataset='development' AND synthetic=0"
-        ).fetchone()[0]
-    by_item: dict[str, list] = {}
-    for row in annotations:
-        by_item.setdefault(row[0], []).append(row)
-    complete = {pid: rows for pid, rows in by_item.items() if len({r[1] for r in rows}) >= 2}
-    base = {
-        "status": "awaiting annotations",
-        "development_prompts_n": dev_n,
-        "heldout_prompts_n": len(held),
-        "heldout_two_annotators_n": len(complete),
-        "metrics": {},
-        "known_limits": [
-            "Unknown phrasing may not match extraction patterns and requires manual review.",
-            "Only held-out prompts with two distinct annotators are eligible.",
-            "Sample prompts are not evaluation labels.",
-        ],
-    }
-    if len(complete) < 30:
-        return base
-    metrics = {}
-    prompt_lookup = {pid: prompt for pid, prompt in held}
-    for atom in ATOMS:
-        tp = fp = fn = 0
-        for pid, rows in complete.items():
-            pred = atom in extract_atoms(prompt_lookup[pid])
-            for row in rows[:2]:
-                gold = atom in json.loads(row[2])
-                tp += int(pred and gold)
-                fp += int(pred and not gold)
-                fn += int(not pred and gold)
-        pden, rden = tp + fp, tp + fn
-        metrics[atom] = {
-            "precision": tp / pden if pden else None,
-            "precision_n": pden,
-            "precision_ci95": wilson_interval(tp, pden),
-            "recall": tp / rden if rden else None,
-            "recall_n": rden,
-            "recall_ci95": wilson_interval(tp, rden),
-            "heldout_prompts_n": len(complete),
-        }
-    slot_agreement = {}
-    for slot in SLOTS:
-        equal = 0
-        n = 0
-        for rows in complete.values():
-            a, b = json.loads(rows[0][3]).get(slot), json.loads(rows[1][3]).get(slot)
-            if a is None or b is None:
-                continue
-            n += 1
-            equal += a == b
-        slot_agreement[slot] = {"agreement": equal / n if n else None, "n": n, "ci95": wilson_interval(equal, n)}
-    base.update(
-        {
-            "status": "measured",
-            "metrics": metrics,
-            "slot_agreement": slot_agreement,
-            "confidence": "95% Wilson intervals",
-            "n": len(complete),
-        }
-    )
-    return base
+        return evaluate_heldout_dataset(db)
 
 
 @router.get("/api/coordinator/overview")
@@ -1392,6 +1384,27 @@ def _checker_result(
     return output
 
 
+@router.get("/api/real-prompts")
+def real_prompt_list(request: Request):
+    who(request)
+    from app.linter.real_fixtures import REAL_TEST_PROMPTS
+
+    return {
+        "items": [
+            {
+                "id": p["id"],
+                "name": p["name"],
+                "text": p["text"],
+                "source": p["source"],
+                "reference": p["reference"],
+            }
+            for p in REAL_TEST_PROMPTS
+        ],
+        "n": len(REAL_TEST_PROMPTS),
+        "source": "project_brief",
+    }
+
+
 @router.get("/api/samples")
 def sample_list(request: Request):
     who(request)
@@ -1449,6 +1462,107 @@ def prompt_check(body: PromptCheckBody, request: Request):
         if course_id and course_id not in allowed:
             _deny_scope(request, f"prompt-check:{course_id}")
     return _checker_result(prompt, body.template_id, sample_id, user, course_id, request)
+
+
+@router.post("/api/prompt-checker/improve")
+def prompt_improve_endpoint(body: PromptImproveBody, request: Request):
+    user = who(request)
+    sample_id = body.sample_id
+    prompt = body.prompt
+    if sample_id:
+        sample = next((s for s in SAMPLES if s["id"] == sample_id), None)
+        if not sample:
+            raise HTTPException(404, "Sample prompt not found")
+        prompt = sample["text"]
+    if not prompt:
+        raise HTTPException(422, "Prompt text is required")
+    course_id = body.course_id
+    if user["role"] == "Faculty":
+        allowed = _course_ids(user["username"], "faculty")
+        if course_id and course_id not in allowed:
+            _deny_scope(request, f"prompt-improve:{course_id}")
+    elif user["role"] == "Course Coordinator":
+        allowed = _course_ids(user["username"], "coordinator")
+        if course_id and course_id not in allowed:
+            _deny_scope(request, f"prompt-improve:{course_id}")
+
+    from app.linter.improve import improve_prompt
+
+    slot_values = {}
+    if body.cohort:
+        slot_values["cohort"] = body.cohort
+    if body.count:
+        slot_values["count"] = body.count
+    if course_id:
+        slot_values["course"] = course_id
+    if body.topic_id:
+        slot_values["topic"] = body.topic_id
+
+    result = improve_prompt(
+        prompt=prompt,
+        user_choices=body.user_choices,
+        slot_values=slot_values,
+        use_llm=body.use_llm,
+        model=body.model,
+    )
+
+    out = {
+        "verified": result.verified,
+        "rejection_reason": result.rejection_reason,
+        "improved_prompt": result.improved_prompt,
+        "before": result.before,
+        "after": result.after,
+        "delta_completeness": result.delta_completeness,
+        "delta_energy": result.delta_energy,
+        "resolutions": [
+            {
+                "conflict_pair": r.conflict_pair,
+                "proposed_drop": r.proposed_drop,
+                "retained_atom": r.retained_atom,
+                "reason": r.reason,
+                "policy_enforced": r.policy_enforced,
+                "alternative_options": r.alternative_options,
+            }
+            for r in result.resolutions
+        ],
+        "dropped_atoms": result.dropped_atoms,
+        "retained_atoms": result.retained_atoms,
+        "filled_slots": result.filled_slots,
+        "text_diff": result.text_diff,
+        "mode": result.mode,
+    }
+
+    audit(
+        user["username"],
+        user["role"],
+        "prompt_improve",
+        f"verified:{result.verified}",
+        {"dropped": result.dropped_atoms, "delta_comp": result.delta_completeness},
+    )
+    return out
+
+
+@router.post("/api/admin/paper-artifacts")
+def admin_generate_paper_artifacts(request: Request):
+    actor = who(request)
+    if actor["role"] != "University":
+        raise HTTPException(403, "University role required")
+    from app.paper_artifacts import generate_all_paper_artifacts
+
+    result = generate_all_paper_artifacts()
+    audit(actor["username"], actor["role"], "generate_paper_artifacts", "success")
+    return result
+
+
+@router.get("/api/admin/paper-artifacts")
+def admin_get_paper_artifacts(request: Request):
+    actor = who(request)
+    if actor["role"] != "University":
+        raise HTTPException(403, "University role required")
+    manifest_path = Path(__file__).resolve().parent.parent / "artifacts" / "paper_ready" / "manifest.json"
+    if not manifest_path.exists():
+        return {"status": "not_generated", "message": "Paper artifacts have not been generated yet."}
+    return json.loads(manifest_path.read_text(encoding="utf-8"))
 
 
 @router.get("/api/faculty/samples")
