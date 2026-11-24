@@ -28,6 +28,7 @@ import numpy as np
 import scipy
 import sklearn
 
+import app.env  # noqa: F401
 from app.extractor.combine import combine_rules_and_reader
 from app.extractor.llm_reader import (
     ATOM_NAMES,
@@ -390,8 +391,14 @@ def run_dev_eval() -> dict[str, Any]:
     if not reader_active:
         print("reader not run: no API key")
 
-    key = os.environ.get("STUDY_API_KEY") or os.environ.get("OPENAI_API_KEY")
-    model = os.environ.get("STUDY_MODEL", "gpt-4o-mini")
+    key = (
+        (os.environ.get("STUDY_API_KEY") or "").strip()
+        or (os.environ.get("GROQ_API_KEY") or "").strip()
+        or (os.environ.get("OPENAI_API_KEY") or "").strip()
+    )
+    is_groq = bool((os.environ.get("GROQ_API_KEY") or "").strip()) and not os.environ.get("STUDY_API_BASE")
+    default_model = "llama-3.3-70b-versatile" if is_groq else "gpt-4o-mini"
+    model = os.environ.get("STUDY_MODEL") or os.environ.get("GROQ_MODEL") or default_model
 
     systems = ["rules_only"]
     if reader_active:
@@ -545,8 +552,14 @@ def run_frozen_eval(force: bool = False) -> dict[str, Any]:
                 )
 
     reader_active = is_reader_enabled()
-    key = os.environ.get("STUDY_API_KEY") or os.environ.get("OPENAI_API_KEY")
-    model = os.environ.get("STUDY_MODEL", "gpt-4o-mini")
+    key = (
+        (os.environ.get("STUDY_API_KEY") or "").strip()
+        or (os.environ.get("GROQ_API_KEY") or "").strip()
+        or (os.environ.get("OPENAI_API_KEY") or "").strip()
+    )
+    is_groq = bool((os.environ.get("GROQ_API_KEY") or "").strip()) and not os.environ.get("STUDY_API_BASE")
+    default_model = "llama-3.3-70b-versatile" if is_groq else "gpt-4o-mini"
+    model = os.environ.get("STUDY_MODEL") or os.environ.get("GROQ_MODEL") or default_model
 
     results_rules = evaluate_system_on_dataset(frozen_items, "rules_only")
     results_reader = (

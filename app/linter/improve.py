@@ -13,6 +13,7 @@
 
 from __future__ import annotations
 
+import app.env  # noqa: F401
 import difflib
 import os
 from dataclasses import dataclass
@@ -338,10 +339,17 @@ def improve_prompt(
 
     if use_llm:
         # Optional LLM rewrite mode (off by default)
-        key = api_key or os.environ.get("STUDY_API_KEY") or os.environ.get("OPENAI_API_KEY")
-        selected_model = model or os.environ.get("STUDY_MODEL", "gpt-4o-mini")
+        key = (
+            (api_key or "").strip()
+            or (os.environ.get("STUDY_API_KEY") or "").strip()
+            or (os.environ.get("GROQ_API_KEY") or "").strip()
+            or (os.environ.get("OPENAI_API_KEY") or "").strip()
+        )
+        is_groq = bool((os.environ.get("GROQ_API_KEY") or "").strip()) and not os.environ.get("STUDY_API_BASE")
+        default_model = "llama-3.3-70b-versatile" if is_groq else "gpt-4o-mini"
+        selected_model = model or os.environ.get("STUDY_MODEL") or os.environ.get("GROQ_MODEL") or default_model
         if not key:
-            raise ValueError("LLM rewrite requested but no STUDY_API_KEY or OPENAI_API_KEY provided.")
+            raise ValueError("LLM rewrite requested but no GROQ_API_KEY, STUDY_API_KEY, or OPENAI_API_KEY provided.")
 
         from app.study import call_model
 

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import app.env  # noqa: F401
 import json
 import os
 import urllib.request
@@ -49,10 +50,18 @@ def check_response(payload: Any, question_count: int) -> dict:
 
 
 def request_completion(prompt: str, model: str, seed: int = 42, temperature: float = 0.2) -> tuple[dict, dict]:
-    key = os.environ.get("STUDY_API_KEY") or os.environ.get("OPENAI_API_KEY")
+    key = (
+        (os.environ.get("STUDY_API_KEY") or "").strip()
+        or (os.environ.get("GROQ_API_KEY") or "").strip()
+        or (os.environ.get("OPENAI_API_KEY") or "").strip()
+    )
     if not key:
-        raise RuntimeError("Set STUDY_API_KEY or OPENAI_API_KEY to run the LLM harness")
-    endpoint = os.environ.get("STUDY_API_BASE", "https://api.openai.com/v1/chat/completions")
+        raise RuntimeError("Set GROQ_API_KEY, STUDY_API_KEY, or OPENAI_API_KEY to run the LLM harness")
+    is_groq = bool((os.environ.get("GROQ_API_KEY") or "").strip()) and not os.environ.get("STUDY_API_BASE")
+    default_endpoint = (
+        "https://api.groq.com/openai/v1/chat/completions" if is_groq else "https://api.openai.com/v1/chat/completions"
+    )
+    endpoint = os.environ.get("STUDY_API_BASE") or os.environ.get("GROQ_API_BASE") or default_endpoint
     request = {
         "model": model,
         "temperature": temperature,
@@ -69,7 +78,11 @@ def request_completion(prompt: str, model: str, seed: int = 42, temperature: flo
     req = urllib.request.Request(
         endpoint,
         data=json.dumps(request).encode(),
-        headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
+        headers={
+            "Authorization": f"Bearer {key}",
+            "Content-Type": "application/json",
+            "User-Agent": "PromptRepositoryLab/0.1.0",
+        },
         method="POST",
     )
     with urllib.request.urlopen(req, timeout=120) as response:

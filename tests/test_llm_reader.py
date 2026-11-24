@@ -6,9 +6,11 @@ from pathlib import Path
 
 import pytest
 
+from app.env import load_env
 from app.extractor.llm_reader import (
     get_cache_key,
     is_negated_phrase,
+    is_reader_enabled,
     is_verbatim_quote,
     read_prompt_with_llm,
     validate_and_filter_reader_output,
@@ -19,6 +21,7 @@ def test_reader_disabled_without_api_key(monkeypatch: pytest.MonkeyPatch) -> Non
     """Reader is off unless a key is set. Without a key the system runs on rules only and says so."""
     monkeypatch.delenv("STUDY_API_KEY", raising=False)
     monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+    monkeypatch.delenv("GROQ_API_KEY", raising=False)
 
     prompt = "Create 10 MCQs on database normalization for bachelor students."
     res = read_prompt_with_llm(prompt, use_cache=False)
@@ -168,3 +171,73 @@ def test_caching_deterministic(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) 
     assert key1 != key3
     key4 = get_cache_key(prompt, "claude-3-haiku")
     assert key1 != key4
+
+
+def test_groq_configuration_resolution(monkeypatch: pytest.MonkeyPatch) -> None:
+    """When GROQ_API_KEY is configured, reader enables and routes to Groq endpoint and model."""
+    monkeypatch.delenv("STUDY_API_KEY", raising=False)
+    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+    monkeypatch.delenv("STUDY_API_BASE", raising=False)
+    monkeypatch.delenv("STUDY_MODEL", raising=False)
+    monkeypatch.setenv("GROQ_API_KEY", "gsk_testmockgroqkey12345")
+
+    assert is_reader_enabled() is True
+
+    captured_args = {}
+
+    def mock_call_llm_api(prompt_text, model, key, api_base, seed=42, temperature=0.0):
+        captured_args["prompt_text"] = prompt_text
+        captured_args["model"] = model
+        captured_args["key"] = key
+        captured_args["api_base"] = api_base
+        payload = {"mock": True}
+        resp = {
+            "choices": [{"message": {"content": '{"atoms": {}, "slots": {}}'}}],
+            "usage": {"total_tokens": 10},
+        }
+        return payload, resp, 0.05
+
+    monkeypatch.setattr("app.extractor.llm_reader.call_llm_api", mock_call_llm_api)
+
+    prompt = "Create 10 MCQs on database indexing for bachelor students."
+    res = read_prompt_with_llm(prompt, use_cache=False)
+
+    assert res["enabled"] is True
+    assert captured_args["key"] == "gsk_testmockgroqkey12345"
+    assert captured_args["model"] == "llama-3.3-70b-versatile"
+    assert captured_args["api_base"] == "https://api.groq.com/openai/v1/chat/completions"
+
+
+def test_env_loader_unit(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """Load variables from .env file into os.environ without overwriting existing vars."""
+    fake_env = tmp_path / ".env"
+    fake_env.write_text(
+        "# Test comment\n"
+        "\n"
+        "TEST_NEW_KEY=test_value\n"
+        'TEST_QUOTED_KEY="quoted_value"\n'
+        "TEST_INLINE_COMMENT=raw_value # some comment\n"
+        "TEST_EXISTING_KEY=new_file_value\n",
+        encoding="utf-8",
+    )
+
+    monkeypatch.setenv("TEST_EXISTING_KEY", "already_present_value")
+    monkeypatch.delenv("TEST_NEW_KEY", raising=False)
+    monkeypatch.delenv("TEST_QUOTED_KEY", raising=False)
+    monkeypatch.delenv("TEST_INLINE_COMMENT", raising=False)
+
+    loaded = load_env(fake_env)
+
+    assert loaded["TEST_NEW_KEY"] == "test_value"
+    assert loaded["TEST_QUOTED_KEY"] == "quoted_value"
+    assert loaded["TEST_INLINE_COMMENT"] == "raw_value"
+    assert loaded["TEST_EXISTING_KEY"] == "new_file_value"
+
+    import os
+
+    # Did not overwrite already existing environment variable
+    assert os.environ["TEST_EXISTING_KEY"] == "already_present_value"
+    # Populated new variables
+    assert os.environ["TEST_NEW_KEY"] == "test_value"
+    assert os.environ["TEST_QUOTED_KEY"] == "quoted_value"
+    assert os.environ["TEST_INLINE_COMMENT"] == "raw_value"

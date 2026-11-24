@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import app.env  # noqa: F401
 import argparse
 import json
 import sqlite3

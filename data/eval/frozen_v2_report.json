@@ -1,8 +1,8 @@
 {
   "metadata": {
-    "date": "2026-11-24T11:04:06.237226+00:00",
-    "model": "none",
-    "reader_enabled": false,
+    "date": "2026-11-24T11:55:43.057374+00:00",
+    "model": "openai/gpt-oss-20b",
+    "reader_enabled": true,
     "rubric_version": "1.0.0",
     "schema_version": "1.0.0",
     "versions": {
@@ -20,8 +20,8 @@
     "n_prompts": 30
   },
   "execution": {
-    "forced": false,
-    "forced_run_count": 0
+    "forced": true,
+    "forced_run_count": 2
   },
   "systems": {
     "rules_only": {
@@ -310,10 +310,628 @@
       ]
     },
     "reader_only": {
-      "status": "not_run_no_api_key"
+      "status": "success",
+      "n_prompts": 30,
+      "review_rate": 0.0,
+      "total_review_items": 0,
+      "total_eval_items": 540,
+      "slot_agreement": 0.3481,
+      "slot_agreement_ci_95": [
+        0.2938,
+        0.4067
+      ],
+      "slot_matches": 94,
+      "total_slots": 270,
+      "micro_precision": 0.625,
+      "micro_precision_ci_95": [
+        0.3057,
+        0.8632
+      ],
+      "micro_recall": 0.102,
+      "micro_recall_ci_95": [
+        0.0444,
+        0.2176
+      ],
+      "micro_f1": 0.1754,
+      "per_atom": {
+        "very_easy": {
+          "gold_count": 5,
+          "pred_count": 0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 5,
+          "precision": 0.0,
+          "precision_ci_95": [
+            0.0,
+            0.0
+          ],
+          "recall": 0.0,
+          "recall_ci_95": [
+            0.0,
+            0.4345
+          ],
+          "f1": 0.0
+        },
+        "expert_level": {
+          "gold_count": 4,
+          "pred_count": 0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 4,
+          "precision": 0.0,
+          "precision_ci_95": [
+            0.0,
+            0.0
+          ],
+          "recall": 0.0,
+          "recall_ci_95": [
+            0.0,
+            0.4899
+          ],
+          "f1": 0.0
+        },
+        "no_basic": {
+          "gold_count": 4,
+          "pred_count": 0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 4,
+          "precision": 0.0,
+          "precision_ci_95": [
+            0.0,
+            0.0
+          ],
+          "recall": 0.0,
+          "recall_ci_95": [
+            0.0,
+            0.4899
+          ],
+          "f1": 0.0
+        },
+        "ordered_easy_to_hard": {
+          "gold_count": 6,
+          "pred_count": 2,
+          "tp": 2,
+          "fp": 0,
+          "fn": 4,
+          "precision": 1.0,
+          "precision_ci_95": [
+            0.3424,
+            1.0
+          ],
+          "recall": 0.3333,
+          "recall_ci_95": [
+            0.0968,
+            0.7
+          ],
+          "f1": 0.5
+        },
+        "hidden_answers": {
+          "gold_count": 8,
+          "pred_count": 0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 8,
+          "precision": 0.0,
+          "precision_ci_95": [
+            0.0,
+            0.0
+          ],
+          "recall": 0.0,
+          "recall_ci_95": [
+            0.0,
+            0.3244
+          ],
+          "f1": 0.0
+        },
+        "answer_after_each_q": {
+          "gold_count": 5,
+          "pred_count": 2,
+          "tp": 0,
+          "fp": 2,
+          "fn": 5,
+          "precision": 0.0,
+          "precision_ci_95": [
+            0.0,
+            0.6576
+          ],
+          "recall": 0.0,
+          "recall_ci_95": [
+            0.0,
+            0.4345
+          ],
+          "f1": 0.0
+        },
+        "single_correct": {
+          "gold_count": 12,
+          "pred_count": 2,
+          "tp": 2,
+          "fp": 0,
+          "fn": 10,
+          "precision": 1.0,
+          "precision_ci_95": [
+            0.3424,
+            1.0
+          ],
+          "recall": 0.1667,
+          "recall_ci_95": [
+            0.047,
+            0.448
+          ],
+          "f1": 0.2858
+        },
+        "multi_interp": {
+          "gold_count": 3,
+          "pred_count": 1,
+          "tp": 0,
+          "fp": 1,
+          "fn": 3,
+          "precision": 0.0,
+          "precision_ci_95": [
+            0.0,
+            0.7935
+          ],
+          "recall": 0.0,
+          "recall_ci_95": [
+            0.0,
+            0.5615
+          ],
+          "f1": 0.0
+        },
+        "confusing_language": {
+          "gold_count": 2,
+          "pred_count": 1,
+          "tp": 1,
+          "fp": 0,
+          "fn": 1,
+          "precision": 1.0,
+          "precision_ci_95": [
+            0.2065,
+            1.0
+          ],
+          "recall": 0.5,
+          "recall_ci_95": [
+            0.0945,
+            0.9055
+          ],
+          "f1": 0.6667
+        }
+      },
+      "wrong_energy_strict_count": 8,
+      "wrong_energy_strict_prompts": [
+        {
+          "prompt_id": "N05",
+          "true_energy": 1,
+          "predicted_energy": 0,
+          "energy_range": [
+            0,
+            0
+          ]
+        },
+        {
+          "prompt_id": "N06",
+          "true_energy": 2,
+          "predicted_energy": 0,
+          "energy_range": [
+            0,
+            0
+          ]
+        },
+        {
+          "prompt_id": "N07",
+          "true_energy": 1,
+          "predicted_energy": 0,
+          "energy_range": [
+            0,
+            0
+          ]
+        },
+        {
+          "prompt_id": "N09",
+          "true_energy": 1,
+          "predicted_energy": 0,
+          "energy_range": [
+            0,
+            0
+          ]
+        },
+        {
+          "prompt_id": "N10",
+          "true_energy": 1,
+          "predicted_energy": 0,
+          "energy_range": [
+            0,
+            0
+          ]
+        },
+        {
+          "prompt_id": "N23",
+          "true_energy": 1,
+          "predicted_energy": 0,
+          "energy_range": [
+            0,
+            0
+          ]
+        },
+        {
+          "prompt_id": "N24",
+          "true_energy": 1,
+          "predicted_energy": 2,
+          "energy_range": [
+            2,
+            2
+          ]
+        },
+        {
+          "prompt_id": "N28",
+          "true_energy": 1,
+          "predicted_energy": 0,
+          "energy_range": [
+            0,
+            0
+          ]
+        }
+      ],
+      "wrong_energy_range_count": 8,
+      "wrong_energy_range_prompts": [
+        {
+          "prompt_id": "N05",
+          "true_energy": 1,
+          "predicted_energy": 0,
+          "energy_range": [
+            0,
+            0
+          ]
+        },
+        {
+          "prompt_id": "N06",
+          "true_energy": 2,
+          "predicted_energy": 0,
+          "energy_range": [
+            0,
+            0
+          ]
+        },
+        {
+          "prompt_id": "N07",
+          "true_energy": 1,
+          "predicted_energy": 0,
+          "energy_range": [
+            0,
+            0
+          ]
+        },
+        {
+          "prompt_id": "N09",
+          "true_energy": 1,
+          "predicted_energy": 0,
+          "energy_range": [
+            0,
+            0
+          ]
+        },
+        {
+          "prompt_id": "N10",
+          "true_energy": 1,
+          "predicted_energy": 0,
+          "energy_range": [
+            0,
+            0
+          ]
+        },
+        {
+          "prompt_id": "N23",
+          "true_energy": 1,
+          "predicted_energy": 0,
+          "energy_range": [
+            0,
+            0
+          ]
+        },
+        {
+          "prompt_id": "N24",
+          "true_energy": 1,
+          "predicted_energy": 2,
+          "energy_range": [
+            2,
+            2
+          ]
+        },
+        {
+          "prompt_id": "N28",
+          "true_energy": 1,
+          "predicted_energy": 0,
+          "energy_range": [
+            0,
+            0
+          ]
+        }
+      ]
     },
     "combined": {
-      "status": "not_run_no_api_key"
+      "status": "success",
+      "n_prompts": 30,
+      "review_rate": 0.037,
+      "total_review_items": 20,
+      "total_eval_items": 540,
+      "slot_agreement": 0.5926,
+      "slot_agreement_ci_95": [
+        0.5331,
+        0.6495
+      ],
+      "slot_matches": 160,
+      "total_slots": 270,
+      "micro_precision": 1.0,
+      "micro_precision_ci_95": [
+        0.8513,
+        1.0
+      ],
+      "micro_recall": 0.449,
+      "micro_recall_ci_95": [
+        0.3185,
+        0.5868
+      ],
+      "micro_f1": 0.6197,
+      "per_atom": {
+        "very_easy": {
+          "gold_count": 5,
+          "pred_count": 4,
+          "tp": 4,
+          "fp": 0,
+          "fn": 1,
+          "precision": 1.0,
+          "precision_ci_95": [
+            0.5101,
+            1.0
+          ],
+          "recall": 0.8,
+          "recall_ci_95": [
+            0.3755,
+            0.9638
+          ],
+          "f1": 0.8889
+        },
+        "expert_level": {
+          "gold_count": 4,
+          "pred_count": 4,
+          "tp": 4,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "precision_ci_95": [
+            0.5101,
+            1.0
+          ],
+          "recall": 1.0,
+          "recall_ci_95": [
+            0.5101,
+            1.0
+          ],
+          "f1": 1.0
+        },
+        "no_basic": {
+          "gold_count": 4,
+          "pred_count": 1,
+          "tp": 1,
+          "fp": 0,
+          "fn": 3,
+          "precision": 1.0,
+          "precision_ci_95": [
+            0.2065,
+            1.0
+          ],
+          "recall": 0.25,
+          "recall_ci_95": [
+            0.0456,
+            0.6994
+          ],
+          "f1": 0.4
+        },
+        "ordered_easy_to_hard": {
+          "gold_count": 6,
+          "pred_count": 3,
+          "tp": 3,
+          "fp": 0,
+          "fn": 3,
+          "precision": 1.0,
+          "precision_ci_95": [
+            0.4385,
+            1.0
+          ],
+          "recall": 0.5,
+          "recall_ci_95": [
+            0.1876,
+            0.8124
+          ],
+          "f1": 0.6667
+        },
+        "hidden_answers": {
+          "gold_count": 8,
+          "pred_count": 2,
+          "tp": 2,
+          "fp": 0,
+          "fn": 6,
+          "precision": 1.0,
+          "precision_ci_95": [
+            0.3424,
+            1.0
+          ],
+          "recall": 0.25,
+          "recall_ci_95": [
+            0.0715,
+            0.5907
+          ],
+          "f1": 0.4
+        },
+        "answer_after_each_q": {
+          "gold_count": 5,
+          "pred_count": 0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 5,
+          "precision": 0.0,
+          "precision_ci_95": [
+            0.0,
+            0.0
+          ],
+          "recall": 0.0,
+          "recall_ci_95": [
+            0.0,
+            0.4345
+          ],
+          "f1": 0.0
+        },
+        "single_correct": {
+          "gold_count": 12,
+          "pred_count": 5,
+          "tp": 5,
+          "fp": 0,
+          "fn": 7,
+          "precision": 1.0,
+          "precision_ci_95": [
+            0.5655,
+            1.0
+          ],
+          "recall": 0.4167,
+          "recall_ci_95": [
+            0.1933,
+            0.6805
+          ],
+          "f1": 0.5883
+        },
+        "multi_interp": {
+          "gold_count": 3,
+          "pred_count": 1,
+          "tp": 1,
+          "fp": 0,
+          "fn": 2,
+          "precision": 1.0,
+          "precision_ci_95": [
+            0.2065,
+            1.0
+          ],
+          "recall": 0.3333,
+          "recall_ci_95": [
+            0.0615,
+            0.7923
+          ],
+          "f1": 0.5
+        },
+        "confusing_language": {
+          "gold_count": 2,
+          "pred_count": 2,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "precision_ci_95": [
+            0.3424,
+            1.0
+          ],
+          "recall": 1.0,
+          "recall_ci_95": [
+            0.3424,
+            1.0
+          ],
+          "f1": 1.0
+        }
+      },
+      "wrong_energy_strict_count": 5,
+      "wrong_energy_strict_prompts": [
+        {
+          "prompt_id": "N05",
+          "true_energy": 1,
+          "predicted_energy": 0,
+          "energy_range": [
+            0,
+            0
+          ]
+        },
+        {
+          "prompt_id": "N07",
+          "true_energy": 1,
+          "predicted_energy": 0,
+          "energy_range": [
+            0,
+            0
+          ]
+        },
+        {
+          "prompt_id": "N09",
+          "true_energy": 1,
+          "predicted_energy": 0,
+          "energy_range": [
+            0,
+            0
+          ]
+        },
+        {
+          "prompt_id": "N10",
+          "true_energy": 1,
+          "predicted_energy": 0,
+          "energy_range": [
+            0,
+            0
+          ]
+        },
+        {
+          "prompt_id": "N23",
+          "true_energy": 1,
+          "predicted_energy": 0,
+          "energy_range": [
+            0,
+            0
+          ]
+        }
+      ],
+      "wrong_energy_range_count": 5,
+      "wrong_energy_range_prompts": [
+        {
+          "prompt_id": "N05",
+          "true_energy": 1,
+          "predicted_energy": 0,
+          "energy_range": [
+            0,
+            0
+          ]
+        },
+        {
+          "prompt_id": "N07",
+          "true_energy": 1,
+          "predicted_energy": 0,
+          "energy_range": [
+            0,
+            0
+          ]
+        },
+        {
+          "prompt_id": "N09",
+          "true_energy": 1,
+          "predicted_energy": 0,
+          "energy_range": [
+            0,
+            0
+          ]
+        },
+        {
+          "prompt_id": "N10",
+          "true_energy": 1,
+          "predicted_energy": 0,
+          "energy_range": [
+            0,
+            0
+          ]
+        },
+        {
+          "prompt_id": "N23",
+          "true_energy": 1,
+          "predicted_energy": 0,
+          "energy_range": [
+            0,
+            0
+          ]
+        }
+      ]
     }
   }
 }

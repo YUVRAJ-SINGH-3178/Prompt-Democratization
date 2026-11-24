@@ -19,6 +19,7 @@ from hashlib import sha256
 from pathlib import Path
 from typing import Any
 
+import app.env  # noqa: F401
 from app.linter.rubrics import (
     ATOM_RUBRICS,
     RUBRIC_VERSION,
@@ -249,7 +250,11 @@ WORKED_EXAMPLES: list[dict[str, Any]] = [
 
 def is_reader_enabled() -> bool:
     """Check if the LLM reader is enabled via environment variables."""
-    return bool(os.environ.get("STUDY_API_KEY") or os.environ.get("OPENAI_API_KEY"))
+    for var in ("STUDY_API_KEY", "OPENAI_API_KEY", "GROQ_API_KEY"):
+        val = (os.environ.get(var) or "").strip()
+        if val:
+            return True
+    return False
 
 
 def normalize_text_for_quote(s: str) -> str:
@@ -363,6 +368,7 @@ def call_llm_api(
         headers={
             "Authorization": f"Bearer {api_key}",
             "Content-Type": "application/json",
+            "User-Agent": "PromptRepositoryLab/0.1.0",
         },
         method="POST",
     )
@@ -493,7 +499,12 @@ def read_prompt_with_llm(
     - Retries once on malformed JSON.
     - Validates all evidence quotes in code.
     """
-    key = api_key or os.environ.get("STUDY_API_KEY") or os.environ.get("OPENAI_API_KEY")
+    key = (
+        (api_key or "").strip()
+        or (os.environ.get("STUDY_API_KEY") or "").strip()
+        or (os.environ.get("GROQ_API_KEY") or "").strip()
+        or (os.environ.get("OPENAI_API_KEY") or "").strip()
+    )
     if not key:
         return {
             "enabled": False,
@@ -504,8 +515,16 @@ def read_prompt_with_llm(
             "accepted_spans": [],
         }
 
-    selected_model: str = str(model or os.environ.get("STUDY_MODEL") or "gpt-4o-mini")
-    endpoint: str = str(api_base or os.environ.get("STUDY_API_BASE") or "https://api.openai.com/v1/chat/completions")
+    is_groq = bool((os.environ.get("GROQ_API_KEY") or "").strip()) and not os.environ.get("STUDY_API_BASE")
+    default_endpoint = (
+        "https://api.groq.com/openai/v1/chat/completions" if is_groq else "https://api.openai.com/v1/chat/completions"
+    )
+    default_model = "llama-3.3-70b-versatile" if is_groq else "gpt-4o-mini"
+
+    selected_model: str = str(model or os.environ.get("STUDY_MODEL") or os.environ.get("GROQ_MODEL") or default_model)
+    endpoint: str = str(
+        api_base or os.environ.get("STUDY_API_BASE") or os.environ.get("GROQ_API_BASE") or default_endpoint
+    )
 
     cache_key = get_cache_key(prompt_text, selected_model)
     cache_file = CACHE_DIR / f"{cache_key}.json"

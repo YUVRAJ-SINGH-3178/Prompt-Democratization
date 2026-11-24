@@ -18,7 +18,9 @@ real-eval:
 dev-eval:
 	.venv/Scripts/python.exe -m app.cli dev-eval
 frozen-eval:
-	.venv/Scripts/python.exe -m app.cli frozen-eval
+	.venv/Scripts/python.exe -m app.cli frozen-eval $(ARGS)
+frozen-eval-force:
+	.venv/Scripts/python.exe -m app.cli frozen-eval --force
 lint:
 	.venv/Scripts/ruff.exe check app tests scripts
 format-check:

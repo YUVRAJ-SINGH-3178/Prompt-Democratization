@@ -1,7 +1,7 @@
 # Development Dataset Evaluation Report
 
-**Date:** 2026-11-24T11:04:43.840204+00:00
-**Model:** none
+**Date:** 2026-11-24T12:03:14.211627+00:00
+**Model:** openai/gpt-oss-20b
 **Rubric Version:** 1.0.0
 **Schema Version:** 1.0.0
 **Environment:** Python 3.13.5, NumPy 2.2.6, SciPy 1.15.3, scikit-learn 1.6.1
@@ -15,13 +15,13 @@
 
 | Metric | Rules Only | Reader Only | Combined System |
 |---|---|---|---|
-| **Review Rate** | 0.0% | Not run (no API key) | Not run (no API key) |
-| **Slot Agreement** | 99.8% [99.1%, 100.0%] | Not run (no API key) | Not run (no API key) |
-| **Micro Precision** | 100.0% [94.9%, 100.0%] | Not run (no API key) | Not run (no API key) |
-| **Micro Recall** | 100.0% [94.9%, 100.0%] | Not run (no API key) | Not run (no API key) |
-| **Micro F1** | 100.0% | Not run (no API key) | Not run (no API key) |
-| **Wrong Energy Prompts (Strict)** | 0 | Not run (no API key) | Not run (no API key) |
-| **Wrong Energy Prompts (Range-based)** | 0 | Not run (no API key) | Not run (no API key) |
+| **Review Rate** | 0.0% | 0.0% | 0.7% |
+| **Slot Agreement** | 99.8% [99.1%, 100.0%] | 42.2% [38.3%, 46.1%] | 99.0% [97.9%, 99.6%] |
+| **Micro Precision** | 100.0% [94.9%, 100.0%] | 77.8% [45.3%, 93.7%] | 100.0% [94.8%, 100.0%] |
+| **Micro Recall** | 100.0% [94.9%, 100.0%] | 9.7% [4.8%, 18.7%] | 97.2% [90.4%, 99.2%] |
+| **Micro F1** | 100.0% | 17.3% | 98.6% |
+| **Wrong Energy Prompts (Strict)** | 0 | 12 | 0 |
+| **Wrong Energy Prompts (Range-based)** | 0 | 12 | 0 |
 
 ### Per-Atom Breakdown (Rules Only)
 | Atom | Gold Count | Pred Count | Precision (95% CI) | Recall (95% CI) | F1 |
@@ -40,13 +40,13 @@
 
 | Metric | Rules Only | Reader Only | Combined System |
 |---|---|---|---|
-| **Review Rate** | 0.0% | Not run (no API key) | Not run (no API key) |
-| **Slot Agreement** | 57.4% [48.0%, 66.3%] | Not run (no API key) | Not run (no API key) |
-| **Micro Precision** | 100.0% [67.6%, 100.0%] | Not run (no API key) | Not run (no API key) |
-| **Micro Recall** | 34.8% [18.8%, 55.1%] | Not run (no API key) | Not run (no API key) |
-| **Micro F1** | 51.6% | Not run (no API key) | Not run (no API key) |
-| **Wrong Energy Prompts (Strict)** | 2 | Not run (no API key) | Not run (no API key) |
-| **Wrong Energy Prompts (Range-based)** | 2 | Not run (no API key) | Not run (no API key) |
+| **Review Rate** | 0.0% | 0.0% | 6.0% |
+| **Slot Agreement** | 57.4% [48.0%, 66.3%] | 34.3% [26.0%, 43.6%] | 58.3% [48.9%, 67.2%] |
+| **Micro Precision** | 100.0% [67.6%, 100.0%] | 75.0% [30.1%, 95.4%] | 100.0% [67.6%, 100.0%] |
+| **Micro Recall** | 34.8% [18.8%, 55.1%] | 13.0% [4.5%, 32.1%] | 34.8% [18.8%, 55.1%] |
+| **Micro F1** | 51.6% | 22.2% | 51.6% |
+| **Wrong Energy Prompts (Strict)** | 2 | 4 | 2 |
+| **Wrong Energy Prompts (Range-based)** | 2 | 4 | 2 |
 
 ### Per-Atom Breakdown (Rules Only)
 | Atom | Gold Count | Pred Count | Precision (95% CI) | Recall (95% CI) | F1 |
@@ -65,13 +65,13 @@
 
 | Metric | Rules Only | Reader Only | Combined System |
 |---|---|---|---|
-| **Review Rate** | 0.0% | Not run (no API key) | Not run (no API key) |
-| **Slot Agreement** | 93.5% [91.4%, 95.1%] | Not run (no API key) | Not run (no API key) |
-| **Micro Precision** | 100.0% [95.4%, 100.0%] | Not run (no API key) | Not run (no API key) |
-| **Micro Recall** | 84.2% [75.6%, 90.2%] | Not run (no API key) | Not run (no API key) |
-| **Micro F1** | 91.4% | Not run (no API key) | Not run (no API key) |
-| **Wrong Energy Prompts (Strict)** | 2 | Not run (no API key) | Not run (no API key) |
-| **Wrong Energy Prompts (Range-based)** | 2 | Not run (no API key) | Not run (no API key) |
+| **Review Rate** | 0.0% | 0.0% | 1.6% |
+| **Slot Agreement** | 93.5% [91.4%, 95.1%] | 42.2% [38.7%, 45.9%] | 92.9% [90.8%, 94.6%] |
+| **Micro Precision** | 100.0% [95.4%, 100.0%] | 80.0% [54.8%, 93.0%] | 100.0% [95.2%, 100.0%] |
+| **Micro Recall** | 84.2% [75.6%, 90.2%] | 12.6% [7.4%, 20.8%] | 81.0% [72.0%, 87.7%] |
+| **Micro F1** | 91.4% | 21.8% | 89.5% |
+| **Wrong Energy Prompts (Strict)** | 2 | 16 | 2 |
+| **Wrong Energy Prompts (Range-based)** | 2 | 16 | 2 |
 
 ### Per-Atom Breakdown (Rules Only)
 | Atom | Gold Count | Pred Count | Precision (95% CI) | Recall (95% CI) | F1 |

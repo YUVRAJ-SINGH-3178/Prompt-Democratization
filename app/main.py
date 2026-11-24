@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import app.env  # noqa: F401
 import csv
 import io
 import json
@@ -886,9 +887,10 @@ def run_study(body: StudyRunRequest):
         key: value + f"\n\nGenerate exactly {body.question_count} questions."
         for key, value in build_study_prompts(body.model_dump()).items()
     }
-    model = body.model or os.environ.get("STUDY_MODEL")
+    default_study_model = "llama-3.3-70b-versatile" if (os.environ.get("GROQ_API_KEY") or "").strip() else None
+    model = body.model or os.environ.get("STUDY_MODEL") or os.environ.get("GROQ_MODEL") or default_study_model
     if not model:
-        raise HTTPException(422, "Set STUDY_MODEL or provide model")
+        raise HTTPException(422, "Set STUDY_MODEL, GROQ_MODEL, or provide model")
     batch = uuid.uuid4().hex
     completed = []
     try:
@@ -934,10 +936,24 @@ def rate_study(body: StudyRatingRequest):
 @app.get("/api/settings")
 def settings():
     threshold, source = routing_minimum()
+    llm_key = bool(
+        (os.environ.get("OPENAI_API_KEY") or "").strip()
+        or (os.environ.get("STUDY_API_KEY") or "").strip()
+        or (os.environ.get("GROQ_API_KEY") or "").strip()
+    )
+    llm_extractor = bool(
+        llm_key
+        and (
+            os.environ.get("LLM_EXTRACTOR_MODEL")
+            or os.environ.get("STUDY_MODEL")
+            or os.environ.get("GROQ_MODEL")
+            or os.environ.get("GROQ_API_KEY")
+        )
+    )
     return {
         "theme": "dark",
-        "llm_extractor_enabled": bool(os.environ.get("OPENAI_API_KEY") and os.environ.get("LLM_EXTRACTOR_MODEL")),
-        "llm_key_present": bool(os.environ.get("OPENAI_API_KEY")),
+        "llm_extractor_enabled": llm_extractor,
+        "llm_key_present": llm_key,
         "auth": "not present in clean-room source",
         "default_min_ratings": threshold,
         "min_ratings_source": source,
