@@ -121,6 +121,7 @@ def main():
     sub.add_parser("paper-artifacts")
     sub.add_parser("extractor-report")
     sub.add_parser("eval")
+    sub.add_parser("real-eval")
     args = parser.parse_args()
     if args.command == "reproduce":
         out = write_run(args.study, args.seed, args.repetitions)
@@ -138,6 +139,10 @@ def main():
         from app.eval_harness import synthetic_recovery
 
         out = synthetic_recovery()
+    elif args.command == "real-eval":
+        from app.real_eval import run_real_evaluation
+
+        out = run_real_evaluation()
     else:
         out = {"error": "unknown command"}
     print(json.dumps(out, indent=2))

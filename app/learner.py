@@ -2,7 +2,7 @@
 
 For a comparison where prompt i beat prompt j:
   x = features(j) - features(i), label = 1
-Fit LogisticRegression with fit_intercept=False, C=1.0, max_iter=2000.
+Fit logistic loss without intercept.
 
 Learned energy of a prompt = weight vector dot features.
 P(A better than B) = sigmoid(energy(B) - energy(A)).
@@ -28,7 +28,52 @@ BOOTSTRAP_N = 200
 
 
 def sigmoid(x: float) -> float:
-    return 1.0 / (1.0 + np.exp(-x))
+    return float(1.0 / (1.0 + np.exp(-np.clip(x, -35.0, 35.0))))
+
+
+def fit_one_row(
+    X: np.ndarray,
+    C: float = 1.0,
+    max_iter: int = 50,
+    tol: float = 1e-6,
+) -> np.ndarray | None:
+    """Antisymmetric logistic loss minimization on single-row differences.
+
+    Minimizes: sum_i log(1 + exp(-w^T x_i)) + (1 / (2*C)) * ||w||^2.
+    Uses Newton-Raphson / IRLS with L2 regularization.
+    Returns weight vector or None if singular.
+    """
+    if len(X) == 0:
+        return None
+    N, D = X.shape
+    w = np.zeros(D, dtype=float)
+    I_reg = np.eye(D) / C
+    for _ in range(max_iter):
+        z = X @ w
+        p = 1.0 / (1.0 + np.exp(-np.clip(z, -35.0, 35.0)))
+        grad = X.T @ (p - 1.0) + w / C
+        W = p * (1.0 - p)
+        Hess = (X.T * W) @ X + I_reg
+        try:
+            step = np.linalg.solve(Hess, grad)
+        except np.linalg.LinAlgError:
+            return None
+        w -= step
+        if float(np.max(np.abs(step))) < tol:
+            break
+    return w
+
+
+def fit_symmetric(X: np.ndarray, C: float = 1.0) -> np.ndarray:
+    """Symmetric fit: adds the flipped row inside the fit and fits LogisticRegression.
+
+    Uses C / 2 to match the objective scale of fit_one_row.
+    """
+    X_sym = np.vstack([X, -X])
+    y_sym = np.array([1] * len(X) + [0] * len(X), dtype=int)
+    model = LogisticRegression(fit_intercept=False, C=C / 2.0, max_iter=2000, tol=1e-8)
+    model.fit(X_sym, y_sym)
+    return model.coef_[0]
 
 
 def fit_bradley_terry(
@@ -41,7 +86,7 @@ def fit_bradley_terry(
       features_b: list[float]  (length 10)
       winner: 'a' or 'b'  (ties excluded before calling)
 
-    Returns model info dict.
+    Returns model info dict with full fit point estimate and 200 bootstrap weight vectors.
     """
     # Filter out ties
     valid = [c for c in comparisons if c.get("winner") in ("a", "b")]
@@ -58,23 +103,31 @@ def fit_bradley_terry(
             "feature_names": list(FEATURE_NAMES),
         }
 
-    X, y = _build_dataset(valid)
-    model = LogisticRegression(fit_intercept=False, C=1.0, max_iter=2000)
-    model.fit(X, y)
-    weights = model.coef_[0].tolist()
+    X, _ = _build_dataset(valid)
+    weights_arr = fit_one_row(X, C=1.0)
+    if weights_arr is None:
+        weights_arr = fit_symmetric(X, C=1.0)
+    weights = weights_arr.tolist()
 
-    # Bootstrap uncertainty
+    # Bootstrap uncertainty: resample whole comparisons with replacement
     rng = np.random.default_rng(BOOTSTRAP_SEED)
-    boot_weights = []
-    for _ in range(BOOTSTRAP_N):
-        idx = rng.choice(len(X), size=len(X), replace=True)
-        X_boot, y_boot = X[idx], y[idx]
-        try:
-            m = LogisticRegression(fit_intercept=False, C=1.0, max_iter=2000)
-            m.fit(X_boot, y_boot)
-            boot_weights.append(m.coef_[0].tolist())
-        except Exception:
+    boot_weights: list[list[float]] = []
+    n_dropped = 0
+    draws = 0
+    max_extra = 20
+
+    while len(boot_weights) < BOOTSTRAP_N and draws < (BOOTSTRAP_N + max_extra):
+        draws += 1
+        idx = rng.choice(len(valid), size=len(valid), replace=True)
+        resample_comparisons = [valid[i] for i in idx]
+        X_boot, _ = _build_dataset(resample_comparisons)
+        w_boot = fit_one_row(X_boot, C=1.0)
+        if w_boot is None or np.any(np.isnan(w_boot)):
+            n_dropped += 1
             continue
+        boot_weights.append(w_boot.tolist())
+
+    interval_reliable = (n_dropped <= 10) and (len(boot_weights) == BOOTSTRAP_N)
 
     weight_intervals = []
     if boot_weights:
@@ -90,8 +143,12 @@ def fit_bradley_terry(
         "n_raters": len(raters),
         "weights": weights,
         "weight_intervals_95": weight_intervals,
+        "bootstrap_weights": boot_weights,
+        "dropped_bootstrap_count": n_dropped,
+        "interval_reliable": interval_reliable,
+        "reliable": interval_reliable,
         "feature_names": list(FEATURE_NAMES),
-        "bootstrap_n": BOOTSTRAP_N,
+        "bootstrap_n": len(boot_weights),
         "bootstrap_seed": BOOTSTRAP_SEED,
         "versions": {
             "python": platform.python_version(),
@@ -106,12 +163,12 @@ def fit_bradley_terry(
 def _build_dataset(
     comparisons: list[dict[str, Any]],
 ) -> tuple[np.ndarray, np.ndarray]:
-    """Build X, y arrays for the BT model.
+    """Build X, y arrays for the BT model (one row per comparison).
 
     For winner='a': x = features(b) - features(a), label = 1
-                    x_sym = features(a) - features(b), label = 0
     For winner='b': x = features(a) - features(b), label = 1
-                    x_sym = features(b) - features(a), label = 0
+    (Where x is loser - winner so that learned energy weights are positive
+    when defects/penalties hurt preference).
     """
     X_rows = []
     y_rows = []
@@ -121,14 +178,10 @@ def _build_dataset(
         if c["winner"] == "a":
             X_rows.append(fb - fa)
             y_rows.append(1)
-            X_rows.append(fa - fb)
-            y_rows.append(0)
         else:
             X_rows.append(fa - fb)
             y_rows.append(1)
-            X_rows.append(fb - fa)
-            y_rows.append(0)
-    return np.array(X_rows), np.array(y_rows)
+    return np.array(X_rows, dtype=float), np.array(y_rows, dtype=int)
 
 
 def learned_energy(weights: list[float], features: list[float]) -> float:
@@ -141,8 +194,13 @@ def predict_preference(
     features_a: list[float],
     features_b: list[float],
     weight_intervals: list[dict[str, float]] | None = None,
+    bootstrap_weights: list[list[float]] | None = None,
 ) -> dict[str, Any]:
-    """P(A better than B) = sigmoid(energy(B) - energy(A))."""
+    """P(A better than B) = sigmoid(energy(B) - energy(A)).
+
+    Point estimate is computed from the full fit weights.
+    95% uncertainty interval is computed from percentiles over bootstrap weights.
+    """
     ea = learned_energy(weights, features_a)
     eb = learned_energy(weights, features_b)
     p_a_better = sigmoid(eb - ea)
@@ -154,8 +212,14 @@ def predict_preference(
         "p_b_better": 1.0 - p_a_better,
     }
 
-    # Interval from bootstrap weight intervals
-    if weight_intervals:
+    if bootstrap_weights:
+        diff = np.array(features_b, dtype=float) - np.array(features_a, dtype=float)
+        p_values = [sigmoid(float(np.dot(w, diff))) for w in bootstrap_weights]
+        result["p_a_better_interval_95"] = {
+            "lo": float(np.percentile(p_values, 2.5)),
+            "hi": float(np.percentile(p_values, 97.5)),
+        }
+    elif weight_intervals:
         p_values = []
         for combo in _corner_combos(weight_intervals):
             e_a = float(np.dot(combo, features_a))
@@ -171,7 +235,6 @@ def predict_preference(
 
 def _corner_combos(intervals: list[dict[str, float]]) -> list[list[float]]:
     """Sample corner combinations of weight intervals for uncertainty."""
-    # Use lo and hi endpoints plus the midpoint
     combos = []
     mid = [(iv["lo"] + iv["hi"]) / 2 for iv in intervals]
     combos.append(mid)

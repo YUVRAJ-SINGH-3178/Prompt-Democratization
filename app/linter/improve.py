@@ -19,7 +19,7 @@ from dataclasses import dataclass
 from typing import Any
 
 from app.linter.core import CONFLICTS, evaluate, extract_atoms, score_slots
-from app.linter.lexicon import split_clauses, split_sentences
+from app.linter.lexicon import find_unclassified_clauses, split_clauses, split_sentences
 
 # Default mapping values aligned with Faculty builder
 MAPPING_DEFAULTS = {
@@ -63,7 +63,7 @@ class ImprovementVerification:
 class ImprovementResult:
     original_prompt: str
     improved_prompt: str | None
-    verified: bool
+    verified: bool | str
     rejection_reason: str | None
     verification_details: ImprovementVerification
     before: dict[str, Any]
@@ -76,6 +76,8 @@ class ImprovementResult:
     filled_slots: list[str]
     text_diff: str
     mode: str  # 'rule_based' or 'llm'
+    extractor_confidence: str = "high"
+    unclassified_clauses: list[str] | None = None
     llm_metadata: dict[str, Any] | None = None
 
 
@@ -377,10 +379,14 @@ def improve_prompt(
     delta_energy = imp_result.energy - orig_result.energy
     diff = compute_diff(prompt, candidate_prompt)
 
+    unclassified = find_unclassified_clauses(prompt)
+    confidence = "high" if not unclassified else "medium"
+    verified_status: bool | str = "extractor_limited" if unclassified else True
+
     return ImprovementResult(
         original_prompt=prompt,
         improved_prompt=candidate_prompt,
-        verified=True,
+        verified=verified_status,
         rejection_reason=None,
         verification_details=verification,
         before={
@@ -403,6 +409,8 @@ def improve_prompt(
         filled_slots=filled_slots if mode == "rule_based" else [],
         text_diff=diff,
         mode=mode,
+        extractor_confidence=confidence,
+        unclassified_clauses=unclassified,
         llm_metadata=llm_metadata,
     )
 

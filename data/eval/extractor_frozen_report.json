@@ -1,0 +1,428 @@
+{
+  "status": "computed",
+  "frozen_set_file": "data/gold/synthetic/authored_prompts_SYNTHETIC.csv",
+  "frozen_set_sha256": "e5bea36a5a7e0000e53fcc365e9db696ed8ddf6378b07fce27b245b9b98d2c71",
+  "extractor_version": "rule-linter-0.2.0",
+  "date": "2026-11-24T09:42:24.890187+00:00",
+  "n": 12,
+  "single_measurement_run": true,
+  "overall_atom_summary": {
+    "tp_total": 8,
+    "fp_total": 0,
+    "fn_total": 15
+  },
+  "atom_metrics": {
+    "very_easy": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 3,
+      "fp": 0,
+      "fn": 0,
+      "tn": 9,
+      "gold_positive_n": 3
+    },
+    "expert_level": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "tn": 11,
+      "gold_positive_n": 1
+    },
+    "no_basic": {
+      "precision": 1.0,
+      "recall": 0.5,
+      "f1": 0.6666666666666666,
+      "tp": 1,
+      "fp": 0,
+      "fn": 1,
+      "tn": 10,
+      "gold_positive_n": 2
+    },
+    "hidden_answers": {
+      "precision": null,
+      "recall": 0.0,
+      "f1": null,
+      "tp": 0,
+      "fp": 0,
+      "fn": 3,
+      "tn": 9,
+      "gold_positive_n": 3
+    },
+    "answer_after_each_q": {
+      "precision": null,
+      "recall": 0.0,
+      "f1": null,
+      "tp": 0,
+      "fp": 0,
+      "fn": 2,
+      "tn": 10,
+      "gold_positive_n": 2
+    },
+    "single_correct": {
+      "precision": 1.0,
+      "recall": 0.16666666666666666,
+      "f1": 0.2857142857142857,
+      "tp": 1,
+      "fp": 0,
+      "fn": 5,
+      "tn": 6,
+      "gold_positive_n": 6
+    },
+    "multi_interp": {
+      "precision": null,
+      "recall": 0.0,
+      "f1": null,
+      "tp": 0,
+      "fp": 0,
+      "fn": 1,
+      "tn": 11,
+      "gold_positive_n": 1
+    },
+    "clear_unambiguous": {
+      "precision": null,
+      "recall": null,
+      "f1": null,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 12,
+      "gold_positive_n": 0
+    },
+    "confusing_language": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 1,
+      "fp": 0,
+      "fn": 0,
+      "tn": 11,
+      "gold_positive_n": 1
+    },
+    "ordered_easy_to_hard": {
+      "precision": 1.0,
+      "recall": 0.25,
+      "f1": 0.4,
+      "tp": 1,
+      "fp": 0,
+      "fn": 3,
+      "tn": 8,
+      "gold_positive_n": 4
+    }
+  },
+  "slot_agreement": 0.5741,
+  "total_slot_comparisons": 108,
+  "correct_slot_comparisons": 62,
+  "wrong_conflict_energy_prompts": [
+    {
+      "prompt_id": "P05",
+      "gold_energy": 1,
+      "pred_energy": 0,
+      "gold_atoms": [
+        "single_correct",
+        "multi_interp"
+      ],
+      "pred_atoms": [
+        "single_correct"
+      ],
+      "gold_conflicts": [
+        [
+          "multi_interp",
+          "single_correct"
+        ],
+        [
+          "clear_unambiguous",
+          "multi_interp"
+        ]
+      ],
+      "pred_conflicts": []
+    },
+    {
+      "prompt_id": "P09",
+      "gold_energy": 1,
+      "pred_energy": 0,
+      "gold_atoms": [
+        "hidden_answers",
+        "answer_after_each_q",
+        "single_correct"
+      ],
+      "pred_atoms": [],
+      "gold_conflicts": [
+        [
+          "answer_after_each_q",
+          "hidden_answers"
+        ]
+      ],
+      "pred_conflicts": []
+    }
+  ],
+  "per_prompt_results": [
+    {
+      "prompt_id": "P01",
+      "gold_atoms": [
+        "ordered_easy_to_hard"
+      ],
+      "pred_atoms": [
+        "ordered_easy_to_hard"
+      ],
+      "gold_energy": 0,
+      "pred_energy": 0,
+      "slot_matches": {
+        "role": false,
+        "audience": false,
+        "topic": false,
+        "count": true,
+        "n_options": true,
+        "labeling": true,
+        "marking": false,
+        "explanation": false,
+        "ordering": true
+      }
+    },
+    {
+      "prompt_id": "P02",
+      "gold_atoms": [
+        "answer_after_each_q",
+        "single_correct",
+        "ordered_easy_to_hard"
+      ],
+      "pred_atoms": [],
+      "gold_energy": 0,
+      "pred_energy": 0,
+      "slot_matches": {
+        "role": true,
+        "audience": false,
+        "topic": false,
+        "count": true,
+        "n_options": true,
+        "labeling": false,
+        "marking": true,
+        "explanation": true,
+        "ordering": false
+      }
+    },
+    {
+      "prompt_id": "P03",
+      "gold_atoms": [
+        "hidden_answers"
+      ],
+      "pred_atoms": [],
+      "gold_energy": 0,
+      "pred_energy": 0,
+      "slot_matches": {
+        "role": true,
+        "audience": false,
+        "topic": false,
+        "count": true,
+        "n_options": true,
+        "labeling": true,
+        "marking": true,
+        "explanation": true,
+        "ordering": true
+      }
+    },
+    {
+      "prompt_id": "P04",
+      "gold_atoms": [
+        "very_easy",
+        "expert_level",
+        "single_correct"
+      ],
+      "pred_atoms": [
+        "expert_level",
+        "very_easy"
+      ],
+      "gold_energy": 1,
+      "pred_energy": 1,
+      "slot_matches": {
+        "role": false,
+        "audience": false,
+        "topic": false,
+        "count": true,
+        "n_options": true,
+        "labeling": true,
+        "marking": true,
+        "explanation": true,
+        "ordering": true
+      }
+    },
+    {
+      "prompt_id": "P05",
+      "gold_atoms": [
+        "single_correct",
+        "multi_interp"
+      ],
+      "pred_atoms": [
+        "single_correct"
+      ],
+      "gold_energy": 1,
+      "pred_energy": 0,
+      "slot_matches": {
+        "role": false,
+        "audience": true,
+        "topic": false,
+        "count": true,
+        "n_options": true,
+        "labeling": false,
+        "marking": false,
+        "explanation": true,
+        "ordering": true
+      }
+    },
+    {
+      "prompt_id": "P06",
+      "gold_atoms": [
+        "confusing_language"
+      ],
+      "pred_atoms": [
+        "confusing_language"
+      ],
+      "gold_energy": 1,
+      "pred_energy": 1,
+      "slot_matches": {
+        "role": true,
+        "audience": false,
+        "topic": false,
+        "count": true,
+        "n_options": true,
+        "labeling": false,
+        "marking": true,
+        "explanation": false,
+        "ordering": true
+      }
+    },
+    {
+      "prompt_id": "P07",
+      "gold_atoms": [
+        "no_basic",
+        "single_correct",
+        "ordered_easy_to_hard"
+      ],
+      "pred_atoms": [],
+      "gold_energy": 0,
+      "pred_energy": 0,
+      "slot_matches": {
+        "role": false,
+        "audience": false,
+        "topic": false,
+        "count": true,
+        "n_options": true,
+        "labeling": true,
+        "marking": true,
+        "explanation": false,
+        "ordering": false
+      }
+    },
+    {
+      "prompt_id": "P08",
+      "gold_atoms": [],
+      "pred_atoms": [],
+      "gold_energy": 0,
+      "pred_energy": 0,
+      "slot_matches": {
+        "role": true,
+        "audience": true,
+        "topic": false,
+        "count": true,
+        "n_options": true,
+        "labeling": true,
+        "marking": true,
+        "explanation": true,
+        "ordering": true
+      }
+    },
+    {
+      "prompt_id": "P09",
+      "gold_atoms": [
+        "hidden_answers",
+        "answer_after_each_q",
+        "single_correct"
+      ],
+      "pred_atoms": [],
+      "gold_energy": 1,
+      "pred_energy": 0,
+      "slot_matches": {
+        "role": false,
+        "audience": false,
+        "topic": false,
+        "count": true,
+        "n_options": true,
+        "labeling": true,
+        "marking": true,
+        "explanation": true,
+        "ordering": true
+      }
+    },
+    {
+      "prompt_id": "P10",
+      "gold_atoms": [
+        "single_correct",
+        "ordered_easy_to_hard"
+      ],
+      "pred_atoms": [],
+      "gold_energy": 0,
+      "pred_energy": 0,
+      "slot_matches": {
+        "role": false,
+        "audience": false,
+        "topic": false,
+        "count": true,
+        "n_options": true,
+        "labeling": true,
+        "marking": false,
+        "explanation": false,
+        "ordering": false
+      }
+    },
+    {
+      "prompt_id": "P11",
+      "gold_atoms": [
+        "very_easy",
+        "hidden_answers"
+      ],
+      "pred_atoms": [
+        "very_easy"
+      ],
+      "gold_energy": 0,
+      "pred_energy": 0,
+      "slot_matches": {
+        "role": false,
+        "audience": false,
+        "topic": false,
+        "count": false,
+        "n_options": true,
+        "labeling": false,
+        "marking": true,
+        "explanation": true,
+        "ordering": true
+      }
+    },
+    {
+      "prompt_id": "P12",
+      "gold_atoms": [
+        "very_easy",
+        "no_basic"
+      ],
+      "pred_atoms": [
+        "no_basic",
+        "very_easy"
+      ],
+      "gold_energy": 1,
+      "pred_energy": 1,
+      "slot_matches": {
+        "role": false,
+        "audience": false,
+        "topic": false,
+        "count": true,
+        "n_options": true,
+        "labeling": true,
+        "marking": true,
+        "explanation": false,
+        "ordering": true
+      }
+    }
+  ]
+}

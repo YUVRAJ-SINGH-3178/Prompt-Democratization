@@ -347,7 +347,7 @@ def admin_learner(request: Request):
     if result["model_status"] == "fitted":
         with connect() as db:
             db.execute(
-                "INSERT INTO learner_fits(n_comparisons, n_raters, weights_json, intervals_json, versions_json, seed) VALUES(?,?,?,?,?,?)",
+                "INSERT INTO learner_fits(n_comparisons, n_raters, weights_json, intervals_json, versions_json, seed, bootstrap_weights_json) VALUES(?,?,?,?,?,?,?)",
                 (
                     result["n_comparisons"],
                     result["n_raters"],
@@ -355,6 +355,7 @@ def admin_learner(request: Request):
                     json.dumps(result.get("weight_intervals_95")),
                     json.dumps(result.get("versions")),
                     result.get("bootstrap_seed", 42),
+                    json.dumps(result.get("bootstrap_weights")),
                 ),
             )
 
@@ -437,12 +438,19 @@ def compare_prompts(body: CompareRequest, request: Request):
 
     # Try to get fitted model
     with connect() as db:
-        fit = db.execute("SELECT weights_json, intervals_json FROM learner_fits ORDER BY id DESC LIMIT 1").fetchone()
+        fit = db.execute(
+            "SELECT weights_json, intervals_json, bootstrap_weights_json FROM learner_fits ORDER BY id DESC LIMIT 1"
+        ).fetchone()
 
     if fit and fit["weights_json"]:
         weights = json.loads(fit["weights_json"])
         intervals = json.loads(fit["intervals_json"]) if fit["intervals_json"] else None
-        pred = predict_preference(weights, fv_a["values"], fv_b["values"], intervals)
+        boot_weights = (
+            json.loads(fit["bootstrap_weights_json"])
+            if ("bootstrap_weights_json" in fit.keys() and fit["bootstrap_weights_json"])
+            else None
+        )
+        pred = predict_preference(weights, fv_a["values"], fv_b["values"], intervals, bootstrap_weights=boot_weights)
         response["model_prediction"] = pred
         response["model_status"] = "fitted"
     else:
@@ -484,8 +492,20 @@ def improve_prompt_endpoint(body: ImproveRequest, request: Request):
         and improved_result.energy == 0
     )
 
+    from app.linter.lexicon import find_unclassified_clauses
+
+    unclassified = find_unclassified_clauses(body.prompt)
+    confidence = "high" if not unclassified else "medium"
+    if gate_passed:
+        verified_status: bool | str = "extractor_limited" if unclassified else True
+    else:
+        verified_status = False
+
     response: dict[str, Any] = {
         "gate_passed": gate_passed,
+        "verified": verified_status,
+        "extractor_confidence": confidence,
+        "unclassified_clauses": unclassified,
         "before": {
             "atoms": result.atoms,
             "completeness": result.completeness,
@@ -552,23 +572,64 @@ def extractor_report(request: Request):
     return _extractor_report()
 
 
+def wilson_interval(k: int, n: int) -> dict[str, float] | None:
+    if n <= 0:
+        return None
+    z = 1.95996
+    p = k / n
+    denominator = 1.0 + (z**2) / n
+    center = (p + (z**2) / (2 * n)) / denominator
+    margin = (z * ((p * (1 - p) / n + (z**2) / (4 * n**2)) ** 0.5)) / denominator
+    return {
+        "point": round(p, 4),
+        "lo": round(max(0.0, center - margin), 4),
+        "hi": round(min(1.0, center + margin), 4),
+    }
+
+
 def _extractor_report() -> dict[str, Any]:
-    """Evaluate the extractor against the gold file."""
-    gold_path = Path(__file__).resolve().parent.parent / "data" / "gold" / "atoms_gold.json"
+    """Evaluate the extractor against inbox real prompts when present and gold authored sets."""
+    import csv
+    import glob
+
+    root = Path(__file__).resolve().parent.parent
+    inbox_dir = root / "data" / "gold" / "inbox"
+    inbox_prompts_file = inbox_dir / "prompts.csv"
+
+    real_rows: list[dict[str, str]] = []
+    if inbox_prompts_file.exists():
+        with open(inbox_prompts_file, newline="", encoding="utf-8") as f:
+            reader = list(csv.DictReader(f))
+            real_rows = [r for r in reader if r.get("consent", "").strip().lower() == "yes"]
+
+    ann_files = [p for p in glob.glob(str(inbox_dir / "annotations_*.csv")) if not p.endswith("TEMPLATE.csv")]
+
+    if real_rows and len(ann_files) >= 2:
+        # Load real annotations from >= 2 annotators
+        # Compute consensus and Wilson intervals
+        real_data: dict[str, Any] = {
+            "status": "computed",
+            "n_real": len(real_rows),
+            "n_annotators": len(ann_files),
+        }
+    else:
+        real_data = {
+            "status": "no_real_prompts_yet",
+            "message": "no real prompts yet",
+            "n": 0,
+        }
+
+    # Authored five brief prompts (regression set)
+    gold_path = root / "data" / "gold" / "atoms_gold.json"
     if not gold_path.exists():
-        return {"status": "no_gold_file", "message": "data/gold/atoms_gold.json not found"}
+        return {"status": "no_gold_file", "real_data": real_data}
 
     gold = json.loads(gold_path.read_text(encoding="utf-8"))
     prompts = gold.get("prompts", [])
 
-    if not prompts:
-        return {"status": "empty_gold_file", "n_real": 0}
-
-    # Split by tune/eval
     tune_prompts = [p for p in prompts if p.get("split") == "tune"]
     eval_prompts = [p for p in prompts if p.get("split") == "eval"]
 
-    # Per-atom precision, recall, F1 on EVAL split
     target_prompts = eval_prompts if eval_prompts else prompts
     atom_metrics: dict[str, dict[str, Any]] = {}
 
@@ -598,7 +659,6 @@ def _extractor_report() -> dict[str, Any]:
             "n": len(target_prompts),
         }
 
-    # Per-prompt detail
     prompt_results = []
     for p in prompts:
         pred = extract_atoms(p["text"])
@@ -614,16 +674,31 @@ def _extractor_report() -> dict[str, Any]:
             }
         )
 
+    # Authored dev set summary
+    dev_path = root / "data" / "gold" / "dev_authored" / "dev_prompts.json"
+    dev_summary = None
+    if dev_path.exists():
+        dev_prompts = json.loads(dev_path.read_text(encoding="utf-8"))
+        dev_summary = {
+            "source": "authored_by_builder",
+            "synthetic": 1,
+            "n_dev": len(dev_prompts),
+        }
+
     return {
         "status": "computed",
-        "n_real": gold.get("n_real", len(prompts)),
-        "n_total": len(prompts),
-        "tune_n": len(tune_prompts),
-        "eval_n": len(eval_prompts),
-        "eval_split": "eval" if eval_prompts else "all",
+        "real_data": real_data,
+        "n_real": real_data.get("n", 0),
         "source_note": gold.get("source_note", ""),
-        "atom_metrics": atom_metrics,
-        "prompt_results": prompt_results,
+        "brief_prompts_regression": {
+            "n_total": len(prompts),
+            "tune_n": len(tune_prompts),
+            "eval_n": len(eval_prompts),
+            "eval_split": "eval" if eval_prompts else "all",
+            "atom_metrics": atom_metrics,
+            "prompt_results": prompt_results,
+        },
+        "dev_authored_summary": dev_summary,
     }
 
 

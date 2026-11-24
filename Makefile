@@ -1,4 +1,4 @@
-.PHONY: run test reproduce measure lint format-check typecheck paper-artifacts extractor-report eval
+.PHONY: run test reproduce measure lint format-check typecheck paper-artifacts extractor-report eval real-eval
 run:
 	.venv/Scripts/python.exe -m uvicorn app.main:app --reload
 test:
@@ -13,6 +13,8 @@ extractor-report:
 	.venv/Scripts/python.exe -m app.cli extractor-report
 eval:
 	.venv/Scripts/python.exe -m app.cli eval
+real-eval:
+	.venv/Scripts/python.exe -m app.cli real-eval
 lint:
 	.venv/Scripts/ruff.exe check app tests scripts
 format-check:

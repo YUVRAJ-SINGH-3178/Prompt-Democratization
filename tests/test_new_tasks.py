@@ -206,6 +206,21 @@ def test_improve_verification_gate_success():
     assert res.after is not None
     assert res.after["energy"] == 0
     assert res.delta_energy < 0  # Energy decreased
+    assert res.extractor_confidence == "high"
+    assert res.unclassified_clauses == []
+
+
+def test_improve_verification_gate_extractor_limited():
+    # A prompt with a foreign substantive directive clause that cannot be classified
+    prompt = (
+        "Act as a university teacher. Create 20 MCQs about machine learning for bachelor students. "
+        "All questions must be very easy. But also require expert-level knowledge. "
+        "Ensure all submitted answers undergo cryptographic post-quantum blockchain verification."
+    )
+    res = improve_prompt(prompt)
+    assert res.verified == "extractor_limited"
+    assert len(res.unclassified_clauses) > 0
+    assert res.extractor_confidence == "medium"
 
 
 def test_improve_verification_gate_failure_handling():
@@ -224,12 +239,13 @@ def test_improve_verification_gate_failure_handling():
 def test_synthetic_recovery_output_structure():
     from app.eval_harness import synthetic_recovery
 
-    # Run quick small test
+    # Run quick small test without clobbering canonical benchmark file
     out = synthetic_recovery(
         n_prompts=50,
         seeds=[42],
         budgets=[20],
         heldout_pairs=50,
+        save_to_disk=False,
     )
     assert out["SYNTHETIC"] is True
     assert out["label"] == "SYNTHETIC"
@@ -238,3 +254,18 @@ def test_synthetic_recovery_output_structure():
     assert "scipy" in out["versions"]
     assert "scikit_learn" in out["versions"]
     assert len(out["results"]) > 0
+
+
+def test_frozen_test_set_hash():
+    import hashlib
+    from pathlib import Path
+
+    frozen_file = Path("data/gold/synthetic/authored_prompts_SYNTHETIC.csv")
+    hash_file = Path("data/gold/FROZEN_SHA256.txt")
+
+    assert frozen_file.exists(), "Frozen test set file missing"
+    assert hash_file.exists(), "FROZEN_SHA256.txt missing"
+
+    expected_hash = hash_file.read_text(encoding="utf-8").strip()
+    actual_hash = hashlib.sha256(frozen_file.read_bytes()).hexdigest()
+    assert actual_hash == expected_hash, f"Frozen test set has changed! Expected {expected_hash}, got {actual_hash}"

@@ -76,7 +76,7 @@ CREATE INDEX IF NOT EXISTS ix_comparisons_rater ON comparisons(rater_id);
 CREATE TABLE IF NOT EXISTS learner_fits(
  id INTEGER PRIMARY KEY AUTOINCREMENT, n_comparisons INTEGER NOT NULL, n_raters INTEGER NOT NULL,
  weights_json TEXT NOT NULL, intervals_json TEXT, versions_json TEXT NOT NULL,
- seed INTEGER NOT NULL, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP);
+ seed INTEGER NOT NULL, bootstrap_weights_json TEXT, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP);
 """
 
 
@@ -91,5 +91,9 @@ def connect() -> sqlite3.Connection:
     if path_key not in _SCHEMA_INITIALIZED:
         db.execute("PRAGMA journal_mode=WAL;")
         db.executescript(SCHEMA)
+        try:
+            db.execute("ALTER TABLE learner_fits ADD COLUMN bootstrap_weights_json TEXT;")
+        except sqlite3.OperationalError:
+            pass
         _SCHEMA_INITIALIZED.add(path_key)
     return db

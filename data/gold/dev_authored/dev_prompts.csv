@@ -1,0 +1,136 @@
+prompt_id,voice,source,synthetic,prompt_text,very_easy,expert_level,no_basic,hidden_answers,answer_after_each_q,single_correct,multi_interp,clear_unambiguous,confusing_language,ordered_easy_to_hard,role,audience,topic,count,n_options,labeling,marking,explanation,ordering
+dev-01,terse,authored_by_builder,1,"Act as professor. 10 MCQs on Normalization for bachelor students. 4 choices (A, B, C, D). Mark correct. Easy to hard.",0,0,0,0,0,0,0,0,0,1,1.0,1.0,1.0,1.0,1.0,1.0,1.0,0.0,1.0
+dev-02,terse,authored_by_builder,1,Create 5 MCQs on CPU scheduling. Four options each. Give answers.,0,0,0,0,0,0,0,0,0,0,0.0,0.0,1.0,1.0,1.0,0.0,1.0,0.0,0.0
+dev-03,terse,authored_by_builder,1,Role: university teacher. 20 MCQs on binary search trees. 4 options (A-D). Explain every answer. All very easy.,1,0,0,0,0,0,0,0,0,0,1.0,0.0,1.0,1.0,1.0,1.0,0.0,1.0,0.0
+dev-04,terse,authored_by_builder,1,15 MCQs on graph theory for undergraduates. 4 choices. Mark answer. Skip basic questions. Expert level.,0,1,1,0,0,0,0,0,0,0,0.0,1.0,1.0,1.0,1.0,0.0,1.0,0.0,0.0
+dev-05,terse,authored_by_builder,1,MCQs on networking. Hide answers from students. Put answer key at the end.,0,0,0,1,0,0,0,0,0,0,0.0,0.5,1.0,0.0,0.0,0.0,1.0,0.0,0.0
+dev-06,verbose,authored_by_builder,1,"You are to act in the professional capacity of a distinguished university professor lecturing to senior bachelor students. Your task is to compose an extensive examination consisting of precisely 25 multiple-choice questions focusing exclusively on distributed transactions and consensus protocols. Each item must present four clearly distinguished alternatives labelled A, B, C, and D. Highlight the correct answer in bold text immediately below the question stem, and subsequently provide a comprehensive, detailed explanation clarifying why the chosen alternative is sound while detailing the precise technical misconceptions in the other three alternatives. Structure the sequence of questions systematically so that they progress from the easiest introductory items to the hardest analytical scenarios.",0,0,0,0,0,0,0,0,0,1,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0
+dev-07,verbose,authored_by_builder,1,"Please function as an experienced instructor who teaches graduate seminar courses in computer science. Generate twelve multiple-choice questions on cryptographic protocols for postgraduate learners. Every question requires four options labelled A through D. Make sure that all questions require advanced research knowledge and expert-level understanding of zero-knowledge proofs. Omit any basic questions from this assessment. Directly after each question, provide the answer and write a full technical explanation for every choice.",0,1,1,0,1,0,0,0,0,0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,0.0
+dev-08,verbose,authored_by_builder,1,"Act as a university professor preparing a rigorous quiz on memory management and virtual memory for undergraduate students. Produce thirty questions with four answer choices labelled A, B, C, and D. Do not reveal the correct answer to students under any circumstances, as this will be administered as an in-class test. Provide a separate master answer key at the very end of the document. Ensure that exactly one option is the correct answer for every question without exception.",0,0,0,1,0,1,0,0,0,0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,0.0,0.0
+dev-09,verbose,authored_by_builder,1,"Serve as a university teacher responsible for assessing bachelor cohort knowledge in algorithms and computational complexity. Develop 10 multiple-choice questions on NP-completeness. Each problem must feature four choices labelled (A, B, C, D). Construct questions using deliberately confusing language and tricky statements so that students are forced to re-read every premise. Include options that can be interpreted in multiple ways, testing whether students can detect ambiguity. Provide the correct answer and a thorough rationale explaining why the distractors fail.",0,0,0,0,0,0,1,0,1,0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,0.0
+dev-10,verbose,authored_by_builder,1,Act as an academic instructor. Prepare a series of multiple-choice questions covering object-oriented programming principles. Ensure that the questions help students review fundamental concepts. Give four options for each item and specify which choice is right. Explain the answers wherever necessary to ensure comprehension.,0,0,0,0,0,0,0,0,0,0,1.0,0.5,1.0,0.0,1.0,0.0,1.0,0.5,0.0
+dev-11,non_native,authored_by_builder,1,"Please act as university teacher. Make 10 question on database Normalization for bachelor students. 4 choices with A, B, C, D letters. Mark right choice. Make all question very easy so everyone pass.",1,0,0,0,0,0,0,0,0,0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,0.0,0.0
+dev-12,non_native,authored_by_builder,1,"You are teacher for university. Write 15 MCQ about operating systems. Four options each. After each question show the answer and give reason. Do not put basic question, only expert level.",0,1,1,0,1,0,0,0,0,0,1.0,0.0,1.0,1.0,1.0,0.0,1.0,1.0,0.0
+dev-13,non_native,authored_by_builder,1,Act as professor. Create 20 test questions for computer science students about recursion. Four choice A B C D. Correct answer keep hidden from students. Sort from easiest to hardest.,0,0,0,1,0,0,0,0,0,1,1.0,0.5,1.0,1.0,1.0,1.0,1.0,0.0,1.0
+dev-14,non_native,authored_by_builder,1,Teacher role. 8 MCQ on SQL indexing for undergraduate learners. 4 options. Strictly only one correct answer per question. Write clear explanation for every choice.,0,0,0,0,0,1,0,0,0,0,0.5,1.0,1.0,1.0,1.0,0.0,1.0,1.0,0.0
+dev-15,non_native,authored_by_builder,1,Act as college instructor. 12 multiple choice on machine learning. Four choices. Use tricky language and statements that can be interpreted in multiple ways to challenge them. Explain why others wrong.,0,0,0,0,0,0,1,0,1,0,1.0,0.0,1.0,1.0,1.0,0.0,0.0,1.0,0.0
+dev-16,non_native,authored_by_builder,1,Prepare some questions about data structures for students. Provide four options and answers. Explain if necessary.,0,0,0,0,0,0,0,0,0,0,0.0,0.5,1.0,0.0,1.0,0.0,1.0,0.5,0.0
+dev-17,non_native,authored_by_builder,1,"Act as professor. 10 questions on compiler design for bachelor cohort. Must have four choices labelled A, B, C, D. Ensure every question is clear and unambiguous without room for misinterpretation. Order by increasing difficulty.",0,0,0,0,0,0,0,1,0,1,1.0,1.0,1.0,1.0,1.0,1.0,0.0,0.0,1.0
+dev-18,non_native,authored_by_builder,1,Make 20 MCQs on software engineering. Give 4 choices. Don't reveal answers to students until test is finished.,0,0,0,1,0,0,0,0,0,0,0.0,0.5,1.0,1.0,1.0,0.0,1.0,0.0,0.0
+dev-19,bullet_list,authored_by_builder,1,"Task instructions:
+- Role: Act as a university professor
+- Audience: Bachelor students in computing
+- Topic: Relational algebra
+- Count: 10 multiple-choice questions
+- Options: 4 choices labelled (A, B, C, D)
+- Answer key: Highlight the correct answer in bold
+- Explanations: Include an explanation for every option
+- Sequence: Progressing from the easiest to the hardest",0,0,0,0,0,0,0,0,0,1,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0
+dev-20,bullet_list,authored_by_builder,1,"* Instructor persona: Experienced teacher
+* Course topic: Computer networks and socket programming
+* Quantity: 15 questions
+* Choices: Four options each
+* Difficulty requirement: All questions must be very easy
+* Explanation: Provide detailed explanations",1,0,0,0,0,0,0,0,0,0,1.0,0.0,1.0,1.0,1.0,0.0,0.0,1.0,0.0
+dev-21,bullet_list,authored_by_builder,1,"- Act as university lecturer for undergraduate class
+- 20 MCQs on operating systems kernels
+- 4 options labelled A to D
+- Skip the basics completely; no basic questions allowed
+- Must require advanced research knowledge and expert level understanding
+- Answer and explanation after each question",0,1,1,0,1,0,0,0,0,0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,0.0
+dev-22,bullet_list,authored_by_builder,1,"* Topic: Cryptography and hashing algorithms
+* Target: Postgraduate students
+* Format: 10 MCQs with four choices
+* Answers: Keep answers hidden from students; put answer key at the end
+* Feedback: Detailed explanation for each correct answer",0,0,0,1,0,0,0,0,0,0,0.0,1.0,1.0,1.0,1.0,0.0,1.0,1.0,0.0
+dev-23,bullet_list,authored_by_builder,1,"- Role: College professor
+- Subject: Web security
+- Items: 12 multiple choice questions
+- Options: Four choices labelled A, B, C, D
+- Correctness: Exactly one correct option per question
+- Clarity: Ensure each question is clear and unambiguous",0,0,0,0,0,1,0,1,0,0,1.0,0.0,1.0,1.0,1.0,1.0,1.0,0.0,0.0
+dev-24,bullet_list,authored_by_builder,1,"* Act as professor of software engineering
+* 15 MCQs for master students
+* Four options each
+* Use tricky wording and confusing language to test attention
+* Include options that can be interpreted in multiple ways
+* Mark correct choice and explain why distractors fail",0,0,0,0,0,0,1,0,1,0,1.0,1.0,1.0,1.0,1.0,0.0,1.0,1.0,0.0
+dev-25,bullet_list,authored_by_builder,1,"- Create multiple choice questions for students
+- Subject: Computer architecture
+- Four choices for each
+- Mark the right answer
+- Arrange properly",0,0,0,0,0,0,0,0,0,0,0.0,0.5,1.0,0.0,1.0,0.0,1.0,0.0,0.5
+dev-26,bullet_list,authored_by_builder,1,"* Act as a university teacher
+* Topic: Calculus and integration techniques
+* Count: 8 questions for freshman students
+* Four options labelled A, B, C, D
+* Sort in ascending order of difficulty from easiest to hardest",0,0,0,0,0,0,0,0,0,1,1.0,1.0,1.0,1.0,1.0,1.0,0.0,0.0,1.0
+dev-27,numbered_rules,authored_by_builder,1,"Rule 1: Act as an experienced professor in computer science.
+Rule 2: Create 10 MCQs on database Normalization for bachelor students.
+Rule 3: Give four options for each question labelled A, B, C, and D.
+Rule 4: Mark the correct answer in bold.
+Rule 5: After every question, provide the answer and a detailed explanation.
+Rule 6: Organize from the easiest to the hardest.",0,0,0,0,1,0,0,0,0,1,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0
+dev-28,numbered_rules,authored_by_builder,1,"1. Persona: university teacher.
+2. Subject: Artificial intelligence heuristics.
+3. Quantity: 20 MCQs for graduate students.
+4. Options: 4 choices per item.
+5. Requirement: All questions must be very easy so every student can answer.
+6. Provide explanations wherever necessary.",1,0,0,0,0,0,0,0,0,0,1.0,1.0,1.0,1.0,1.0,0.0,0.0,0.5,0.0
+dev-29,numbered_rules,authored_by_builder,1,"1. Act as university instructor.
+2. Prepare 15 MCQs on operating systems.
+3. Provide four choices for each item.
+4. Avoid basic questions; do not include any basic questions.
+5. Test expert-level understanding and complex problem-solving.
+6. State the answer after each question.",0,1,1,0,1,0,0,0,0,0,1.0,0.0,1.0,1.0,1.0,0.0,1.0,0.0,0.0
+dev-30,numbered_rules,authored_by_builder,1,"1. Role: professor.
+2. Target: bachelor students.
+3. Topic: Data structures and binary heaps.
+4. 10 MCQs with four options labelled (A, B, C, D).
+5. Do not reveal the correct answer to students.
+6. Put answers at the end in an answer key.",0,0,0,1,0,0,0,0,0,0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,0.0,0.0
+dev-31,numbered_rules,authored_by_builder,1,"Rule 1: Prepare 25 MCQs on computer networks.
+Rule 2: Give four options for every question.
+Rule 3: Ensure there is only one correct answer per item.
+Rule 4: Write clear, unambiguous questions leaving no room for misinterpretation.
+Rule 5: Highlight the right choice.",0,0,0,0,0,1,0,1,0,0,0.0,0.0,1.0,1.0,1.0,0.0,1.0,0.0,0.0
+dev-32,numbered_rules,authored_by_builder,1,"1. Act as university teacher.
+2. Create 15 questions on cloud computing.
+3. Give four choices labelled A-D.
+4. Use confusing language and tricky statements to test critical reading.
+5. Allow options that can be interpreted in multiple ways.
+6. Supply the correct answer and explanation.",0,0,0,0,0,0,1,0,1,0,1.0,0.0,1.0,1.0,1.0,1.0,1.0,1.0,0.0
+dev-33,numbered_rules,authored_by_builder,1,"1. Act as expert professor.
+2. Make 10 MCQs on algorithms.
+3. Provide four choices for each.
+4. Mark right answer.
+5. Arrange them properly.",0,0,0,0,0,0,0,0,0,0,1.0,0.0,1.0,1.0,1.0,0.0,1.0,0.0,0.5
+dev-34,numbered_rules,authored_by_builder,1,"Rule 1: Teacher persona for sophomore cohort.
+Rule 2: Topic is linear algebra and matrix rank.
+Rule 3: Generate 12 MCQs with 4 choices labelled A, B, C, D.
+Rule 4: Sequence questions in order of increasing difficulty from easiest to hardest.",0,0,0,0,0,0,0,0,0,1,0.5,1.0,1.0,1.0,1.0,1.0,0.0,0.0,1.0
+dev-35,negations,authored_by_builder,1,Act as professor. 10 MCQs on database systems. Do not reveal the correct answer to students until after grading. Four choices each.,0,0,0,1,0,0,0,0,0,0,1.0,0.5,1.0,1.0,1.0,0.0,1.0,0.0,0.0
+dev-36,negations,authored_by_builder,1,Create 15 MCQs on machine learning. Do not include any basic questions; skip introductory concepts. 4 options labelled A to D.,0,0,1,0,0,0,0,0,0,0,0.0,0.0,1.0,1.0,1.0,1.0,0.0,0.0,0.0
+dev-37,negations,authored_by_builder,1,Act as a university teacher for bachelor students. Write 20 MCQs on operating systems. The questions should not be very easy; make them challenging. 4 options.,0,0,0,0,0,0,0,0,0,0,1.0,1.0,1.0,1.0,1.0,0.0,0.0,0.0,0.0
+dev-38,negations,authored_by_builder,1,10 questions on Python programming. Avoid confusing language and tricky statements. Questions must be clear and unambiguous. 4 choices.,0,0,0,0,0,0,0,1,0,0,0.0,0.0,1.0,1.0,1.0,0.0,0.0,0.0,0.0
+dev-39,negations,authored_by_builder,1,Role: university professor. 12 MCQs on cryptography. Never show the answers to students on the question sheet. Keep answers hidden. 4 options (A-D).,0,0,0,1,0,0,0,0,0,0,1.0,0.5,1.0,1.0,1.0,1.0,1.0,0.0,0.0
+dev-40,negations,authored_by_builder,1,15 MCQs on computer security. Do not provide an answer key at the end; instead give the answer after each question. 4 choices.,0,0,0,0,1,0,0,0,0,0,0.0,0.0,1.0,1.0,1.0,0.0,1.0,0.0,0.0
+dev-41,negations,authored_by_builder,1,Act as instructor. 8 questions on software architecture. Ensure options cannot be interpreted in multiple ways; make sure there is only one correct answer.,0,0,0,0,0,1,0,0,0,0,1.0,0.0,1.0,1.0,0.0,0.0,1.0,0.0,0.0
+dev-42,negations,authored_by_builder,1,Create 10 questions on compiler design. Do not arrange from easiest to hardest; randomize the order. 4 options each.,0,0,0,0,0,0,0,0,0,0,0.0,0.0,1.0,1.0,1.0,0.0,0.0,0.0,0.0
+dev-43,paraphrases,authored_by_builder,1,"Act as professor. 10 MCQs on database Normalization for bachelor students. Four choices (A, B, C, D). Exactly one option is correct. Explain each answer.",0,0,0,0,0,1,0,0,0,0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,0.0
+dev-44,paraphrases,authored_by_builder,1,"Role: teacher. 15 questions on sorting algorithms. Four choices. Just one option is correct per question, with no second right answer.",0,0,0,0,0,1,0,0,0,0,1.0,0.0,1.0,1.0,1.0,0.0,1.0,0.0,0.0
+dev-45,paraphrases,authored_by_builder,1,Create 12 MCQs on operating systems. 4 options. Make sure every item has strictly one right answer even when distractors look plausible.,0,0,0,0,0,1,0,0,0,0,0.0,0.0,1.0,1.0,1.0,0.0,1.0,0.0,0.0
+dev-46,paraphrases,authored_by_builder,1,Act as university teacher. 20 MCQs on machine learning. Four choices. Arrange questions in order of increasing difficulty from easiest to hardest.,0,0,0,0,0,0,0,0,0,1,1.0,0.0,1.0,1.0,1.0,0.0,0.0,0.0,1.0
+dev-47,paraphrases,authored_by_builder,1,Prepare 10 MCQs on data structures for undergraduate students. Four options labelled A to D. Progress from simplest recall items to most difficult critical thinking problems.,0,0,0,0,0,0,0,0,0,1,0.0,1.0,1.0,1.0,1.0,1.0,0.0,0.0,1.0
+dev-48,paraphrases,authored_by_builder,1,Act as professor. 15 MCQs on computer networks. 4 choices. All questions must test advanced research knowledge and expert level understanding.,0,1,0,0,0,0,0,0,0,0,1.0,0.0,1.0,1.0,1.0,0.0,0.0,0.0,0.0
+dev-49,paraphrases,authored_by_builder,1,Act as instructor. 8 MCQs on digital circuits for bachelor learners. Four choices (A-D). Questions must be beginner level and very easy for everyone.,1,0,0,0,0,0,0,0,0,0,1.0,1.0,1.0,1.0,1.0,1.0,0.0,0.0,0.0
+dev-50,paraphrases,authored_by_builder,1,10 questions on artificial intelligence. 4 choices. Withhold the answers from students and give answers at the end of the test in an answer key.,0,0,0,1,0,0,0,0,0,0,0.0,0.5,1.0,1.0,1.0,0.0,1.0,0.0,0.0
+dev-51,separate_sentence_conflicts,authored_by_builder,1,"Act as a university teacher. Create 20 MCQs about machine learning for bachelor students. All questions must be very easy so every student can answer them. However, every question must also test advanced research knowledge and expert-level understanding. Provide four options and mark the answer.",1,1,0,0,0,0,0,0,0,0,1.0,1.0,1.0,1.0,1.0,0.0,1.0,0.0,0.0
+dev-52,separate_sentence_conflicts,authored_by_builder,1,Act as a professor. Generate 15 MCQs on computer systems. Make all questions very easy. Do not include any basic questions in this examination. Give four choices for each question.,1,0,1,0,0,0,0,0,0,0,1.0,0.0,1.0,1.0,1.0,0.0,0.0,0.0,0.0
+dev-53,separate_sentence_conflicts,authored_by_builder,1,"Act as an experienced instructor. Create 10 MCQs on database management systems. Do not reveal the correct answer to students. After every question, provide the answer and a detailed explanation. Each question should have four options labelled A, B, C, D.",0,0,0,1,1,0,0,0,0,0,1.0,0.5,1.0,1.0,1.0,1.0,1.0,1.0,0.0
+dev-54,separate_sentence_conflicts,authored_by_builder,1,Act as a university professor. Prepare 25 MCQs on operating systems for undergraduates. Make sure there is only one correct answer for each item. Include options that can be interpreted in multiple ways so that several choices seem plausible. Every question must have four options.,0,0,0,0,0,1,1,0,0,0,1.0,1.0,1.0,1.0,1.0,0.0,1.0,0.0,0.0
+dev-55,separate_sentence_conflicts,authored_by_builder,1,"You are a teacher designing an exam on algorithms. Ensure each question is clear and unambiguous, leaving no room for misinterpretation. Use confusing language and tricky statements to test critical thinking. Provide four options labelled A, B, C, D for all 10 questions.",0,0,0,0,0,0,0,1,1,0,1.0,0.0,1.0,1.0,1.0,1.0,0.0,0.0,0.0
+dev-56,separate_sentence_conflicts,authored_by_builder,1,Role: university instructor. Topic: software testing. Count: 12 MCQs for bachelor cohort. Every question must be clear and unambiguous with strictly defined wording. Write options that can be interpreted in multiple ways so that interpretation matters. Provide four choices and explanations.,0,0,0,0,0,0,1,1,0,0,1.0,1.0,1.0,1.0,1.0,0.0,0.0,1.0,0.0
+dev-57,separate_sentence_conflicts,authored_by_builder,1,"Act as professor. Create 15 MCQs on discrete mathematics. All questions must be extremely easy and trivial for beginner students. At the same time, ensure no basic questions are included. Four choices per question.",1,0,1,0,0,0,0,0,0,0,1.0,0.5,1.0,1.0,1.0,0.0,0.0,0.0,0.0
+dev-58,separate_sentence_conflicts,authored_by_builder,1,Act as university teacher. 20 MCQs on distributed systems for postgraduate students. Keep the correct answer hidden from students; do not show answers on the exam. Display the answer after each question with a complete rationale. Provide four choices labelled A through D.,0,0,0,1,1,0,0,0,0,0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,0.0
+dev-59,zero_atoms,authored_by_builder,1,Act as a university teacher and create some multiple-choice questions for students. Make the questions useful for their exams. Give four options for each question and provide the answers. Explain the answers wherever necessary.,0,0,0,0,0,0,0,0,0,0,1.0,0.5,0.0,0.0,1.0,0.0,1.0,0.5,0.0
