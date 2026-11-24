@@ -125,7 +125,10 @@ def main():
     sub.add_parser("real-eval")
     sub.add_parser("dev-eval")
     froz = sub.add_parser("frozen-eval")
+    froz.add_argument("--set", dest="set_name", default="v3", help="Frozen set name (default: v3)")
     froz.add_argument("--force", action="store_true", default=False)
+    swp = sub.add_parser("model-sweep")
+    swp.add_argument("--models", type=str, required=True, help="Comma-separated model names")
     args = parser.parse_args()
     if args.command == "reproduce":
         out = write_run(args.study, args.seed, args.repetitions)
@@ -154,7 +157,12 @@ def main():
     elif args.command == "frozen-eval":
         from app.extractor.eval import run_frozen_eval
 
-        out = run_frozen_eval(force=args.force)
+        out = run_frozen_eval(force=args.force, set_name=args.set_name)
+    elif args.command == "model-sweep":
+        from app.extractor.eval import run_model_sweep
+
+        models = [m.strip() for m in args.models.split(",") if m.strip()]
+        out = run_model_sweep(models)
     else:
         out = {"error": "unknown command"}
     print(json.dumps(out, indent=2))

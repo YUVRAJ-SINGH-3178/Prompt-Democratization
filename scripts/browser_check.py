@@ -128,9 +128,11 @@ async def main():
                         page.on("console", lambda msg: errors.append(msg.text) if msg.type == "error" else None)
                         page.on(
                             "response",
-                            lambda response: auth_responses.append((response.url.rsplit("/", 1)[-1], response.status))
-                            if "/api/auth/" in response.url or response.url.endswith(dashboard)
-                            else None,
+                            lambda response: (
+                                auth_responses.append((response.url.rsplit("/", 1)[-1], response.status))
+                                if "/api/auth/" in response.url or response.url.endswith(dashboard)
+                                else None
+                            ),
                         )
                         await page.goto("http://127.0.0.1:8765", wait_until="networkidle")
                         await page.evaluate(

@@ -13,7 +13,10 @@ Task 2:
 
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass
+from pathlib import Path
+import re
 from typing import Any
 
 from app.auth_db import connect
@@ -23,7 +26,135 @@ from app.extractor.llm_reader import (
     read_prompt_with_llm,
 )
 from app.linter.core import evaluate, extract_atoms, score_slots
-from app.linter.lexicon import find_unclassified_clauses
+from app.linter.lexicon import find_unclassified_clauses, split_sentences
+
+ROOT = Path(__file__).resolve().parent.parent.parent
+CUE_LEXICON_PATH = ROOT / "data" / "gold" / "cue_lexicon.json"
+
+
+def load_cue_lexicon() -> list[str]:
+    """Load cue phrases from data/gold/cue_lexicon.json."""
+    if not CUE_LEXICON_PATH.exists():
+        return []
+    try:
+        data = json.loads(CUE_LEXICON_PATH.read_text(encoding="utf-8"))
+        cues: list[str] = list(data.get("weak_cues", []))
+        for fam_items in data.get("families", {}).values():
+            cues.extend(fam_items)
+        seen = set()
+        unique_cues = []
+        for c in cues:
+            clow = str(c).strip().lower()
+            if clow and clow not in seen:
+                seen.add(clow)
+                unique_cues.append(clow)
+        return unique_cues
+    except Exception:
+        return []
+
+
+def find_unrecognised_cue_flags(
+    prompt: str,
+    accepted_atoms: list[str],
+    highlight_spans: list[dict[str, Any]],
+    human_decisions: dict[tuple[str, str], dict[str, Any]] | None = None,
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    """Flag sentences containing requirement-like phrasing where no accepted atom was found."""
+    cues = load_cue_lexicon()
+    if not cues:
+        return [], []
+
+    sentences = split_sentences(prompt)
+    flags: list[dict[str, Any]] = []
+    open_flag_items: list[dict[str, Any]] = []
+
+    pos = 0
+    for sentence in sentences:
+        clean_sentence = sentence.strip()
+        if not clean_sentence:
+            continue
+
+        # Find character span of sentence in prompt
+        start_char = prompt.find(clean_sentence, pos)
+        if start_char == -1:
+            start_char = prompt.find(clean_sentence)
+        if start_char == -1:
+            start_char = pos
+            end_char = pos + len(clean_sentence)
+        else:
+            end_char = start_char + len(clean_sentence)
+            pos = end_char
+
+        # Ignore short header lines like 'Format:' or 'Task:'
+        words = clean_sentence.split()
+        if len(words) <= 2 and clean_sentence.rstrip().endswith(":"):
+            continue
+
+        # Check if an accepted atom was found in this sentence
+        has_accepted = False
+        for s in highlight_spans:
+            if s.get("item_type") == "atom" and (
+                s.get("item_name") in accepted_atoms or s.get("item_name") == "clear_unambiguous"
+            ):
+                s_start, s_end = s.get("start", -1), s.get("end", -1)
+                if s_start != -1 and max(s_start, start_char) < min(s_end, end_char):
+                    has_accepted = True
+                    break
+
+        if not has_accepted:
+            # Check rule-based extraction on this specific sentence
+            sentence_atoms = set(extract_atoms(clean_sentence))
+            if (sentence_atoms & set(accepted_atoms)) or ("clear_unambiguous" in sentence_atoms):
+                has_accepted = True
+
+        if has_accepted:
+            continue
+
+        # Check for presence of weak or family cues in sentence
+        matched_cue = None
+        sentence_lower = clean_sentence.lower()
+        for cue in cues:
+            if " " in cue:
+                if cue in sentence_lower:
+                    matched_cue = cue
+                    break
+            else:
+                pattern = r"\b" + re.escape(cue) + r"\b"
+                if re.search(pattern, sentence_lower):
+                    matched_cue = cue
+                    break
+
+        if matched_cue:
+            message = (
+                f"This sentence contains requirement-like phrasing that the system does not recognise: {clean_sentence}"
+            )
+            flag = {
+                "item_type": "cue_flag",
+                "item_name": "possible_unrecognised_requirement",
+                "sentence": clean_sentence,
+                "matched_cue": matched_cue,
+                "start": start_char,
+                "end": end_char,
+                "message": message,
+            }
+            flags.append(flag)
+
+            # Check human decision
+            h_dec = (human_decisions or {}).get(("cue_flag", clean_sentence))
+            if h_dec is None:
+                open_flag_items.append(
+                    {
+                        "item_type": "cue_flag",
+                        "item_name": "possible_unrecognised_requirement",
+                        "verdict": "possible_unrecognised_requirement",
+                        "quote": clean_sentence,
+                        "rule_opinion": f"Cue detected: {matched_cue}",
+                        "reader_opinion": None,
+                        "message": message,
+                    }
+                )
+
+    return flags, open_flag_items
 
 
 @dataclass
@@ -50,6 +181,11 @@ class CombinedExtractionResult:
     open_items: list[dict[str, Any]]
     unclassified_clauses: list[str]
     verified_ready: bool
+    energy_lower_bound: int = 0
+    energy_is_lower_bound: bool = True
+    energy_display: str = ""
+    cue_flags: list[dict[str, Any]] | None = None
+    reader_unavailable_reason: str | None = None
 
 
 def get_existing_human_decisions(prompt_id: str | None, prompt_text: str) -> dict[tuple[str, str], dict[str, Any]]:
@@ -119,6 +255,8 @@ def combine_rules_and_reader(
     api_base: str | None = None,
     record_reviews: bool = True,
     policy_atoms: tuple[str, ...] | None = None,
+    is_dev: bool = False,
+    quote_mode: str = "strict",
 ) -> CombinedExtractionResult:
     """Combine rule-based extraction and LLM reader verdicts with verifiable evidence."""
     # 1. Rule-based extraction
@@ -132,11 +270,17 @@ def combine_rules_and_reader(
             model=model,
             api_key=api_key,
             api_base=api_base,
+            prompt_id=prompt_id,
+            is_dev=is_dev,
+            quote_mode=quote_mode,
         )
 
     reader_enabled = bool(reader_output.get("enabled", False))
     reader_status = str(reader_output.get("status", "disabled"))
     reader_message = reader_output.get("message")
+    reader_unavailable_reason = reader_output.get("reader_unavailable_reason")
+    if not reader_enabled and not reader_unavailable_reason:
+        reader_unavailable_reason = "no_key"
 
     # 3. Existing human decisions
     human_decisions = get_existing_human_decisions(prompt_id, prompt)
@@ -153,7 +297,7 @@ def combine_rules_and_reader(
         h_dec = human_decisions.get(("atom", atom))
 
         if h_dec is not None:
-            # Human decision overrides both machines!
+            # Prioritize human review decisions
             status = h_dec["status"]
             is_confirmed = status == "confirmed"
             verdict = "human_confirmed" if is_confirmed else "human_rejected"
@@ -197,7 +341,7 @@ def combine_rules_and_reader(
         span = r_item.get("span")
 
         if r_unsupported:
-            # Model asserted without valid verbatim quote: ignore claim and log it!
+            # Model asserted without valid verbatim quote: discard unsupported claim
             if rule_has:
                 verdict = "rules_only"
                 accepted = False
@@ -382,7 +526,7 @@ def combine_rules_and_reader(
                 }
             )
         else:
-            # Both > 0 and differ (e.g. 0.5 vs 1.0): Take neither!
+            # Differing positive slot scores route to review with neutral score
             verdict = "disagree_value"
             score = 0.0
             needs_review = True
@@ -444,11 +588,30 @@ def combine_rules_and_reader(
             }
         )
 
+    # Unrecognised cue identification
+    cue_flags, open_cue_items = find_unrecognised_cue_flags(prompt, accepted_atoms, highlight_spans, human_decisions)
+    open_items.extend(open_cue_items)
+
     # Queue open items in database
     if record_reviews and open_items:
         queue_open_items_in_db(prompt_id, prompt, open_items)
 
-    verified_ready = len(review_atoms) == 0 and len(review_slots) == 0 and len(unclassified_clauses) == 0
+    verified_ready = (
+        len(review_atoms) == 0
+        and len(review_slots) == 0
+        and len(unclassified_clauses) == 0
+        and len(open_cue_items) == 0
+    )
+
+    energy_lower_bound = energy
+    energy_is_lower_bound = True
+    if has_review_range:
+        energy_display = f"[{energy_min}, {energy_max}] conflicts (at least {energy_min} conflicts found)"
+    else:
+        if energy == 0:
+            energy_display = "0 conflicts found among recognised requirements; unrecognised requirements may add more"
+        else:
+            energy_display = f"at least {energy} conflicts found"
 
     return CombinedExtractionResult(
         prompt=prompt,
@@ -473,4 +636,9 @@ def combine_rules_and_reader(
         open_items=open_items,
         unclassified_clauses=unclassified_clauses,
         verified_ready=verified_ready,
+        energy_lower_bound=energy_lower_bound,
+        energy_is_lower_bound=energy_is_lower_bound,
+        energy_display=energy_display,
+        cue_flags=cue_flags,
+        reader_unavailable_reason=reader_unavailable_reason,
     )

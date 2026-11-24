@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "date": "2026-11-24T12:03:14.211627+00:00",
+    "date": "2026-11-24T13:21:08.278424+00:00",
     "model": "openai/gpt-oss-20b",
     "reader_enabled": true,
     "rubric_version": "1.0.0",
@@ -212,7 +212,178 @@
         "wrong_energy_strict_count": 0,
         "wrong_energy_strict_prompts": [],
         "wrong_energy_range_count": 0,
-        "wrong_energy_range_prompts": []
+        "wrong_energy_range_prompts": [],
+        "strict_energy_correctness": 1.0,
+        "range_energy_correctness": 1.0,
+        "diagnostics": {
+          "calls_made": 0,
+          "calls_returned": 0,
+          "malformed_responses": 0,
+          "retries": 0,
+          "reader_failed": 0,
+          "claims_asserted_total": 0,
+          "claims_discarded_quote_total": 0,
+          "claims_discarded_negated_total": 0,
+          "claims_accepted_total": 0,
+          "strict_accepted_total": 0,
+          "norm_accepted_total": 0,
+          "latency_seconds_total": 0.0,
+          "tokens_total": 0,
+          "per_atom": {
+            "very_easy": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "expert_level": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "no_basic": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "ordered_easy_to_hard": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "hidden_answers": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "answer_after_each_q": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "single_correct": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "multi_interp": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "confusing_language": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            }
+          },
+          "per_slot": {
+            "role": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "audience": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "topic": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "count": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "n_options": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "labeling": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "marking": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "explanation": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "ordering": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            }
+          }
+        },
+        "cue_flags_cost": {
+          "missed_atoms_total": 0,
+          "missed_atoms_caught_by_cues": 0,
+          "pct_missed_caught": 0.0,
+          "zero_gold_prompts_count": 17,
+          "zero_gold_prompts_flagged": 6,
+          "false_flag_rate_on_zero_gold": 0.3529,
+          "total_cue_flags": 16,
+          "review_load_per_prompt": 0.24
+        },
+        "reader_contribution": {
+          "reader_added_atoms_total": 0,
+          "reader_added_atoms_correct": 0,
+          "reader_added_accuracy": 0.0
+        }
       },
       "reader_only": {
         "status": "success",
@@ -220,168 +391,168 @@
         "review_rate": 0.0,
         "total_review_items": 0,
         "total_eval_items": 1224,
-        "slot_agreement": 0.4216,
+        "slot_agreement": 0.5833,
         "slot_agreement_ci_95": [
-          0.3831,
-          0.4611
+          0.5439,
+          0.6218
         ],
-        "slot_matches": 258,
+        "slot_matches": 357,
         "total_slots": 612,
-        "micro_precision": 0.7778,
+        "micro_precision": 0.8276,
         "micro_precision_ci_95": [
-          0.4526,
-          0.9368
+          0.6545,
+          0.924
         ],
-        "micro_recall": 0.0972,
+        "micro_recall": 0.3333,
         "micro_recall_ci_95": [
-          0.0479,
-          0.1874
+          0.2353,
+          0.4482
         ],
-        "micro_f1": 0.1728,
+        "micro_f1": 0.4752,
         "per_atom": {
           "very_easy": {
             "gold_count": 8,
-            "pred_count": 0,
-            "tp": 0,
-            "fp": 0,
-            "fn": 8,
-            "precision": 0.0,
-            "precision_ci_95": [
-              0.0,
-              0.0
-            ],
-            "recall": 0.0,
-            "recall_ci_95": [
-              0.0,
-              0.3244
-            ],
-            "f1": 0.0
-          },
-          "expert_level": {
-            "gold_count": 7,
-            "pred_count": 1,
-            "tp": 1,
-            "fp": 0,
-            "fn": 6,
-            "precision": 1.0,
-            "precision_ci_95": [
-              0.2065,
-              1.0
-            ],
-            "recall": 0.1429,
-            "recall_ci_95": [
-              0.0257,
-              0.5131
-            ],
-            "f1": 0.2501
-          },
-          "no_basic": {
-            "gold_count": 8,
-            "pred_count": 0,
-            "tp": 0,
-            "fp": 0,
-            "fn": 8,
-            "precision": 0.0,
-            "precision_ci_95": [
-              0.0,
-              0.0
-            ],
-            "recall": 0.0,
-            "recall_ci_95": [
-              0.0,
-              0.3244
-            ],
-            "f1": 0.0
-          },
-          "ordered_easy_to_hard": {
-            "gold_count": 10,
             "pred_count": 3,
             "tp": 3,
             "fp": 0,
-            "fn": 7,
+            "fn": 5,
             "precision": 1.0,
             "precision_ci_95": [
               0.4385,
               1.0
             ],
-            "recall": 0.3,
+            "recall": 0.375,
             "recall_ci_95": [
-              0.1078,
-              0.6032
+              0.1368,
+              0.6943
             ],
-            "f1": 0.4615
+            "f1": 0.5455
           },
-          "hidden_answers": {
-            "gold_count": 11,
-            "pred_count": 0,
-            "tp": 0,
-            "fp": 0,
-            "fn": 11,
-            "precision": 0.0,
-            "precision_ci_95": [
-              0.0,
-              0.0
-            ],
-            "recall": 0.0,
-            "recall_ci_95": [
-              0.0,
-              0.2588
-            ],
-            "f1": 0.0
-          },
-          "answer_after_each_q": {
-            "gold_count": 8,
-            "pred_count": 2,
-            "tp": 1,
+          "expert_level": {
+            "gold_count": 7,
+            "pred_count": 4,
+            "tp": 3,
             "fp": 1,
-            "fn": 7,
-            "precision": 0.5,
+            "fn": 4,
+            "precision": 0.75,
             "precision_ci_95": [
-              0.0945,
-              0.9055
+              0.3006,
+              0.9544
+            ],
+            "recall": 0.4286,
+            "recall_ci_95": [
+              0.1582,
+              0.7495
+            ],
+            "f1": 0.5455
+          },
+          "no_basic": {
+            "gold_count": 8,
+            "pred_count": 1,
+            "tp": 1,
+            "fp": 0,
+            "fn": 7,
+            "precision": 1.0,
+            "precision_ci_95": [
+              0.2065,
+              1.0
             ],
             "recall": 0.125,
             "recall_ci_95": [
               0.0224,
               0.4709
             ],
-            "f1": 0.2
+            "f1": 0.2222
+          },
+          "ordered_easy_to_hard": {
+            "gold_count": 10,
+            "pred_count": 8,
+            "tp": 8,
+            "fp": 0,
+            "fn": 2,
+            "precision": 1.0,
+            "precision_ci_95": [
+              0.6756,
+              1.0
+            ],
+            "recall": 0.8,
+            "recall_ci_95": [
+              0.4902,
+              0.9433
+            ],
+            "f1": 0.8889
+          },
+          "hidden_answers": {
+            "gold_count": 11,
+            "pred_count": 2,
+            "tp": 2,
+            "fp": 0,
+            "fn": 9,
+            "precision": 1.0,
+            "precision_ci_95": [
+              0.3424,
+              1.0
+            ],
+            "recall": 0.1818,
+            "recall_ci_95": [
+              0.0514,
+              0.477
+            ],
+            "f1": 0.3077
+          },
+          "answer_after_each_q": {
+            "gold_count": 8,
+            "pred_count": 5,
+            "tp": 2,
+            "fp": 3,
+            "fn": 6,
+            "precision": 0.4,
+            "precision_ci_95": [
+              0.1176,
+              0.7693
+            ],
+            "recall": 0.25,
+            "recall_ci_95": [
+              0.0715,
+              0.5907
+            ],
+            "f1": 0.3077
           },
           "single_correct": {
             "gold_count": 9,
-            "pred_count": 3,
-            "tp": 2,
+            "pred_count": 5,
+            "tp": 4,
             "fp": 1,
-            "fn": 7,
-            "precision": 0.6667,
+            "fn": 5,
+            "precision": 0.8,
             "precision_ci_95": [
-              0.2077,
-              0.9385
+              0.3755,
+              0.9638
             ],
-            "recall": 0.2222,
+            "recall": 0.4444,
             "recall_ci_95": [
-              0.0632,
-              0.5474
+              0.1888,
+              0.7333
             ],
-            "f1": 0.3333
+            "f1": 0.5714
           },
           "multi_interp": {
             "gold_count": 6,
-            "pred_count": 0,
-            "tp": 0,
+            "pred_count": 1,
+            "tp": 1,
             "fp": 0,
-            "fn": 6,
-            "precision": 0.0,
+            "fn": 5,
+            "precision": 1.0,
             "precision_ci_95": [
-              0.0,
-              0.0
+              0.2065,
+              1.0
             ],
-            "recall": 0.0,
+            "recall": 0.1667,
             "recall_ci_95": [
-              0.0,
-              0.3903
+              0.0301,
+              0.5635
             ],
-            "f1": 0.0
+            "f1": 0.2858
           },
           "confusing_language": {
             "gold_count": 5,
@@ -402,7 +573,7 @@
             "f1": 0.0
           }
         },
-        "wrong_energy_strict_count": 12,
+        "wrong_energy_strict_count": 11,
         "wrong_energy_strict_prompts": [
           {
             "prompt_id": "dev-09",
@@ -468,15 +639,6 @@
             ]
           },
           {
-            "prompt_id": "dev-54",
-            "true_energy": 1,
-            "predicted_energy": 0,
-            "energy_range": [
-              0,
-              0
-            ]
-          },
-          {
             "prompt_id": "dev-55",
             "true_energy": 1,
             "predicted_energy": 0,
@@ -513,7 +675,7 @@
             ]
           }
         ],
-        "wrong_energy_range_count": 12,
+        "wrong_energy_range_count": 11,
         "wrong_energy_range_prompts": [
           {
             "prompt_id": "dev-09",
@@ -579,15 +741,6 @@
             ]
           },
           {
-            "prompt_id": "dev-54",
-            "true_energy": 1,
-            "predicted_energy": 0,
-            "energy_range": [
-              0,
-              0
-            ]
-          },
-          {
             "prompt_id": "dev-55",
             "true_energy": 1,
             "predicted_energy": 0,
@@ -623,32 +776,203 @@
               0
             ]
           }
-        ]
+        ],
+        "strict_energy_correctness": 0.8382,
+        "range_energy_correctness": 0.8382,
+        "diagnostics": {
+          "calls_made": 85,
+          "calls_returned": 1,
+          "malformed_responses": 0,
+          "retries": 42,
+          "reader_failed": 42,
+          "claims_asserted_total": 182,
+          "claims_discarded_quote_total": 0,
+          "claims_discarded_negated_total": 4,
+          "claims_accepted_total": 178,
+          "strict_accepted_total": 178,
+          "norm_accepted_total": 178,
+          "latency_seconds_total": 83.3,
+          "tokens_total": 154141,
+          "per_atom": {
+            "very_easy": {
+              "claims_asserted": 3,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 3,
+              "strict_accepted": 3,
+              "norm_accepted": 3
+            },
+            "expert_level": {
+              "claims_asserted": 4,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 4,
+              "strict_accepted": 4,
+              "norm_accepted": 4
+            },
+            "no_basic": {
+              "claims_asserted": 3,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 2,
+              "claims_accepted": 1,
+              "strict_accepted": 1,
+              "norm_accepted": 1
+            },
+            "ordered_easy_to_hard": {
+              "claims_asserted": 8,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 8,
+              "strict_accepted": 8,
+              "norm_accepted": 8
+            },
+            "hidden_answers": {
+              "claims_asserted": 4,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 2,
+              "claims_accepted": 2,
+              "strict_accepted": 2,
+              "norm_accepted": 2
+            },
+            "answer_after_each_q": {
+              "claims_asserted": 5,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 5,
+              "strict_accepted": 5,
+              "norm_accepted": 5
+            },
+            "single_correct": {
+              "claims_asserted": 5,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 5,
+              "strict_accepted": 5,
+              "norm_accepted": 5
+            },
+            "multi_interp": {
+              "claims_asserted": 1,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 1,
+              "strict_accepted": 1,
+              "norm_accepted": 1
+            },
+            "confusing_language": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            }
+          },
+          "per_slot": {
+            "role": {
+              "claims_asserted": 19,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 19,
+              "strict_accepted": 19,
+              "norm_accepted": 19
+            },
+            "audience": {
+              "claims_asserted": 14,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 14,
+              "strict_accepted": 14,
+              "norm_accepted": 14
+            },
+            "topic": {
+              "claims_asserted": 25,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 25,
+              "strict_accepted": 25,
+              "norm_accepted": 25
+            },
+            "count": {
+              "claims_asserted": 22,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 22,
+              "strict_accepted": 22,
+              "norm_accepted": 22
+            },
+            "n_options": {
+              "claims_asserted": 25,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 25,
+              "strict_accepted": 25,
+              "norm_accepted": 25
+            },
+            "labeling": {
+              "claims_asserted": 12,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 12,
+              "strict_accepted": 12,
+              "norm_accepted": 12
+            },
+            "marking": {
+              "claims_asserted": 15,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 15,
+              "strict_accepted": 15,
+              "norm_accepted": 15
+            },
+            "explanation": {
+              "claims_asserted": 8,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 8,
+              "strict_accepted": 8,
+              "norm_accepted": 8
+            },
+            "ordering": {
+              "claims_asserted": 9,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 9,
+              "strict_accepted": 9,
+              "norm_accepted": 9
+            }
+          }
+        },
+        "cue_flags_cost": {
+          "missed_atoms_total": 54,
+          "missed_atoms_caught_by_cues": 47,
+          "pct_missed_caught": 0.8704,
+          "zero_gold_prompts_count": 17,
+          "zero_gold_prompts_flagged": 6,
+          "false_flag_rate_on_zero_gold": 0.3529,
+          "total_cue_flags": 55,
+          "review_load_per_prompt": 0.81
+        },
+        "reader_contribution": {
+          "reader_added_atoms_total": 5,
+          "reader_added_atoms_correct": 0,
+          "reader_added_accuracy": 0.0
+        }
       },
       "combined": {
         "status": "success",
         "n_prompts": 68,
-        "review_rate": 0.0074,
-        "total_review_items": 9,
+        "review_rate": 0.0147,
+        "total_review_items": 18,
         "total_eval_items": 1224,
-        "slot_agreement": 0.9902,
+        "slot_agreement": 0.9837,
         "slot_agreement_ci_95": [
-          0.9788,
-          0.9955
+          0.9702,
+          0.9911
         ],
-        "slot_matches": 606,
+        "slot_matches": 602,
         "total_slots": 612,
         "micro_precision": 1.0,
         "micro_precision_ci_95": [
-          0.948,
+          0.9465,
           1.0
         ],
-        "micro_recall": 0.9722,
+        "micro_recall": 0.9444,
         "micro_recall_ci_95": [
-          0.9043,
-          0.9923
+          0.8657,
+          0.9782
         ],
-        "micro_f1": 0.9859,
+        "micro_f1": 0.9714,
         "per_atom": {
           "very_easy": {
             "gold_count": 8,
@@ -688,21 +1012,21 @@
           },
           "no_basic": {
             "gold_count": 8,
-            "pred_count": 7,
-            "tp": 7,
+            "pred_count": 6,
+            "tp": 6,
             "fp": 0,
-            "fn": 1,
+            "fn": 2,
             "precision": 1.0,
             "precision_ci_95": [
-              0.6457,
+              0.6097,
               1.0
             ],
-            "recall": 0.875,
+            "recall": 0.75,
             "recall_ci_95": [
-              0.5291,
-              0.9776
+              0.4093,
+              0.9285
             ],
-            "f1": 0.9333
+            "f1": 0.8571
           },
           "ordered_easy_to_hard": {
             "gold_count": 10,
@@ -724,21 +1048,21 @@
           },
           "hidden_answers": {
             "gold_count": 11,
-            "pred_count": 10,
-            "tp": 10,
+            "pred_count": 9,
+            "tp": 9,
             "fp": 0,
-            "fn": 1,
+            "fn": 2,
             "precision": 1.0,
             "precision_ci_95": [
-              0.7225,
+              0.7009,
               1.0
             ],
-            "recall": 0.9091,
+            "recall": 0.8182,
             "recall_ci_95": [
-              0.6226,
-              0.9838
+              0.523,
+              0.9486
             ],
-            "f1": 0.9524
+            "f1": 0.9
           },
           "answer_after_each_q": {
             "gold_count": 8,
@@ -816,7 +1140,178 @@
         "wrong_energy_strict_count": 0,
         "wrong_energy_strict_prompts": [],
         "wrong_energy_range_count": 0,
-        "wrong_energy_range_prompts": []
+        "wrong_energy_range_prompts": [],
+        "strict_energy_correctness": 1.0,
+        "range_energy_correctness": 1.0,
+        "diagnostics": {
+          "calls_made": 0,
+          "calls_returned": 0,
+          "malformed_responses": 0,
+          "retries": 0,
+          "reader_failed": 0,
+          "claims_asserted_total": 0,
+          "claims_discarded_quote_total": 0,
+          "claims_discarded_negated_total": 0,
+          "claims_accepted_total": 0,
+          "strict_accepted_total": 0,
+          "norm_accepted_total": 0,
+          "latency_seconds_total": 0.0,
+          "tokens_total": 0,
+          "per_atom": {
+            "very_easy": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "expert_level": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "no_basic": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "ordered_easy_to_hard": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "hidden_answers": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "answer_after_each_q": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "single_correct": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "multi_interp": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "confusing_language": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            }
+          },
+          "per_slot": {
+            "role": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "audience": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "topic": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "count": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "n_options": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "labeling": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "marking": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "explanation": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "ordering": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            }
+          }
+        },
+        "cue_flags_cost": {
+          "missed_atoms_total": 10,
+          "missed_atoms_caught_by_cues": 5,
+          "pct_missed_caught": 0.5,
+          "zero_gold_prompts_count": 17,
+          "zero_gold_prompts_flagged": 6,
+          "false_flag_rate_on_zero_gold": 0.3529,
+          "total_cue_flags": 19,
+          "review_load_per_prompt": 0.28
+        },
+        "reader_contribution": {
+          "reader_added_atoms_total": 0,
+          "reader_added_atoms_correct": 0,
+          "reader_added_accuracy": 0.0
+        }
       }
     },
     "dev_12": {
@@ -1049,7 +1544,178 @@
               0
             ]
           }
-        ]
+        ],
+        "strict_energy_correctness": 0.8333,
+        "range_energy_correctness": 0.8333,
+        "diagnostics": {
+          "calls_made": 0,
+          "calls_returned": 0,
+          "malformed_responses": 0,
+          "retries": 0,
+          "reader_failed": 0,
+          "claims_asserted_total": 0,
+          "claims_discarded_quote_total": 0,
+          "claims_discarded_negated_total": 0,
+          "claims_accepted_total": 0,
+          "strict_accepted_total": 0,
+          "norm_accepted_total": 0,
+          "latency_seconds_total": 0.0,
+          "tokens_total": 0,
+          "per_atom": {
+            "very_easy": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "expert_level": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "no_basic": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "ordered_easy_to_hard": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "hidden_answers": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "answer_after_each_q": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "single_correct": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "multi_interp": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "confusing_language": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            }
+          },
+          "per_slot": {
+            "role": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "audience": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "topic": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "count": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "n_options": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "labeling": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "marking": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "explanation": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "ordering": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            }
+          }
+        },
+        "cue_flags_cost": {
+          "missed_atoms_total": 15,
+          "missed_atoms_caught_by_cues": 12,
+          "pct_missed_caught": 0.8,
+          "zero_gold_prompts_count": 1,
+          "zero_gold_prompts_flagged": 0,
+          "false_flag_rate_on_zero_gold": 0.0,
+          "total_cue_flags": 11,
+          "review_load_per_prompt": 0.92
+        },
+        "reader_contribution": {
+          "reader_added_atoms_total": 0,
+          "reader_added_atoms_correct": 0,
+          "reader_added_accuracy": 0.0
+        }
       },
       "reader_only": {
         "status": "success",
@@ -1057,24 +1723,24 @@
         "review_rate": 0.0,
         "total_review_items": 0,
         "total_eval_items": 216,
-        "slot_agreement": 0.3426,
+        "slot_agreement": 0.4167,
         "slot_agreement_ci_95": [
-          0.2599,
-          0.4361
+          0.3281,
+          0.5109
         ],
-        "slot_matches": 37,
+        "slot_matches": 45,
         "total_slots": 108,
-        "micro_precision": 0.75,
+        "micro_precision": 0.8,
         "micro_precision_ci_95": [
-          0.3006,
-          0.9544
+          0.3755,
+          0.9638
         ],
-        "micro_recall": 0.1304,
+        "micro_recall": 0.1739,
         "micro_recall_ci_95": [
-          0.0454,
-          0.3213
+          0.0698,
+          0.3714
         ],
-        "micro_f1": 0.2222,
+        "micro_f1": 0.2857,
         "per_atom": {
           "very_easy": {
             "gold_count": 3,
@@ -1186,21 +1852,21 @@
           },
           "single_correct": {
             "gold_count": 6,
-            "pred_count": 2,
-            "tp": 1,
+            "pred_count": 3,
+            "tp": 2,
             "fp": 1,
-            "fn": 5,
-            "precision": 0.5,
+            "fn": 4,
+            "precision": 0.6667,
             "precision_ci_95": [
-              0.0945,
-              0.9055
+              0.2077,
+              0.9385
             ],
-            "recall": 0.1667,
+            "recall": 0.3333,
             "recall_ci_95": [
-              0.0301,
-              0.5635
+              0.0968,
+              0.7
             ],
-            "f1": 0.25
+            "f1": 0.4444
           },
           "multi_interp": {
             "gold_count": 1,
@@ -1316,13 +1982,184 @@
               0
             ]
           }
-        ]
+        ],
+        "strict_energy_correctness": 0.6667,
+        "range_energy_correctness": 0.6667,
+        "diagnostics": {
+          "calls_made": 16,
+          "calls_returned": 0,
+          "malformed_responses": 0,
+          "retries": 8,
+          "reader_failed": 8,
+          "claims_asserted_total": 28,
+          "claims_discarded_quote_total": 0,
+          "claims_discarded_negated_total": 0,
+          "claims_accepted_total": 28,
+          "strict_accepted_total": 28,
+          "norm_accepted_total": 28,
+          "latency_seconds_total": 11.05,
+          "tokens_total": 23993,
+          "per_atom": {
+            "very_easy": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "expert_level": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "no_basic": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "ordered_easy_to_hard": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "hidden_answers": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "answer_after_each_q": {
+              "claims_asserted": 1,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 1,
+              "strict_accepted": 1,
+              "norm_accepted": 1
+            },
+            "single_correct": {
+              "claims_asserted": 3,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 3,
+              "strict_accepted": 3,
+              "norm_accepted": 3
+            },
+            "multi_interp": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "confusing_language": {
+              "claims_asserted": 1,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 1,
+              "strict_accepted": 1,
+              "norm_accepted": 1
+            }
+          },
+          "per_slot": {
+            "role": {
+              "claims_asserted": 3,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 3,
+              "strict_accepted": 3,
+              "norm_accepted": 3
+            },
+            "audience": {
+              "claims_asserted": 4,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 4,
+              "strict_accepted": 4,
+              "norm_accepted": 4
+            },
+            "topic": {
+              "claims_asserted": 4,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 4,
+              "strict_accepted": 4,
+              "norm_accepted": 4
+            },
+            "count": {
+              "claims_asserted": 3,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 3,
+              "strict_accepted": 3,
+              "norm_accepted": 3
+            },
+            "n_options": {
+              "claims_asserted": 3,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 3,
+              "strict_accepted": 3,
+              "norm_accepted": 3
+            },
+            "labeling": {
+              "claims_asserted": 3,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 3,
+              "strict_accepted": 3,
+              "norm_accepted": 3
+            },
+            "marking": {
+              "claims_asserted": 2,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 2,
+              "strict_accepted": 2,
+              "norm_accepted": 2
+            },
+            "explanation": {
+              "claims_asserted": 1,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 1,
+              "strict_accepted": 1,
+              "norm_accepted": 1
+            },
+            "ordering": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            }
+          }
+        },
+        "cue_flags_cost": {
+          "missed_atoms_total": 19,
+          "missed_atoms_caught_by_cues": 17,
+          "pct_missed_caught": 0.8947,
+          "zero_gold_prompts_count": 1,
+          "zero_gold_prompts_flagged": 0,
+          "false_flag_rate_on_zero_gold": 0.0,
+          "total_cue_flags": 13,
+          "review_load_per_prompt": 1.08
+        },
+        "reader_contribution": {
+          "reader_added_atoms_total": 3,
+          "reader_added_atoms_correct": 2,
+          "reader_added_accuracy": 0.6667
+        }
       },
       "combined": {
         "status": "success",
         "n_prompts": 12,
-        "review_rate": 0.0602,
-        "total_review_items": 13,
+        "review_rate": 0.0648,
+        "total_review_items": 14,
         "total_eval_items": 216,
         "slot_agreement": 0.5833,
         "slot_agreement_ci_95": [
@@ -1547,7 +2384,178 @@
               0
             ]
           }
-        ]
+        ],
+        "strict_energy_correctness": 0.8333,
+        "range_energy_correctness": 0.8333,
+        "diagnostics": {
+          "calls_made": 0,
+          "calls_returned": 0,
+          "malformed_responses": 0,
+          "retries": 0,
+          "reader_failed": 0,
+          "claims_asserted_total": 0,
+          "claims_discarded_quote_total": 0,
+          "claims_discarded_negated_total": 0,
+          "claims_accepted_total": 0,
+          "strict_accepted_total": 0,
+          "norm_accepted_total": 0,
+          "latency_seconds_total": 0.0,
+          "tokens_total": 0,
+          "per_atom": {
+            "very_easy": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "expert_level": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "no_basic": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "ordered_easy_to_hard": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "hidden_answers": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "answer_after_each_q": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "single_correct": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "multi_interp": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "confusing_language": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            }
+          },
+          "per_slot": {
+            "role": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "audience": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "topic": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "count": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "n_options": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "labeling": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "marking": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "explanation": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "ordering": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            }
+          }
+        },
+        "cue_flags_cost": {
+          "missed_atoms_total": 15,
+          "missed_atoms_caught_by_cues": 12,
+          "pct_missed_caught": 0.8,
+          "zero_gold_prompts_count": 1,
+          "zero_gold_prompts_flagged": 0,
+          "false_flag_rate_on_zero_gold": 0.0,
+          "total_cue_flags": 11,
+          "review_load_per_prompt": 0.92
+        },
+        "reader_contribution": {
+          "reader_added_atoms_total": 0,
+          "reader_added_atoms_correct": 0,
+          "reader_added_accuracy": 0.0
+        }
       }
     },
     "combined_dev": {
@@ -1780,7 +2788,178 @@
               0
             ]
           }
-        ]
+        ],
+        "strict_energy_correctness": 0.975,
+        "range_energy_correctness": 0.975,
+        "diagnostics": {
+          "calls_made": 0,
+          "calls_returned": 0,
+          "malformed_responses": 0,
+          "retries": 0,
+          "reader_failed": 0,
+          "claims_asserted_total": 0,
+          "claims_discarded_quote_total": 0,
+          "claims_discarded_negated_total": 0,
+          "claims_accepted_total": 0,
+          "strict_accepted_total": 0,
+          "norm_accepted_total": 0,
+          "latency_seconds_total": 0.0,
+          "tokens_total": 0,
+          "per_atom": {
+            "very_easy": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "expert_level": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "no_basic": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "ordered_easy_to_hard": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "hidden_answers": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "answer_after_each_q": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "single_correct": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "multi_interp": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "confusing_language": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            }
+          },
+          "per_slot": {
+            "role": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "audience": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "topic": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "count": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "n_options": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "labeling": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "marking": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "explanation": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "ordering": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            }
+          }
+        },
+        "cue_flags_cost": {
+          "missed_atoms_total": 15,
+          "missed_atoms_caught_by_cues": 12,
+          "pct_missed_caught": 0.8,
+          "zero_gold_prompts_count": 18,
+          "zero_gold_prompts_flagged": 6,
+          "false_flag_rate_on_zero_gold": 0.3333,
+          "total_cue_flags": 27,
+          "review_load_per_prompt": 0.34
+        },
+        "reader_contribution": {
+          "reader_added_atoms_total": 0,
+          "reader_added_atoms_correct": 0,
+          "reader_added_accuracy": 0.0
+        }
       },
       "reader_only": {
         "status": "success",
@@ -1788,168 +2967,168 @@
         "review_rate": 0.0,
         "total_review_items": 0,
         "total_eval_items": 1440,
-        "slot_agreement": 0.4222,
+        "slot_agreement": 0.5583,
         "slot_agreement_ci_95": [
-          0.3867,
-          0.4586
+          0.5218,
+          0.5942
         ],
-        "slot_matches": 304,
+        "slot_matches": 402,
         "total_slots": 720,
-        "micro_precision": 0.8,
+        "micro_precision": 0.8235,
         "micro_precision_ci_95": [
-          0.5481,
-          0.9295
+          0.6649,
+          0.9165
         ],
-        "micro_recall": 0.1263,
+        "micro_recall": 0.2947,
         "micro_recall_ci_95": [
-          0.0738,
-          0.2079
+          0.2125,
+          0.3929
         ],
-        "micro_f1": 0.2182,
+        "micro_f1": 0.4341,
         "per_atom": {
           "very_easy": {
             "gold_count": 11,
-            "pred_count": 0,
-            "tp": 0,
+            "pred_count": 3,
+            "tp": 3,
             "fp": 0,
-            "fn": 11,
-            "precision": 0.0,
+            "fn": 8,
+            "precision": 1.0,
             "precision_ci_95": [
-              0.0,
-              0.0
+              0.4385,
+              1.0
             ],
-            "recall": 0.0,
+            "recall": 0.2727,
             "recall_ci_95": [
-              0.0,
-              0.2588
+              0.0975,
+              0.5656
             ],
-            "f1": 0.0
+            "f1": 0.4285
           },
           "expert_level": {
             "gold_count": 8,
+            "pred_count": 4,
+            "tp": 3,
+            "fp": 1,
+            "fn": 5,
+            "precision": 0.75,
+            "precision_ci_95": [
+              0.3006,
+              0.9544
+            ],
+            "recall": 0.375,
+            "recall_ci_95": [
+              0.1368,
+              0.6943
+            ],
+            "f1": 0.5
+          },
+          "no_basic": {
+            "gold_count": 10,
             "pred_count": 1,
             "tp": 1,
             "fp": 0,
-            "fn": 7,
+            "fn": 9,
             "precision": 1.0,
             "precision_ci_95": [
               0.2065,
               1.0
             ],
-            "recall": 0.125,
+            "recall": 0.1,
             "recall_ci_95": [
-              0.0224,
-              0.4709
+              0.0179,
+              0.4042
             ],
-            "f1": 0.2222
-          },
-          "no_basic": {
-            "gold_count": 10,
-            "pred_count": 0,
-            "tp": 0,
-            "fp": 0,
-            "fn": 10,
-            "precision": 0.0,
-            "precision_ci_95": [
-              0.0,
-              0.0
-            ],
-            "recall": 0.0,
-            "recall_ci_95": [
-              0.0,
-              0.2775
-            ],
-            "f1": 0.0
+            "f1": 0.1818
           },
           "ordered_easy_to_hard": {
             "gold_count": 14,
-            "pred_count": 4,
-            "tp": 4,
+            "pred_count": 8,
+            "tp": 8,
             "fp": 0,
-            "fn": 10,
+            "fn": 6,
             "precision": 1.0,
             "precision_ci_95": [
-              0.5101,
+              0.6756,
               1.0
             ],
-            "recall": 0.2857,
+            "recall": 0.5714,
             "recall_ci_95": [
-              0.1172,
-              0.5465
+              0.3259,
+              0.7862
             ],
-            "f1": 0.4444
+            "f1": 0.7272
           },
           "hidden_answers": {
             "gold_count": 14,
-            "pred_count": 0,
-            "tp": 0,
+            "pred_count": 2,
+            "tp": 2,
             "fp": 0,
-            "fn": 14,
-            "precision": 0.0,
+            "fn": 12,
+            "precision": 1.0,
             "precision_ci_95": [
-              0.0,
-              0.0
+              0.3424,
+              1.0
             ],
-            "recall": 0.0,
+            "recall": 0.1429,
             "recall_ci_95": [
-              0.0,
-              0.2153
+              0.0401,
+              0.3994
             ],
-            "f1": 0.0
+            "f1": 0.2501
           },
           "answer_after_each_q": {
             "gold_count": 10,
-            "pred_count": 4,
+            "pred_count": 6,
             "tp": 3,
-            "fp": 1,
+            "fp": 3,
             "fn": 7,
-            "precision": 0.75,
+            "precision": 0.5,
             "precision_ci_95": [
-              0.3006,
-              0.9544
+              0.1876,
+              0.8124
             ],
             "recall": 0.3,
             "recall_ci_95": [
               0.1078,
               0.6032
             ],
-            "f1": 0.4286
+            "f1": 0.375
           },
           "single_correct": {
             "gold_count": 15,
-            "pred_count": 5,
-            "tp": 3,
+            "pred_count": 8,
+            "tp": 6,
             "fp": 2,
-            "fn": 12,
-            "precision": 0.6,
+            "fn": 9,
+            "precision": 0.75,
             "precision_ci_95": [
-              0.2307,
-              0.8824
+              0.4093,
+              0.9285
             ],
-            "recall": 0.2,
+            "recall": 0.4,
             "recall_ci_95": [
-              0.0705,
-              0.4519
+              0.1982,
+              0.6425
             ],
-            "f1": 0.3
+            "f1": 0.5217
           },
           "multi_interp": {
             "gold_count": 7,
-            "pred_count": 0,
-            "tp": 0,
+            "pred_count": 1,
+            "tp": 1,
             "fp": 0,
-            "fn": 7,
-            "precision": 0.0,
+            "fn": 6,
+            "precision": 1.0,
             "precision_ci_95": [
-              0.0,
-              0.0
+              0.2065,
+              1.0
             ],
-            "recall": 0.0,
+            "recall": 0.1429,
             "recall_ci_95": [
-              0.0,
-              0.3543
+              0.0257,
+              0.5131
             ],
-            "f1": 0.0
+            "f1": 0.2501
           },
           "confusing_language": {
             "gold_count": 6,
@@ -1970,7 +3149,7 @@
             "f1": 0.2858
           }
         },
-        "wrong_energy_strict_count": 16,
+        "wrong_energy_strict_count": 15,
         "wrong_energy_strict_prompts": [
           {
             "prompt_id": "dev-09",
@@ -2036,15 +3215,6 @@
             ]
           },
           {
-            "prompt_id": "dev-54",
-            "true_energy": 1,
-            "predicted_energy": 0,
-            "energy_range": [
-              0,
-              0
-            ]
-          },
-          {
             "prompt_id": "dev-55",
             "true_energy": 1,
             "predicted_energy": 0,
@@ -2117,7 +3287,7 @@
             ]
           }
         ],
-        "wrong_energy_range_count": 16,
+        "wrong_energy_range_count": 15,
         "wrong_energy_range_prompts": [
           {
             "prompt_id": "dev-09",
@@ -2183,15 +3353,6 @@
             ]
           },
           {
-            "prompt_id": "dev-54",
-            "true_energy": 1,
-            "predicted_energy": 0,
-            "energy_range": [
-              0,
-              0
-            ]
-          },
-          {
             "prompt_id": "dev-55",
             "true_energy": 1,
             "predicted_energy": 0,
@@ -2263,32 +3424,203 @@
               0
             ]
           }
-        ]
+        ],
+        "strict_energy_correctness": 0.8125,
+        "range_energy_correctness": 0.8125,
+        "diagnostics": {
+          "calls_made": 100,
+          "calls_returned": 0,
+          "malformed_responses": 0,
+          "retries": 50,
+          "reader_failed": 50,
+          "claims_asserted_total": 210,
+          "claims_discarded_quote_total": 0,
+          "claims_discarded_negated_total": 4,
+          "claims_accepted_total": 206,
+          "strict_accepted_total": 206,
+          "norm_accepted_total": 206,
+          "latency_seconds_total": 94.35,
+          "tokens_total": 178134,
+          "per_atom": {
+            "very_easy": {
+              "claims_asserted": 3,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 3,
+              "strict_accepted": 3,
+              "norm_accepted": 3
+            },
+            "expert_level": {
+              "claims_asserted": 4,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 4,
+              "strict_accepted": 4,
+              "norm_accepted": 4
+            },
+            "no_basic": {
+              "claims_asserted": 3,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 2,
+              "claims_accepted": 1,
+              "strict_accepted": 1,
+              "norm_accepted": 1
+            },
+            "ordered_easy_to_hard": {
+              "claims_asserted": 8,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 8,
+              "strict_accepted": 8,
+              "norm_accepted": 8
+            },
+            "hidden_answers": {
+              "claims_asserted": 4,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 2,
+              "claims_accepted": 2,
+              "strict_accepted": 2,
+              "norm_accepted": 2
+            },
+            "answer_after_each_q": {
+              "claims_asserted": 6,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 6,
+              "strict_accepted": 6,
+              "norm_accepted": 6
+            },
+            "single_correct": {
+              "claims_asserted": 8,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 8,
+              "strict_accepted": 8,
+              "norm_accepted": 8
+            },
+            "multi_interp": {
+              "claims_asserted": 1,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 1,
+              "strict_accepted": 1,
+              "norm_accepted": 1
+            },
+            "confusing_language": {
+              "claims_asserted": 1,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 1,
+              "strict_accepted": 1,
+              "norm_accepted": 1
+            }
+          },
+          "per_slot": {
+            "role": {
+              "claims_asserted": 22,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 22,
+              "strict_accepted": 22,
+              "norm_accepted": 22
+            },
+            "audience": {
+              "claims_asserted": 18,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 18,
+              "strict_accepted": 18,
+              "norm_accepted": 18
+            },
+            "topic": {
+              "claims_asserted": 29,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 29,
+              "strict_accepted": 29,
+              "norm_accepted": 29
+            },
+            "count": {
+              "claims_asserted": 25,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 25,
+              "strict_accepted": 25,
+              "norm_accepted": 25
+            },
+            "n_options": {
+              "claims_asserted": 28,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 28,
+              "strict_accepted": 28,
+              "norm_accepted": 28
+            },
+            "labeling": {
+              "claims_asserted": 15,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 15,
+              "strict_accepted": 15,
+              "norm_accepted": 15
+            },
+            "marking": {
+              "claims_asserted": 17,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 17,
+              "strict_accepted": 17,
+              "norm_accepted": 17
+            },
+            "explanation": {
+              "claims_asserted": 9,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 9,
+              "strict_accepted": 9,
+              "norm_accepted": 9
+            },
+            "ordering": {
+              "claims_asserted": 9,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 9,
+              "strict_accepted": 9,
+              "norm_accepted": 9
+            }
+          }
+        },
+        "cue_flags_cost": {
+          "missed_atoms_total": 73,
+          "missed_atoms_caught_by_cues": 64,
+          "pct_missed_caught": 0.8767,
+          "zero_gold_prompts_count": 18,
+          "zero_gold_prompts_flagged": 6,
+          "false_flag_rate_on_zero_gold": 0.3333,
+          "total_cue_flags": 68,
+          "review_load_per_prompt": 0.85
+        },
+        "reader_contribution": {
+          "reader_added_atoms_total": 8,
+          "reader_added_atoms_correct": 2,
+          "reader_added_accuracy": 0.25
+        }
       },
       "combined": {
         "status": "success",
         "n_prompts": 80,
-        "review_rate": 0.016,
-        "total_review_items": 23,
+        "review_rate": 0.0222,
+        "total_review_items": 32,
         "total_eval_items": 1440,
-        "slot_agreement": 0.9292,
+        "slot_agreement": 0.9236,
         "slot_agreement_ci_95": [
-          0.9081,
-          0.9457
+          0.9019,
+          0.9408
         ],
-        "slot_matches": 669,
+        "slot_matches": 665,
         "total_slots": 720,
         "micro_precision": 1.0,
         "micro_precision_ci_95": [
-          0.9525,
+          0.9519,
           1.0
         ],
-        "micro_recall": 0.8105,
+        "micro_recall": 0.8,
         "micro_recall_ci_95": [
-          0.7203,
-          0.8767
+          0.7086,
+          0.8681
         ],
-        "micro_f1": 0.8953,
+        "micro_f1": 0.8889,
         "per_atom": {
           "very_easy": {
             "gold_count": 11,
@@ -2364,21 +3696,21 @@
           },
           "hidden_answers": {
             "gold_count": 14,
-            "pred_count": 10,
-            "tp": 10,
+            "pred_count": 9,
+            "tp": 9,
             "fp": 0,
-            "fn": 4,
+            "fn": 5,
             "precision": 1.0,
             "precision_ci_95": [
-              0.7225,
+              0.7009,
               1.0
             ],
-            "recall": 0.7143,
+            "recall": 0.6429,
             "recall_ci_95": [
-              0.4535,
-              0.8828
+              0.3876,
+              0.8366
             ],
-            "f1": 0.8333
+            "f1": 0.7826
           },
           "answer_after_each_q": {
             "gold_count": 10,
@@ -2494,8 +3826,213 @@
               0
             ]
           }
-        ]
+        ],
+        "strict_energy_correctness": 0.975,
+        "range_energy_correctness": 0.975,
+        "diagnostics": {
+          "calls_made": 0,
+          "calls_returned": 0,
+          "malformed_responses": 0,
+          "retries": 0,
+          "reader_failed": 0,
+          "claims_asserted_total": 0,
+          "claims_discarded_quote_total": 0,
+          "claims_discarded_negated_total": 0,
+          "claims_accepted_total": 0,
+          "strict_accepted_total": 0,
+          "norm_accepted_total": 0,
+          "latency_seconds_total": 0.0,
+          "tokens_total": 0,
+          "per_atom": {
+            "very_easy": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "expert_level": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "no_basic": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "ordered_easy_to_hard": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "hidden_answers": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "answer_after_each_q": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "single_correct": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "multi_interp": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "confusing_language": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_discarded_negated": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            }
+          },
+          "per_slot": {
+            "role": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "audience": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "topic": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "count": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "n_options": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "labeling": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "marking": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "explanation": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            },
+            "ordering": {
+              "claims_asserted": 0,
+              "claims_discarded_quote": 0,
+              "claims_accepted": 0,
+              "strict_accepted": 0,
+              "norm_accepted": 0
+            }
+          }
+        },
+        "cue_flags_cost": {
+          "missed_atoms_total": 25,
+          "missed_atoms_caught_by_cues": 17,
+          "pct_missed_caught": 0.68,
+          "zero_gold_prompts_count": 18,
+          "zero_gold_prompts_flagged": 6,
+          "false_flag_rate_on_zero_gold": 0.3333,
+          "total_cue_flags": 30,
+          "review_load_per_prompt": 0.38
+        },
+        "reader_contribution": {
+          "reader_added_atoms_total": 0,
+          "reader_added_atoms_correct": 0,
+          "reader_added_accuracy": 0.0
+        }
       }
     }
+  },
+  "quote_mode_comparison": {
+    "strict": {
+      "claims_accepted": 206,
+      "micro_precision": 0.8235,
+      "micro_precision_ci_95": [
+        0.6649,
+        0.9165
+      ],
+      "micro_recall": 0.2947,
+      "micro_recall_ci_95": [
+        0.2125,
+        0.3929
+      ],
+      "micro_f1": 0.4341
+    },
+    "normalized": {
+      "claims_accepted": 206,
+      "micro_precision": 0.8235,
+      "micro_precision_ci_95": [
+        0.6649,
+        0.9165
+      ],
+      "micro_recall": 0.2947,
+      "micro_recall_ci_95": [
+        0.2125,
+        0.3929
+      ],
+      "micro_f1": 0.4341
+    },
+    "adds_claims": false,
+    "preserves_precision": true,
+    "adopted": false,
+    "verdict": "Normalised check does not add claims or reduces precision. Strict check retained."
   }
 }

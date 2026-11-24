@@ -73,8 +73,8 @@ def test_review_queue_stores_human_decisions_with_user_and_time(
     resp2 = client.get("/api/reviews/queue", headers=headers)
     assert not any(x["id"] == item_id for x in resp2.json()["items"])
 
-    # 3. Test human decision overrides machines in combine_rules_and_reader!
-    # Even if reader and rules say absent, the human confirmed it!
+    # Test human decision overrides machine verdicts in combine_rules_and_reader
+    # Even if reader and rules say absent, human confirmation takes precedence
     res = combine_rules_and_reader(
         prompt,
         prompt_id="test_p999",
@@ -159,9 +159,9 @@ def test_energy_range_returned_when_atom_needs_review() -> None:
     assert res.atom_verdicts["expert_level"]["verdict"] == "reader_only"
     assert res.atom_verdicts["expert_level"]["needs_review"] is True
 
-    # Energy range must be returned!
+    # Energy range returned for human review
     # Excluded: only very_easy accepted -> energy = 0
-    # Included: very_easy + expert_level (conflict!) -> energy = 1
+    # Included: very_easy + expert_level (conflict) -> energy = 1
     assert res.has_review_range is True
     assert res.energy_range == [0, 1]
     assert res.energy_min == 0
@@ -209,7 +209,7 @@ def test_unsupported_quote_claim_ignored() -> None:
                 "negated": False,
                 "asserted": False,
                 "quote_valid": False,
-                "unsupported": True,  # quote was hallucinated!
+                "unsupported": True,  # quote was not in prompt text
                 "evidence": "keep all answers private",
             }
         },
@@ -252,3 +252,43 @@ def test_improve_returns_extractor_limited_while_item_open() -> None:
     # Must list the open items
     open_names = [item["item_name"] for item in result.open_items]
     assert "expert_level" in open_names or "unclassified_text" in open_names
+
+
+def test_improve_gate_conditions_and_energy_lower_bound() -> None:
+    """Task 3 Improve gate:
+    verified can only be True when:
+    1. no accepted atom has needs_review;
+    2. no possible_unrecognised_requirement flag is open on this prompt;
+    3. the LLM reader did not fail;
+    4. energy_is_lower_bound is false.
+    Because energy_is_lower_bound is currently always true (until real data arrives),
+    the gate cannot verify any prompt today, returning verified: 'extractor_limited'.
+    """
+    clean_prompt = "Act as a professor. Create 10 MCQs on databases for bachelor students. Include four options and mark the answer."
+
+    # Case 1: energy_is_lower_bound is True -> returns 'extractor_limited'
+    res = improve_prompt(clean_prompt, energy_is_lower_bound=True)
+    assert res.verified == "extractor_limited"
+    assert (
+        res.explanation_line
+        == "This check can only see requirements it recognises. Items marked for review may hide conflicts."
+    )
+    assert res.energy_is_lower_bound is True
+    assert isinstance(res.energy_lower_bound, int)
+
+    # Case 2: prompt with cue flag -> returns 'extractor_limited' and open items list
+    cue_prompt = "Write 10 MCQs. Ensure you strictly adhere to syllabus guidelines."
+    res_cue = improve_prompt(cue_prompt)
+    assert res_cue.verified == "extractor_limited"
+    assert res_cue.cue_flags is not None
+    assert any(cf.get("item_name") == "possible_unrecognised_requirement" for cf in res_cue.cue_flags)
+
+    # Case 3: reader failed -> returns 'extractor_limited'
+    failing_reader = {
+        "enabled": True,
+        "status": "reader_failed",
+        "atoms": {},
+        "slots": {},
+    }
+    res_failed = improve_prompt(clean_prompt, reader_output=failing_reader, energy_is_lower_bound=False)
+    assert res_failed.verified == "extractor_limited"

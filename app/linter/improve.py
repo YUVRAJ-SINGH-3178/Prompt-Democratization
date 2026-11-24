@@ -81,6 +81,12 @@ class ImprovementResult:
     unclassified_clauses: list[str] | None = None
     llm_metadata: dict[str, Any] | None = None
     open_items: list[dict[str, Any]] | None = None
+    energy_lower_bound: int = 0
+    energy_is_lower_bound: bool = True
+    explanation_line: str = (
+        "This check can only see requirements it recognises. Items marked for review may hide conflicts."
+    )
+    cue_flags: list[dict[str, Any]] | None = None
 
 
 def resolve_conflicts(
@@ -315,6 +321,7 @@ def improve_prompt(
     model: str | None = None,
     reader_output: dict[str, Any] | None = None,
     combined_result: Any | None = None,
+    energy_is_lower_bound: bool = False,
 ) -> ImprovementResult:
     """Main improvement entry point with contradiction resolution, slot filling, and code-enforced verification."""
     from app.extractor.combine import CombinedExtractionResult, combine_rules_and_reader
@@ -323,9 +330,20 @@ def improve_prompt(
     if combined_result is not None:
         comb = combined_result
     else:
+        effective_reader_output = reader_output
+        if effective_reader_output is None and not use_llm:
+            effective_reader_output = {
+                "enabled": False,
+                "status": "rules_only",
+                "reader_unavailable_reason": "explicitly_rules_only",
+                "message": "Explicitly running on rules only.",
+                "atoms": {},
+                "slots": {},
+                "accepted_spans": [],
+            }
         comb = combine_rules_and_reader(
             prompt,
-            reader_output=reader_output,
+            reader_output=effective_reader_output,
             model=model,
             api_key=api_key,
             record_reviews=False,
@@ -351,13 +369,18 @@ def improve_prompt(
         if not key:
             raise ValueError("LLM rewrite requested but no GROQ_API_KEY, STUDY_API_KEY, or OPENAI_API_KEY provided.")
 
-        from app.study import call_model
+        from app.extractor.llm_reader import call_llm_api
 
         system_instruction = (
             "You are an academic prompt engineer. Rewrite the user prompt to resolve contradictory requirements "
             f"by dropping: {dropped_atoms}. Fill missing educational specification slots without changing core subject intent."
         )
-        response_text = call_model(selected_model, key, system_instruction, prompt)
+        endpoint = os.environ.get("STUDY_API_BASE") or (
+            "https://api.groq.com/openai/v1/chat/completions"
+            if is_groq
+            else "https://api.openai.com/v1/chat/completions"
+        )
+        response_text = call_llm_api(f"{system_instruction}\n\n{prompt}", selected_model, key, endpoint=endpoint)
         candidate_prompt = response_text
         llm_metadata = {
             "model": selected_model,
@@ -374,8 +397,10 @@ def improve_prompt(
     # Step 4: Code-enforced verification
     verification = verify_improvement(prompt, candidate_prompt, dropped_atoms)
 
+    explanation_line = "This check can only see requirements it recognises. Items marked for review may hide conflicts."
+
     if not verification.verified:
-        # If verification fails, do NOT present the candidate prompt as improved!
+        # Candidate failed verification check; do not present candidate as improved
         return ImprovementResult(
             original_prompt=prompt,
             improved_prompt=None,  # Not presented as improved
@@ -400,20 +425,40 @@ def improve_prompt(
             mode=mode,
             llm_metadata=llm_metadata,
             open_items=comb.open_items,
+            energy_lower_bound=comb.energy_lower_bound,
+            energy_is_lower_bound=comb.energy_is_lower_bound,
+            explanation_line=explanation_line,
+            cue_flags=comb.cue_flags,
         )
 
-    # Verification passed!
+    # Verification checks passed
     imp_result = evaluate(candidate_prompt)
     delta_comp = round(imp_result.completeness - comb.completeness, 3)
     delta_energy = imp_result.energy - comb.energy
     diff = compute_diff(prompt, candidate_prompt)
 
-    # The improve gate uses accepted atoms only and returns verified only when no atom or slot
-    # is needs_review or unclassified. Otherwise it returns extractor_limited and lists open items.
-    if not comb.verified_ready:
+    # Verification gate criteria:
+    # 1. no accepted atom has needs_review;
+    # 2. no possible_unrecognised_requirement flag is open on this prompt;
+    # 3. the LLM reader did not fail (it returned and its output was validated, or the run was explicitly rules-only with that fact visible);
+    # 4. and energy_is_lower_bound is false.
+    # Because energy_is_lower_bound is currently always true (until real data arrives), the gate cannot verify any prompt today.
+    reader_ok = (not comb.reader_enabled) or (comb.reader_status in ("success", "cached", "rules_only"))
+    no_cue_open = not any(item.get("item_type") == "cue_flag" for item in comb.open_items)
+
+    if energy_is_lower_bound or not comb.verified_ready or not reader_ok or not no_cue_open:
         verified_status: bool | str = "extractor_limited"
         open_desc = [f"{item['item_type']}:{item['item_name']}" for item in comb.open_items]
-        rejection_reason = f"Extractor limited: open items require review ({', '.join(open_desc)})."
+        if open_desc:
+            rejection_reason = (
+                f"Extractor limited: open items require review ({', '.join(open_desc)}). "
+                "Verification is limited by the extractor, not by the prompt."
+            )
+        else:
+            rejection_reason = (
+                "Extractor limited: energy is a lower bound until real-data evaluation is complete. "
+                "Verification is limited by the extractor, not by the prompt."
+            )
     else:
         verified_status = True
         rejection_reason = None
@@ -449,6 +494,10 @@ def improve_prompt(
         unclassified_clauses=comb.unclassified_clauses,
         llm_metadata=llm_metadata,
         open_items=comb.open_items,
+        energy_lower_bound=comb.energy_lower_bound,
+        energy_is_lower_bound=comb.energy_is_lower_bound,
+        explanation_line=explanation_line,
+        cue_flags=comb.cue_flags,
     )
 
 

@@ -27,8 +27,10 @@ from app.linter.rubrics import (
     SLOT_RUBRICS,
 )
 
-CACHE_DIR = Path(__file__).resolve().parent.parent.parent / "data" / "llm_cache"
-LOG_DIR = Path(__file__).resolve().parent.parent.parent / "data" / "llm_logs"
+ROOT = Path(__file__).resolve().parent.parent.parent
+CACHE_DIR = ROOT / "data" / "llm_cache"
+LOG_DIR = ROOT / "data" / "llm_logs"
+DISCARDS_DEV_LOG = ROOT / "data" / "eval" / "diagnostics" / "reader_discards_dev.jsonl"
 
 ATOM_NAMES = [
     "very_easy",
@@ -258,12 +260,12 @@ def is_reader_enabled() -> bool:
 
 
 def normalize_text_for_quote(s: str) -> str:
-    """Normalize whitespace and lowercase for quote substring matching."""
+    """Normalize whitespace and lowercase for strict quote substring matching."""
     return " ".join(s.strip().split()).lower()
 
 
-def is_verbatim_quote(quote: str, prompt_text: str) -> bool:
-    """Verbatim quote check: quote must be a non-empty substring of prompt (after whitespace normalisation)."""
+def check_quote_strict(quote: str, prompt_text: str) -> bool:
+    """Strict quote check: whitespace normalized and lowercased only."""
     if not quote or not str(quote).strip():
         return False
     norm_quote = normalize_text_for_quote(quote)
@@ -271,16 +273,59 @@ def is_verbatim_quote(quote: str, prompt_text: str) -> bool:
     return norm_quote in norm_prompt
 
 
-def find_quote_span(quote: str, prompt_text: str) -> tuple[int, int] | None:
+def normalize_quotes_and_dashes(s: str) -> str:
+    """Normalize whitespace, lowercase, curly vs straight quotes, and dash variants."""
+    s = " ".join(s.strip().split()).lower()
+    # Curly quotes to straight quotes
+    s = s.replace("“", '"').replace("”", '"')
+    s = s.replace("‘", "'").replace("’", "'").replace("′", "'").replace("`", "'")
+    # Dash variants to standard hyphen
+    s = s.replace("—", "-").replace("–", "-").replace("−", "-").replace("‐", "-")
+    return s
+
+
+def check_quote_normalized(quote: str, prompt_text: str) -> bool:
+    """Normalized quote check: whitespace, curly quotes, and dash variants normalized."""
+    if not quote or not str(quote).strip():
+        return False
+    norm_quote = normalize_quotes_and_dashes(quote)
+    norm_prompt = normalize_quotes_and_dashes(prompt_text)
+    return norm_quote in norm_prompt
+
+
+def is_verbatim_quote(quote: str, prompt_text: str, mode: str = "strict") -> bool:
+    """Verbatim quote check.
+
+    mode == 'strict': whitespace normalisation only.
+    mode == 'normalized': whitespace, curly quotes, and dash variants normalised.
+    """
+    if mode == "normalized":
+        return check_quote_normalized(quote, prompt_text)
+    return check_quote_strict(quote, prompt_text)
+
+
+def find_quote_span(quote: str, prompt_text: str, mode: str = "strict") -> tuple[int, int] | None:
     """Find character start and end index in original prompt text (case-insensitive, whitespace-flexible)."""
     if not quote or not quote.strip():
         return None
     # Escape quote but allow arbitrary whitespace between tokens
-    tokens = [re.escape(t) for t in quote.strip().split()]
+    clean_quote = quote.strip()
+    tokens = [re.escape(t) for t in clean_quote.split()]
     pattern = r"\s+".join(tokens)
     match = re.search(pattern, prompt_text, re.IGNORECASE)
     if match:
         return match.start(), match.end()
+
+    if mode == "normalized":
+        # Allow curly quotes or dash variants in regex matching
+        alt_pattern = pattern
+        alt_pattern = alt_pattern.replace('"', '["“”]')
+        alt_pattern = alt_pattern.replace("'", "['‘’′`]")
+        alt_pattern = alt_pattern.replace("-", "[-—–−‐]")
+        match_alt = re.search(alt_pattern, prompt_text, re.IGNORECASE)
+        if match_alt:
+            return match_alt.start(), match_alt.end()
+
     return None
 
 
@@ -381,12 +426,36 @@ def call_llm_api(
     return payload, resp_data, latency
 
 
-def validate_and_filter_reader_output(raw_analysis: dict[str, Any], prompt_text: str) -> dict[str, Any]:
+def classify_failure_reason(error_str: str, raw_content: str = "") -> str:
+    """Classify why the reader was unavailable or failed: no_key, rate_limit, malformed_output, network_error."""
+    err_low = (error_str or "").lower()
+    if "429" in err_low or "rate limit" in err_low or "rate_limit" in err_low:
+        return "rate_limit"
+    if (
+        "json" in err_low
+        or "missing atoms or slots" in err_low
+        or "expecting value" in err_low
+        or "invalid character" in err_low
+        or "unterminated" in err_low
+    ):
+        return "malformed_output"
+    return "network_error"
+
+
+def validate_and_filter_reader_output(
+    raw_analysis: dict[str, Any],
+    prompt_text: str,
+    quote_mode: str = "strict",
+    prompt_id: str | None = None,
+    is_dev: bool = False,
+    selected_model: str = "",
+) -> dict[str, Any]:
     """Code-enforced validation of LLM claims against the prompt text.
 
     - Every quote must be a verbatim substring of the prompt.
     - If quote is missing or invalid, claim is marked unsupported and discarded.
     - If negated is True (or quote contains negation), atom is NOT asserted.
+    - For dev data only, discarded claims are logged to reader_discards_dev.jsonl.
     """
     raw_atoms = raw_analysis.get("atoms", {})
     raw_slots = raw_analysis.get("slots", {})
@@ -394,28 +463,33 @@ def validate_and_filter_reader_output(raw_analysis: dict[str, Any], prompt_text:
     validated_atoms: dict[str, dict[str, Any]] = {}
     accepted_spans: list[dict[str, Any]] = []
 
+    per_atom_diag: dict[str, dict[str, int]] = {}
+    per_slot_diag: dict[str, dict[str, int]] = {}
+
     for atom in ATOM_NAMES:
         item = raw_atoms.get(atom, {})
         present = bool(item.get("present", False))
         negated = bool(item.get("negated", False))
         evidence = str(item.get("evidence", "")).strip()
 
-        quote_valid = is_verbatim_quote(evidence, prompt_text) if evidence else False
+        strict_quote_valid = check_quote_strict(evidence, prompt_text) if evidence else False
+        norm_quote_valid = check_quote_normalized(evidence, prompt_text) if evidence else False
+        quote_valid = norm_quote_valid if quote_mode == "normalized" else strict_quote_valid
 
         # Check for explicit negation in evidence
         if evidence and is_negated_phrase(evidence):
             negated = True
 
-        # Evidence rule: if model claimed present=True without verbatim evidence, discard claim!
+        # Evidence requirement: discard claim if verbatim substring evidence is absent
         unsupported = False
         if present and not quote_valid:
             present = False
             unsupported = True
 
-        # Negation rule: if negated is True, atom is not asserted
+        # Negation check: atoms marked negated are not asserted
         asserted = present and (not negated) and quote_valid
 
-        span = find_quote_span(evidence, prompt_text) if (asserted and quote_valid) else None
+        span = find_quote_span(evidence, prompt_text, mode=quote_mode) if (asserted and quote_valid) else None
         if asserted and span:
             accepted_spans.append(
                 {
@@ -427,12 +501,49 @@ def validate_and_filter_reader_output(raw_analysis: dict[str, Any], prompt_text:
                 }
             )
 
+        # Track per-atom diagnostics
+        raw_claimed = bool(item.get("present", False))
+        raw_neg = bool(item.get("negated", False)) or (bool(evidence) and is_negated_phrase(evidence))
+        strict_acc = int(raw_claimed and (not raw_neg) and strict_quote_valid)
+        norm_acc = int(raw_claimed and (not raw_neg) and norm_quote_valid)
+
+        per_atom_diag[atom] = {
+            "claims_asserted": 1 if raw_claimed else 0,
+            "claims_discarded_quote": 1 if (raw_claimed and not quote_valid) else 0,
+            "claims_discarded_negated": 1 if (raw_claimed and raw_neg) else 0,
+            "claims_accepted": 1 if asserted else 0,
+            "strict_accepted": strict_acc,
+            "norm_accepted": norm_acc,
+        }
+
+        # For discarded claims on dev data only: log model quote and prompt text
+        if is_dev and raw_claimed and not quote_valid and prompt_text:
+            try:
+                DISCARDS_DEV_LOG.parent.mkdir(parents=True, exist_ok=True)
+                entry = {
+                    "prompt_id": prompt_id or "",
+                    "item_type": "atom",
+                    "item_name": atom,
+                    "model": selected_model,
+                    "quote": evidence,
+                    "prompt_text": prompt_text,
+                    "discard_reason": "not_verbatim_quote",
+                    "strict_valid": strict_quote_valid,
+                    "norm_valid": norm_quote_valid,
+                }
+                with open(DISCARDS_DEV_LOG, "a", encoding="utf-8") as f:
+                    f.write(json.dumps(entry) + "\n")
+            except Exception:
+                pass
+
         validated_atoms[atom] = {
             "present": present,
             "negated": negated,
             "asserted": asserted,
             "evidence": evidence,
             "quote_valid": quote_valid,
+            "strict_quote_valid": strict_quote_valid,
+            "norm_quote_valid": norm_quote_valid,
             "unsupported": unsupported,
             "span": span,
         }
@@ -449,15 +560,17 @@ def validate_and_filter_reader_output(raw_analysis: dict[str, Any], prompt_text:
             score = 0.0
 
         evidence = str(item.get("evidence", "")).strip()
-        quote_valid = is_verbatim_quote(evidence, prompt_text) if evidence else False
+        strict_quote_valid = check_quote_strict(evidence, prompt_text) if evidence else False
+        norm_quote_valid = check_quote_normalized(evidence, prompt_text) if evidence else False
+        quote_valid = norm_quote_valid if quote_mode == "normalized" else strict_quote_valid
 
-        # For score > 0, evidence quote is mandatory and must be verbatim substring
+        claimed_present = score in (0.5, 1.0)
         unsupported = False
-        if score > 0 and not quote_valid:
+        if claimed_present and not quote_valid:
             score = 0.0
             unsupported = True
 
-        span = find_quote_span(evidence, prompt_text) if (score > 0 and quote_valid) else None
+        span = find_quote_span(evidence, prompt_text, mode=quote_mode) if (score > 0 and quote_valid) else None
         if score > 0 and span:
             accepted_spans.append(
                 {
@@ -470,10 +583,43 @@ def validate_and_filter_reader_output(raw_analysis: dict[str, Any], prompt_text:
                 }
             )
 
+        strict_acc = int(claimed_present and strict_quote_valid)
+        norm_acc = int(claimed_present and norm_quote_valid)
+
+        per_slot_diag[slot] = {
+            "claims_asserted": 1 if claimed_present else 0,
+            "claims_discarded_quote": 1 if (claimed_present and not quote_valid) else 0,
+            "claims_accepted": 1 if (claimed_present and quote_valid) else 0,
+            "strict_accepted": strict_acc,
+            "norm_accepted": norm_acc,
+        }
+
+        # For discarded claims on dev data only: log model quote and prompt text
+        if is_dev and claimed_present and not quote_valid and prompt_text:
+            try:
+                DISCARDS_DEV_LOG.parent.mkdir(parents=True, exist_ok=True)
+                entry = {
+                    "prompt_id": prompt_id or "",
+                    "item_type": "slot",
+                    "item_name": slot,
+                    "model": selected_model,
+                    "quote": evidence,
+                    "prompt_text": prompt_text,
+                    "discard_reason": "not_verbatim_quote",
+                    "strict_valid": strict_quote_valid,
+                    "norm_valid": norm_quote_valid,
+                }
+                with open(DISCARDS_DEV_LOG, "a", encoding="utf-8") as f:
+                    f.write(json.dumps(entry) + "\n")
+            except Exception:
+                pass
+
         validated_slots[slot] = {
             "score": score,
             "evidence": evidence,
             "quote_valid": quote_valid,
+            "strict_quote_valid": strict_quote_valid,
+            "norm_quote_valid": norm_quote_valid,
             "unsupported": unsupported,
             "span": span,
         }
@@ -482,6 +628,21 @@ def validate_and_filter_reader_output(raw_analysis: dict[str, Any], prompt_text:
         "atoms": validated_atoms,
         "slots": validated_slots,
         "accepted_spans": accepted_spans,
+        "diagnostics": {
+            "per_atom": per_atom_diag,
+            "per_slot": per_slot_diag,
+            "claims_asserted_total": sum(v["claims_asserted"] for v in per_atom_diag.values())
+            + sum(v["claims_asserted"] for v in per_slot_diag.values()),
+            "claims_discarded_quote_total": sum(v["claims_discarded_quote"] for v in per_atom_diag.values())
+            + sum(v["claims_discarded_quote"] for v in per_slot_diag.values()),
+            "claims_discarded_negated_total": sum(v["claims_discarded_negated"] for v in per_atom_diag.values()),
+            "claims_accepted_total": sum(v["claims_accepted"] for v in per_atom_diag.values())
+            + sum(v["claims_accepted"] for v in per_slot_diag.values()),
+            "strict_accepted_total": sum(v["strict_accepted"] for v in per_atom_diag.values())
+            + sum(v["strict_accepted"] for v in per_slot_diag.values()),
+            "norm_accepted_total": sum(v["norm_accepted"] for v in per_atom_diag.values())
+            + sum(v["norm_accepted"] for v in per_slot_diag.values()),
+        },
     }
 
 
@@ -491,6 +652,9 @@ def read_prompt_with_llm(
     api_key: str | None = None,
     api_base: str | None = None,
     use_cache: bool = True,
+    prompt_id: str | None = None,
+    is_dev: bool = False,
+    quote_mode: str = "strict",
 ) -> dict[str, Any]:
     """Main LLM reader entry point.
 
@@ -498,7 +662,43 @@ def read_prompt_with_llm(
     - Caches results by deterministic SHA-256.
     - Retries once on malformed JSON.
     - Validates all evidence quotes in code.
+    - Records detailed diagnostics.
     """
+    empty_diag: dict[str, Any] = {
+        "calls_made": 0,
+        "calls_returned": 0,
+        "malformed_responses": 0,
+        "retries": 0,
+        "reader_failed": 0,
+        "claims_asserted_total": 0,
+        "claims_discarded_quote_total": 0,
+        "claims_discarded_negated_total": 0,
+        "claims_accepted_total": 0,
+        "strict_accepted_total": 0,
+        "norm_accepted_total": 0,
+        "per_atom": {
+            a: {
+                "claims_asserted": 0,
+                "claims_discarded_quote": 0,
+                "claims_discarded_negated": 0,
+                "claims_accepted": 0,
+                "strict_accepted": 0,
+                "norm_accepted": 0,
+            }
+            for a in ATOM_NAMES
+        },
+        "per_slot": {
+            s: {
+                "claims_asserted": 0,
+                "claims_discarded_quote": 0,
+                "claims_accepted": 0,
+                "strict_accepted": 0,
+                "norm_accepted": 0,
+            }
+            for s in SLOT_NAMES
+        },
+    }
+
     key = (
         (api_key or "").strip()
         or (os.environ.get("STUDY_API_KEY") or "").strip()
@@ -509,10 +709,12 @@ def read_prompt_with_llm(
         return {
             "enabled": False,
             "status": "disabled_no_api_key",
+            "reader_unavailable_reason": "no_key",
             "message": "Reader is off: no API key set. Running on rules only.",
             "atoms": {},
             "slots": {},
             "accepted_spans": [],
+            "diagnostics": empty_diag,
         }
 
     is_groq = bool((os.environ.get("GROQ_API_KEY") or "").strip()) and not os.environ.get("STUDY_API_BASE")
@@ -521,10 +723,8 @@ def read_prompt_with_llm(
     )
     default_model = "llama-3.3-70b-versatile" if is_groq else "gpt-4o-mini"
 
-    selected_model: str = str(model or os.environ.get("STUDY_MODEL") or os.environ.get("GROQ_MODEL") or default_model)
-    endpoint: str = str(
-        api_base or os.environ.get("STUDY_API_BASE") or os.environ.get("GROQ_API_BASE") or default_endpoint
-    )
+    selected_model: str = str(model or os.environ.get("STUDY_MODEL") or default_model)
+    endpoint: str = str(api_base or os.environ.get("STUDY_API_BASE") or default_endpoint)
 
     cache_key = get_cache_key(prompt_text, selected_model)
     cache_file = CACHE_DIR / f"{cache_key}.json"
@@ -533,11 +733,34 @@ def read_prompt_with_llm(
     if use_cache and cache_file.exists():
         try:
             cached = json.loads(cache_file.read_text(encoding="utf-8"))
+            raw_analysis = cached.get("raw_analysis")
+            if not raw_analysis:
+                raw_analysis = {
+                    "atoms": cached.get("atoms", {}),
+                    "slots": cached.get("slots", {}),
+                }
+            validated = validate_and_filter_reader_output(
+                raw_analysis,
+                prompt_text,
+                quote_mode=quote_mode,
+                prompt_id=prompt_id,
+                is_dev=is_dev,
+                selected_model=selected_model,
+            )
             return {
-                "enabled": True,
-                "status": "cached",
-                "cached": True,
                 **cached,
+                "cached": True,
+                "status": "cached",
+                "reader_unavailable_reason": None,
+                **validated,
+                "diagnostics": {
+                    "calls_made": 0,
+                    "calls_returned": 0,
+                    "malformed_responses": 0,
+                    "retries": 0,
+                    "reader_failed": 0,
+                    **validated["diagnostics"],
+                },
             }
         except Exception:
             pass
@@ -549,11 +772,19 @@ def read_prompt_with_llm(
     last_error = ""
     latency_total = 0.0
     token_usage: dict[str, Any] = {}
+    attempts_made = 0
+    calls_returned = 0
+    malformed_count = 0
+    retries_count = 0
 
     for attempt in range(1, max_attempts + 1):
+        attempts_made += 1
+        if attempt > 1:
+            retries_count += 1
         try:
             req_payload, resp_data, lat = call_llm_api(prompt_text, selected_model, key, endpoint)
             latency_total += lat
+            calls_returned += 1
             token_usage = resp_data.get("usage", {})
             choice = resp_data.get("choices", [{}])[0]
             raw_content = choice.get("message", {}).get("content", "")
@@ -573,36 +804,71 @@ def read_prompt_with_llm(
             }
             log_path.write_text(json.dumps(log_entry, indent=2), encoding="utf-8")
 
-            parsed_json = json.loads(raw_content)
-            if isinstance(parsed_json, dict) and "atoms" in parsed_json and "slots" in parsed_json:
-                break
-            else:
-                last_error = "Missing atoms or slots in JSON"
+            try:
+                parsed_json = json.loads(raw_content)
+                if isinstance(parsed_json, dict) and "atoms" in parsed_json and "slots" in parsed_json:
+                    break
+                else:
+                    malformed_count += 1
+                    last_error = "Missing atoms or slots in JSON"
+                    parsed_json = None
+            except Exception as parse_err:
+                malformed_count += 1
+                last_error = f"Malformed JSON: {parse_err}"
                 parsed_json = None
         except Exception as e:
             last_error = str(e)
             parsed_json = None
 
     if parsed_json is None:
+        reason = classify_failure_reason(last_error, raw_content)
         return {
             "enabled": True,
             "status": "reader_failed",
+            "reader_unavailable_reason": reason,
             "message": f"LLM reader failed after {max_attempts} attempts: {last_error}. Falling back to rules only.",
+            "model": selected_model,
+            "latency_seconds": latency_total,
             "atoms": {},
             "slots": {},
             "accepted_spans": [],
+            "diagnostics": {
+                **empty_diag,
+                "calls_made": attempts_made,
+                "calls_returned": calls_returned,
+                "malformed_responses": malformed_count,
+                "retries": retries_count,
+                "reader_failed": 1,
+            },
         }
 
-    validated = validate_and_filter_reader_output(parsed_json, prompt_text)
+    validated = validate_and_filter_reader_output(
+        parsed_json,
+        prompt_text,
+        quote_mode=quote_mode,
+        prompt_id=prompt_id,
+        is_dev=is_dev,
+        selected_model=selected_model,
+    )
     result = {
         "enabled": True,
         "status": "success",
+        "reader_unavailable_reason": None,
         "model": selected_model,
         "latency_seconds": latency_total,
         "token_usage": token_usage,
         "rubric_version": RUBRIC_VERSION,
         "schema_version": SCHEMA_VERSION,
+        "raw_analysis": parsed_json,
         **validated,
+        "diagnostics": {
+            "calls_made": attempts_made,
+            "calls_returned": calls_returned,
+            "malformed_responses": malformed_count,
+            "retries": retries_count,
+            "reader_failed": 0,
+            **validated["diagnostics"],
+        },
     }
 
     # Store cache

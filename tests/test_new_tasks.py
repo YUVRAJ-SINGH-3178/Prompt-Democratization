@@ -315,8 +315,10 @@ def test_frozen_test_set_hash():
     actual_hash = compute_normalized_sha256(old_file)
     assert actual_hash == expected_hash, f"Hash mismatch! Expected {expected_hash}, got {actual_hash}"
 
-    # For frozen_v2: verify only when it appears
-    v2_dir = Path("data/gold/frozen_v2")
+    # For frozen_v2 (now spent): verify hash
+    v2_dir = Path("data/gold/spent/frozen_v2")
+    if not v2_dir.exists():
+        v2_dir = Path("data/gold/frozen_v2")
     v2_hash_file = Path("data/gold/FROZEN_V2_SHA256.txt")
     if v2_dir.exists() and v2_hash_file.exists():
         v2_files = sorted(v2_dir.glob("*.csv"))

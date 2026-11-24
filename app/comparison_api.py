@@ -44,7 +44,7 @@ def _get_candidate_prompts() -> list[dict[str, str]]:
 
 
 # ------------------------------------------------------------------
-# Comparison collection (Task 3)
+# Comparison collection
 # ------------------------------------------------------------------
 
 
@@ -312,7 +312,7 @@ def admin_kappa(request: Request):
 
 
 # ------------------------------------------------------------------
-# Learner (Task 4)
+# Learner preference estimation
 # ------------------------------------------------------------------
 
 
@@ -383,7 +383,7 @@ def admin_learner_history(request: Request):
 
 
 # ------------------------------------------------------------------
-# Compare and Improve (Task 5)
+# Prompt comparison and improvement
 # ------------------------------------------------------------------
 
 
@@ -560,7 +560,7 @@ def _conflicting_pairs(atoms: list[str]) -> list[list[str]]:
 
 
 # ------------------------------------------------------------------
-# Extractor report (Task 1)
+# Extractor evaluation report
 # ------------------------------------------------------------------
 
 
@@ -703,7 +703,7 @@ def _extractor_report() -> dict[str, Any]:
 
 
 # ------------------------------------------------------------------
-# Evaluation harness (Task 6)
+# Evaluation harness
 # ------------------------------------------------------------------
 
 

@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS learner_fits(
  seed INTEGER NOT NULL, bootstrap_weights_json TEXT, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP);
 CREATE TABLE IF NOT EXISTS manual_reviews(
  id INTEGER PRIMARY KEY AUTOINCREMENT, prompt_id TEXT NOT NULL, prompt_text TEXT NOT NULL,
- item_type TEXT NOT NULL CHECK(item_type IN('atom','slot')), item_name TEXT NOT NULL,
+ item_type TEXT NOT NULL CHECK(item_type IN('atom','slot','cue_flag','clause')), item_name TEXT NOT NULL,
  verdict TEXT NOT NULL, quote TEXT, rule_opinion TEXT, reader_opinion TEXT,
  status TEXT NOT NULL DEFAULT 'open' CHECK(status IN('open','confirmed','rejected')),
  decision_value TEXT, decided_by TEXT, decided_at TEXT, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP);
@@ -101,6 +101,28 @@ def connect() -> sqlite3.Connection:
         try:
             db.execute("ALTER TABLE learner_fits ADD COLUMN bootstrap_weights_json TEXT;")
         except sqlite3.OperationalError:
+            pass
+        try:
+            table_row = db.execute(
+                "SELECT sql FROM sqlite_master WHERE type='table' AND name='manual_reviews'"
+            ).fetchone()
+            if table_row and "cue_flag" not in table_row[0]:
+                db.execute("PRAGMA foreign_keys=OFF;")
+                db.execute("ALTER TABLE manual_reviews RENAME TO manual_reviews_old;")
+                db.execute("""
+                    CREATE TABLE manual_reviews(
+                        id INTEGER PRIMARY KEY AUTOINCREMENT, prompt_id TEXT NOT NULL, prompt_text TEXT NOT NULL,
+                        item_type TEXT NOT NULL CHECK(item_type IN('atom','slot','cue_flag','clause')), item_name TEXT NOT NULL,
+                        verdict TEXT NOT NULL, quote TEXT, rule_opinion TEXT, reader_opinion TEXT,
+                        status TEXT NOT NULL DEFAULT 'open' CHECK(status IN('open','confirmed','rejected')),
+                        decision_value TEXT, decided_by TEXT, decided_at TEXT, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+                    );
+                """)
+                db.execute("INSERT INTO manual_reviews SELECT * FROM manual_reviews_old;")
+                db.execute("DROP TABLE manual_reviews_old;")
+                db.execute("CREATE INDEX IF NOT EXISTS ix_manual_reviews_status ON manual_reviews(status,prompt_id);")
+                db.execute("PRAGMA foreign_keys=ON;")
+        except Exception:
             pass
         _SCHEMA_INITIALIZED.add(path_key)
     return db
