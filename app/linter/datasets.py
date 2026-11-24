@@ -517,7 +517,7 @@ def _build_heldout_prompts() -> list[dict[str, Any]]:
                 "prompt_id": pid,
                 "prompt": text,
                 "dataset": "heldout",
-                "source": "heldout_unseen",
+                "source": "authored_by_builder",
                 "discipline": disc,
                 "course": topic,
                 "synthetic": 0,

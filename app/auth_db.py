@@ -67,6 +67,16 @@ CREATE TABLE IF NOT EXISTS accuracy_prompts(
 CREATE TABLE IF NOT EXISTS linter_scoring_runs(
  id INTEGER PRIMARY KEY AUTOINCREMENT, extractor_version TEXT NOT NULL, dataset TEXT NOT NULL,
  prompt_count INTEGER NOT NULL, report_json TEXT NOT NULL, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP);
+CREATE TABLE IF NOT EXISTS comparisons(
+ id INTEGER PRIMARY KEY AUTOINCREMENT, rater_id TEXT NOT NULL, prompt_a_id TEXT NOT NULL,
+ prompt_b_id TEXT NOT NULL, winner TEXT NOT NULL CHECK(winner IN('a','b','tie')),
+ shown_order TEXT NOT NULL DEFAULT 'ab', features_a_json TEXT, features_b_json TEXT,
+ created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, duration_ms INTEGER);
+CREATE INDEX IF NOT EXISTS ix_comparisons_rater ON comparisons(rater_id);
+CREATE TABLE IF NOT EXISTS learner_fits(
+ id INTEGER PRIMARY KEY AUTOINCREMENT, n_comparisons INTEGER NOT NULL, n_raters INTEGER NOT NULL,
+ weights_json TEXT NOT NULL, intervals_json TEXT, versions_json TEXT NOT NULL,
+ seed INTEGER NOT NULL, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP);
 """
 
 

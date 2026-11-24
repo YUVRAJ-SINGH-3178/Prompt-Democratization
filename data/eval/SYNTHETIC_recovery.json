@@ -1,0 +1,87 @@
+{
+  "label": "SYNTHETIC",
+  "SYNTHETIC": true,
+  "description": "Synthetic recovery experiment for the Bradley-Terry learner",
+  "n_prompts": 50,
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    20
+  ],
+  "heldout_pairs": 50,
+  "beta": 1.0,
+  "true_weights": [
+    2.0,
+    1.0,
+    0.8,
+    1.2,
+    0.5,
+    0.3,
+    0.6,
+    0.9,
+    1.1,
+    0.7
+  ],
+  "feature_names": [
+    "conflict_energy",
+    "deficit_role",
+    "deficit_audience",
+    "deficit_topic",
+    "deficit_count",
+    "deficit_n_options",
+    "deficit_labeling",
+    "deficit_marking",
+    "deficit_explanation",
+    "deficit_ordering"
+  ],
+  "results": [
+    {
+      "seed": 42,
+      "budget": 20,
+      "method": "learned",
+      "accuracy": 0.851063829787234,
+      "n_heldout": 47,
+      "SYNTHETIC": true
+    },
+    {
+      "seed": 42,
+      "budget": 20,
+      "method": "random",
+      "accuracy": 0.5531914893617021,
+      "n_heldout": 47,
+      "SYNTHETIC": true
+    },
+    {
+      "seed": 42,
+      "budget": 20,
+      "method": "completeness_only",
+      "accuracy": 0.723404255319149,
+      "n_heldout": 47,
+      "SYNTHETIC": true
+    },
+    {
+      "seed": 42,
+      "budget": 20,
+      "method": "conflict_only",
+      "accuracy": 0.8085106382978723,
+      "n_heldout": 47,
+      "SYNTHETIC": true
+    },
+    {
+      "seed": 42,
+      "budget": 20,
+      "method": "unweighted_sum",
+      "accuracy": 0.851063829787234,
+      "n_heldout": 47,
+      "SYNTHETIC": true
+    }
+  ],
+  "versions": {
+    "python": "3.13.5",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3",
+    "scikit_learn": "1.6.1"
+  },
+  "generated_at": "2026-11-24T09:08:24.034515+00:00"
+}

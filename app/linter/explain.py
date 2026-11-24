@@ -29,10 +29,10 @@ def evidence(prompt: str, atoms: list[str], slot_scores: dict[str, float]) -> di
         cursor = prompt.find(sentence)
         if cursor == -1:
             cursor = 0
-        for slot, spec in SLOT_REGISTRY.items():
-            match = re.search(spec.full_pattern, sentence, re.IGNORECASE)
-            if not match and spec.partial_pattern:
-                match = re.search(spec.partial_pattern, sentence, re.IGNORECASE)
+        for slot, slot_spec in SLOT_REGISTRY.items():
+            match = re.search(slot_spec.full_pattern, sentence, re.IGNORECASE)
+            if not match and slot_spec.partial_pattern:
+                match = re.search(slot_spec.partial_pattern, sentence, re.IGNORECASE)
             if match:
                 slots.append((slot, cursor + match.start(), cursor + match.end(), sentence.strip()))
     by_slot = {slot: (start, end, sentence) for slot, start, end, sentence in slots}

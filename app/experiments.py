@@ -104,7 +104,7 @@ def curve_report(seed: int = 42, repetitions: int = 100) -> dict:
                 errs["cubic_spline"].append(
                     float(np.sqrt(np.mean((CubicSpline(x, y, bc_type="natural")(q) - truth) ** 2)))
                 )
-                kernel = ConstantKernel(1.0) * RBF(1.0) + WhiteKernel(max(sigma * sigma, 1e-3))
+                kernel = ConstantKernel(0.1, (1e-3, 10)) * RBF(0.5, (0.05, 5)) + WhiteKernel(1e-3, (1e-8, 1))
                 gp = GaussianProcessRegressor(
                     kernel=kernel, normalize_y=True, n_restarts_optimizer=2, random_state=seed
                 )

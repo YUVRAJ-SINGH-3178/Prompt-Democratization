@@ -1,7 +1,7 @@
 {
   "manifest_version": "1.0",
-  "generated_at": "2026-11-23T20:29:48.057885+00:00",
-  "git_commit": "92545225435a80976b1eef17ad112a1483f49617",
+  "generated_at": "2026-11-24T08:46:12.685065+00:00",
+  "git_commit": "3453fccf21a4c9f80cde0cbd66b8c7ae8adcddbe",
   "library_versions": {
     "python": "3.13.5",
     "numpy": "2.2.6",
@@ -23,11 +23,11 @@
     "t3_seed": 42,
     "confidence_threshold": 0.8
   },
-  "all_pattern_claims_passed": false,
+  "all_pattern_claims_passed": true,
   "files": {
     "claims.yaml": {
-      "size_bytes": 1940,
-      "sha256": "af63aa4fc80e0ab70b1615afef284330f005fe9e422e86ef0aea93f37ea110b5"
+      "size_bytes": 1938,
+      "sha256": "2f0d0e3f8996e0d9fe971836837cdbd10f8db924da1ad7d4f37fb97995939ca6"
     },
     "t1_lebesgue.csv": {
       "size_bytes": 299,
@@ -38,12 +38,12 @@
       "sha256": "d2e658e07fa338be3c8d0e4c4df4aa9567dd10d570d64d27732696a2145b1727"
     },
     "t2_noisy_curve.csv": {
-      "size_bytes": 7440,
-      "sha256": "8dea1ab995106cab49fc57781b10a0bbbffd3302b4596d4129c37259bcf3c4b7"
+      "size_bytes": 7420,
+      "sha256": "849b12b4cb253569e15c31d6cade5a0a1f05800bb3fd2aab8555b57a180df6f7"
     },
     "t2_noisy_curve.json": {
-      "size_bytes": 30008,
-      "sha256": "f5ad4bc4cd267b5e99e5fb3a0242cf6a5d6394eaf69b3b8001c4b58fb0874722"
+      "size_bytes": 29988,
+      "sha256": "00b031adb2d239890b061407fde6459e22e44905bae4b1ac8ea6fcb5e62d6f31"
     },
     "t3_label_permutation.csv": {
       "size_bytes": 188,

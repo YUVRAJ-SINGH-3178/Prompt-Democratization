@@ -3,7 +3,7 @@
 SAMPLES = [
     {
         "id": "sample-template-complete",
-        "name": "SAMPLE — Complete template example",
+        "name": "SAMPLE: Complete template example",
         "reference_name": "Template",
         "text": (
             "Role: university teacher. For bachelor students, create 10 multiple-choice questions "
@@ -14,7 +14,7 @@ SAMPLES = [
     },
     {
         "id": "sample-faculty-1-style",
-        "name": "SAMPLE — Underspecified prompt (Faculty-1-style; not source text)",
+        "name": "SAMPLE: Underspecified prompt (Faculty-1-style; not source text)",
         "reference_name": "Faculty-1",
         "text": (
             "Act as a university teacher and create some multiple-choice questions for students. "
@@ -24,7 +24,7 @@ SAMPLES = [
     },
     {
         "id": "sample-faculty-2-style",
-        "name": "SAMPLE — Minimal prompt (Faculty-2-style; not source text)",
+        "name": "SAMPLE: Minimal prompt (Faculty-2-style; not source text)",
         "reference_name": "Faculty-2",
         "text": (
             "Act as an expert professor and prepare MCQs on computer science. "
@@ -34,7 +34,7 @@ SAMPLES = [
     },
     {
         "id": "sample-faculty-3-style",
-        "name": "SAMPLE — Contradictory difficulty (Faculty-3-style; not source text)",
+        "name": "SAMPLE: Contradictory difficulty (Faculty-3-style; not source text)",
         "reference_name": "Faculty-3",
         "text": (
             "Act as a university teacher for bachelor students. Create 20 MCQs about machine learning. "
@@ -45,7 +45,7 @@ SAMPLES = [
     },
     {
         "id": "sample-faculty-4-style",
-        "name": "SAMPLE — Conflicting answer placement (Faculty-4-style; not source text)",
+        "name": "SAMPLE: Conflicting answer placement (Faculty-4-style; not source text)",
         "reference_name": "Faculty-4",
         "text": (
             "Act as an experienced professor and generate 15 MCQs on database management systems for bachelor students. "
@@ -55,7 +55,7 @@ SAMPLES = [
     },
     {
         "id": "sample-faculty-5-style",
-        "name": "SAMPLE — Ambiguity requested (Faculty-5-style; not source text)",
+        "name": "SAMPLE: Ambiguity requested (Faculty-5-style; not source text)",
         "reference_name": "Faculty-5",
         "text": (
             "Act as a university professor and create 25 MCQs on operating systems. "

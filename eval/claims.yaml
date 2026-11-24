@@ -1,0 +1,12 @@
+# Evaluation Success Rules (defined a priori before real data collection)
+# Rule: The learned model wins only if its accuracy exceeds every baseline
+# on held-out pairs after Holm-Bonferroni correction at alpha = 0.05.
+rule_id: learned_model_exceeds_all_baselines_after_holm
+threshold_alpha: 0.05
+required_baselines:
+  - random
+  - completeness_only
+  - conflict_only
+  - repository_comparator
+decision_criterion: "p_adjusted < alpha for all baselines"
+evaluation_policy: "The report prints win or no win per this file. It never edits the rule."

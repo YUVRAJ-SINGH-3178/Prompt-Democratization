@@ -164,7 +164,7 @@ def generate_t2_noisy_curve(seeds: list[int] | None = None, repetitions: int = 1
                     )
 
                     # GP
-                    kernel = ConstantKernel(1.0) * RBF(1.0) + WhiteKernel(max(sigma * sigma, 1e-3))
+                    kernel = ConstantKernel(0.1, (1e-3, 10)) * RBF(0.5, (0.05, 5)) + WhiteKernel(1e-3, (1e-8, 1))
                     gp = GaussianProcessRegressor(
                         kernel=kernel, normalize_y=True, n_restarts_optimizer=2, random_state=seed
                     )

@@ -76,6 +76,7 @@ async def access_control(request: Request, call_next):
             path.startswith("/api/prompt-checker/")
             or path.startswith("/api/samples")
             or path.startswith("/api/real-prompts")
+            or path.startswith("/api/prompts/")
         ):
             required = "all"
         else:
@@ -1024,8 +1025,10 @@ async def import_real_simulation_comparison(file: UploadFile = File(...)):
 
 if WEB.exists():
     from app.role_api import router as role_router
+    from app.comparison_api import router as comparison_router
 
     app.include_router(role_router)
+    app.include_router(comparison_router)
 
     @app.get("/", include_in_schema=False)
     def login_page():

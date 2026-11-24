@@ -119,6 +119,8 @@ def main():
     rep.add_argument("--repetitions", type=int, default=100)
     sub.add_parser("measure-break-even")
     sub.add_parser("paper-artifacts")
+    sub.add_parser("extractor-report")
+    sub.add_parser("eval")
     args = parser.parse_args()
     if args.command == "reproduce":
         out = write_run(args.study, args.seed, args.repetitions)
@@ -128,6 +130,14 @@ def main():
         from app.paper_artifacts import generate_all_paper_artifacts
 
         out = generate_all_paper_artifacts()
+    elif args.command == "extractor-report":
+        from app.comparison_api import _extractor_report
+
+        out = _extractor_report()
+    elif args.command == "eval":
+        from app.eval_harness import synthetic_recovery
+
+        out = synthetic_recovery()
     else:
         out = {"error": "unknown command"}
     print(json.dumps(out, indent=2))

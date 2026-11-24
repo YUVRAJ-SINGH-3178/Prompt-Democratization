@@ -110,7 +110,7 @@ def seed(reset_passwords: bool = False, credentials_path: Path | None = None) ->
                 (topic_id, course_id, json.dumps({"name": name})),
             )
         sample_template = {
-            "name": "SAMPLE — Complete assessment template (synthetic substitute)",
+            "name": "SAMPLE: Complete assessment template (synthetic substitute)",
             "task_type": "quiz",
             "prompt": "Role: #role. For #cohort students in #course, write #question_count questions about #topic with four options and 4 choices A to D. Mark the correct answer, include an explanation, and order them by difficulty.",
             "sample": True,
@@ -138,7 +138,7 @@ def seed(reset_passwords: bool = False, credentials_path: Path | None = None) ->
                 )
     target = credentials_path or CREDENTIALS
     target.write_text(
-        "DEMO ONLY — synthetic local accounts. Keep this file private; delete it after saving the passwords.\n"
+        "DEMO ONLY: synthetic local accounts. Keep this file private; delete it after saving the passwords.\n"
         + "username\trole\tpassword\n"
         + "".join(f"{username}\t{role}\t{password}\n" for username, role, password in credentials),
         encoding="utf-8",
@@ -151,7 +151,7 @@ def main() -> None:
     parser.add_argument("--reset-demo-passwords", action="store_true")
     args = parser.parse_args()
     credentials = seed(args.reset_demo_passwords)
-    print("Demo credentials — shown once. Plaintext passwords are not stored in the database or audit log.")
+    print("Demo credentials: shown once. Plaintext passwords are not stored in the database or audit log.")
     for username, role, password in credentials:
         print(f"{username}\t{role}\t{password}")
     print(f"Saved once to {CREDENTIALS.relative_to(ROOT)} (gitignored).")

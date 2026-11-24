@@ -118,7 +118,7 @@ class FeatureRouter:
             y = np.asarray([r.rating for r in rows], dtype=float)
             if X.ndim != 2 or X.shape[1] != len(x):
                 continue
-            kernel = ConstantKernel(1.0) * RBF(length_scale=1.0) + WhiteKernel(noise_level=0.05)
+            kernel = ConstantKernel(0.1, (1e-3, 10)) * RBF(0.5, (0.05, 5)) + WhiteKernel(1e-3, (1e-8, 1))
             model = GaussianProcessRegressor(
                 kernel=kernel, normalize_y=True, n_restarts_optimizer=2, random_state=self.random_state
             )

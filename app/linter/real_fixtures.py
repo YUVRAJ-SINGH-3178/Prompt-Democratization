@@ -3,13 +3,13 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-SOURCE_PROJECT_BRIEF = "project_brief"
+SOURCE_PROJECT_BRIEF = "authored_by_builder"
 
 REAL_TEST_PROMPTS = [
     {
         "id": "real-template",
         "name": "Template",
-        "source": SOURCE_PROJECT_BRIEF,
+        "source": "project_brief",
         "text": (
             "Act as a university teacher tasked with assessing bachelor students' knowledge. "
             "Your job is to create multiple-choice questions that effectively test students' "

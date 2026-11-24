@@ -1,0 +1,67 @@
+{
+  "description": "Gold standard atom annotations for extractor evaluation. Only the five brief prompts have been labeled by the builder. Additional real prompts should be placed in data/gold/inbox/ and annotated by humans.",
+  "n_real": 5,
+  "n_total": 5,
+  "source_note": "These five prompts are from the original project brief. They are authored_by_builder, not collected from actual faculty. Matching them is a regression test, not an accuracy measure on unseen data.",
+  "atoms_vocabulary": [
+    "very_easy", "expert_level", "no_basic", "ordered_easy_to_hard",
+    "hidden_answers", "answer_after_each_q", "single_correct",
+    "multi_interp", "confusing_language", "clear_unambiguous"
+  ],
+  "conflict_pairs": [
+    ["very_easy", "expert_level"],
+    ["very_easy", "no_basic"],
+    ["hidden_answers", "answer_after_each_q"],
+    ["single_correct", "multi_interp"],
+    ["clear_unambiguous", "confusing_language"],
+    ["clear_unambiguous", "multi_interp"]
+  ],
+  "policy_atoms": ["clear_unambiguous"],
+  "prompts": [
+    {
+      "id": "faculty-1",
+      "source": "authored_by_builder",
+      "text": "Act as a university teacher and create some multiple-choice questions for students. Make the questions useful for their exams. Give four options for each question and provide the answers. Make sure the questions are good and cover the important concepts. Explain the answers wherever necessary. The questions should be suitable for students and should help them understand the subject better.",
+      "atoms": [],
+      "energy": 0,
+      "repair": [],
+      "split": "tune"
+    },
+    {
+      "id": "faculty-2",
+      "source": "authored_by_builder",
+      "text": "Act as an expert professor and prepare MCQs on computer science. Include all the important topics that students should know. Make the questions interesting, challenging, and useful for examinations. Provide four choices for every question and mark the right answer. Include explanations for the answers and make sure the questions are neither too easy nor too difficult. Arrange them properly.",
+      "atoms": [],
+      "energy": 0,
+      "repair": [],
+      "split": "tune"
+    },
+    {
+      "id": "faculty-3",
+      "source": "authored_by_builder",
+      "text": "Act as a university teacher who teaches undergraduate and postgraduate students. Create 20 MCQs about machine learning. All questions must be very easy so every student can answer them, but they must also test advanced research knowledge, deep critical thinking, complex problem-solving, and expert-level understanding. Do not include any basic questions. Arrange all questions from the easiest to the hardest. Give four options, the correct answer, and an explanation for every option.",
+      "atoms": ["very_easy", "expert_level", "no_basic", "ordered_easy_to_hard"],
+      "energy": 1,
+      "repair": ["very_easy"],
+      "split": "tune"
+    },
+    {
+      "id": "faculty-4",
+      "source": "authored_by_builder",
+      "text": "Act as an experienced professor and generate 15 MCQs on database management systems for bachelor students. Each question should have four options labelled A, B, C, and D. Highlight the correct answer in bold, but do not reveal the correct answer to students. After every question, provide the answer and a detailed explanation. Do not provide an answer key at the end. Make the questions suitable for a classroom test and ensure students cannot easily guess the answers.",
+      "atoms": ["hidden_answers", "answer_after_each_q"],
+      "energy": 1,
+      "repair": ["hidden_answers"],
+      "split": "eval"
+    },
+    {
+      "id": "faculty-5",
+      "source": "authored_by_builder",
+      "text": "Act as a university professor and create 25 MCQs on operating systems. Every question must have four options. Make the wrong answers look almost correct and use confusing language so that students have to think carefully. Include tricky statements, double negatives, and options that can be interpreted in multiple ways. The questions should be difficult enough to confuse students. Give the correct answer and explain why the other options are wrong. Make sure there is only one correct answer even if some options seem correct.",
+      "atoms": ["single_correct", "multi_interp", "confusing_language"],
+      "energy": 2,
+      "repair": ["confusing_language", "multi_interp"],
+      "split": "eval"
+    }
+  ]
+}

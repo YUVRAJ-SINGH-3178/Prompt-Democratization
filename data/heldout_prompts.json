@@ -3,7 +3,7 @@
     "prompt_id": "HELD-01",
     "prompt": "Act as a university teacher for bachelor students. Create 10 MCQs on Normalization. Four options labelled A to D, one correct answer marked in bold, explanations for all choices, ordered from easiest to hardest.",
     "dataset": "heldout",
-    "source": "heldout_unseen",
+    "source": "authored_by_builder",
     "discipline": "Computing",
     "course": "Normalization",
     "synthetic": 0
@@ -12,7 +12,7 @@
     "prompt_id": "HELD-02",
     "prompt": "Act as an experienced professor. Write 15 MCQs on database indexing for undergraduate students with four choices A, B, C, D. Mark the right answer and explain rationale. Increasing difficulty.",
     "dataset": "heldout",
-    "source": "heldout_unseen",
+    "source": "authored_by_builder",
     "discipline": "Computing",
     "course": "Database Indexing",
     "synthetic": 0
@@ -21,7 +21,7 @@
     "prompt_id": "HELD-03",
     "prompt": "Act as a university instructor. Prepare 20 MCQs on concurrency control for master students. Four options, highlight correct answer. Make questions very easy but test expert-level understanding. No basic questions.",
     "dataset": "heldout",
-    "source": "heldout_unseen",
+    "source": "authored_by_builder",
     "discipline": "Computing",
     "course": "Concurrency Control",
     "synthetic": 0
@@ -30,7 +30,7 @@
     "prompt_id": "HELD-04",
     "prompt": "Act as a faculty member for bachelor students. Generate 12 MCQs on SQL queries with four options labelled A-D. Mark correct answer, but do not reveal the correct answer to students. Show answer after each question.",
     "dataset": "heldout",
-    "source": "heldout_unseen",
+    "source": "authored_by_builder",
     "discipline": "Computing",
     "course": "SQL Queries",
     "synthetic": 0
@@ -39,7 +39,7 @@
     "prompt_id": "HELD-05",
     "prompt": "Act as a professor. Write 25 MCQs on memory management. Four choices. Use confusing language and include options that can be interpreted in multiple ways. Give correct answer.",
     "dataset": "heldout",
-    "source": "heldout_unseen",
+    "source": "authored_by_builder",
     "discipline": "Computing",
     "course": "Memory Management",
     "synthetic": 0
@@ -48,7 +48,7 @@
     "prompt_id": "HELD-06",
     "prompt": "Act as a teacher. Create some questions for students about file systems. Provide four options and provide the answers. Explain answers wherever necessary.",
     "dataset": "heldout",
-    "source": "heldout_unseen",
+    "source": "authored_by_builder",
     "discipline": "Computing",
     "course": "File Systems",
     "synthetic": 0
@@ -57,7 +57,7 @@
     "prompt_id": "HELD-07",
     "prompt": "Act as an expert professor. Prepare MCQs on computer architecture. Four choices for every question and mark right answer. Include explanations. Arrange them properly.",
     "dataset": "heldout",
-    "source": "heldout_unseen",
+    "source": "authored_by_builder",
     "discipline": "Engineering",
     "course": "Computer Architecture",
     "synthetic": 0
@@ -66,7 +66,7 @@
     "prompt_id": "HELD-08",
     "prompt": "Act as an instructor for bachelor students. Create 10 multiple-choice questions on neural networks. Four answer choices labelled A to D. Only one correct answer. Clear and concise explanations.",
     "dataset": "heldout",
-    "source": "heldout_unseen",
+    "source": "authored_by_builder",
     "discipline": "Computing",
     "course": "Neural Networks",
     "synthetic": 0
@@ -75,7 +75,7 @@
     "prompt_id": "HELD-09",
     "prompt": "Act as a university professor for postgraduate students. Write 15 MCQs on deep learning. Four options. Skip the basics and test advanced research knowledge. Ordered from easiest to hardest.",
     "dataset": "heldout",
-    "source": "heldout_unseen",
+    "source": "authored_by_builder",
     "discipline": "Computing",
     "course": "Deep Learning",
     "synthetic": 0
@@ -84,7 +84,7 @@
     "prompt_id": "HELD-10",
     "prompt": "Act as an instructor. Write 20 MCQs on computer graphics for undergraduate students. Four choices labelled A-D. Keep answers hidden until the end. Explain all answers.",
     "dataset": "heldout",
-    "source": "heldout_unseen",
+    "source": "authored_by_builder",
     "discipline": "Computing",
     "course": "Computer Graphics",
     "synthetic": 0
@@ -93,7 +93,7 @@
     "prompt_id": "HELD-11",
     "prompt": "Act as a professor for bachelor students. Generate 10 MCQs on software testing with four options labelled A to D. Highlight correct answer. Ensure questions are clear and unambiguous.",
     "dataset": "heldout",
-    "source": "heldout_unseen",
+    "source": "authored_by_builder",
     "discipline": "Engineering",
     "course": "Software Testing",
     "synthetic": 0
@@ -102,7 +102,7 @@
     "prompt_id": "HELD-12",
     "prompt": "Act as a university teacher. Create 15 MCQs on agile methodologies for master students. Four options each with one correct answer. Arrange from easiest to hardest.",
     "dataset": "heldout",
-    "source": "heldout_unseen",
+    "source": "authored_by_builder",
     "discipline": "Engineering",
     "course": "Agile Methodologies",
     "synthetic": 0
@@ -111,7 +111,7 @@
     "prompt_id": "HELD-13",
     "prompt": "Act as an educator for undergraduate students. Write 10 MCQs on microprocessors. Four choices. Mark the correct answer. Make questions very easy so everyone passes, but also test expert-level knowledge.",
     "dataset": "heldout",
-    "source": "heldout_unseen",
+    "source": "authored_by_builder",
     "discipline": "Engineering",
     "course": "Microprocessors",
     "synthetic": 0
@@ -120,7 +120,7 @@
     "prompt_id": "HELD-14",
     "prompt": "Act as an experienced teacher. Prepare 12 MCQs on robotics for bachelor students. Four options labelled A, B, C, D. Do not reveal correct answer to students. Provide answer after each question.",
     "dataset": "heldout",
-    "source": "heldout_unseen",
+    "source": "authored_by_builder",
     "discipline": "Engineering",
     "course": "Robotics",
     "synthetic": 0
@@ -129,7 +129,7 @@
     "prompt_id": "HELD-15",
     "prompt": "Act as a professor. Create 20 MCQs on cyber security. Four choices. Make wrong answers look correct and use confusing wording. Make sure there is only one correct answer.",
     "dataset": "heldout",
-    "source": "heldout_unseen",
+    "source": "authored_by_builder",
     "discipline": "Computing",
     "course": "Cyber Security",
     "synthetic": 0
@@ -138,7 +138,7 @@
     "prompt_id": "HELD-16",
     "prompt": "Act as a university teacher. Write some multiple choice questions for students on web development. Four options and provide the answers.",
     "dataset": "heldout",
-    "source": "heldout_unseen",
+    "source": "authored_by_builder",
     "discipline": "Computing",
     "course": "Web Development",
     "synthetic": 0
@@ -147,7 +147,7 @@
     "prompt_id": "HELD-17",
     "prompt": "Act as an expert professor and prepare MCQs on data science. Provide four choices and mark the right answer. Include explanations. Arrange them properly.",
     "dataset": "heldout",
-    "source": "heldout_unseen",
+    "source": "authored_by_builder",
     "discipline": "Computing",
     "course": "Data Science",
     "synthetic": 0
@@ -156,7 +156,7 @@
     "prompt_id": "HELD-18",
     "prompt": "Act as an instructor for bachelor students. Create 10 MCQs on cloud computing. Four options labelled A to D. One correct answer. Provide detailed explanation for each.",
     "dataset": "heldout",
-    "source": "heldout_unseen",
+    "source": "authored_by_builder",
     "discipline": "Computing",
     "course": "Cloud Computing",
     "synthetic": 0
@@ -165,7 +165,7 @@
     "prompt_id": "HELD-19",
     "prompt": "Act as a faculty member for master students. Write 15 MCQs on natural language processing. Four choices. Skip the basics. Ordered by increasing difficulty.",
     "dataset": "heldout",
-    "source": "heldout_unseen",
+    "source": "authored_by_builder",
     "discipline": "Computing",
     "course": "Natural Language Processing",
     "synthetic": 0
@@ -174,7 +174,7 @@
     "prompt_id": "HELD-20",
     "prompt": "Act as a professor for undergraduate students. Write 20 MCQs on computer vision. Four options labelled A to D. Keep the answers hidden in an answer key. Include explanations.",
     "dataset": "heldout",
-    "source": "heldout_unseen",
+    "source": "authored_by_builder",
     "discipline": "Computing",
     "course": "Computer Vision",
     "synthetic": 0
@@ -183,7 +183,7 @@
     "prompt_id": "HELD-21",
     "prompt": "Act as a university teacher. Create 10 MCQs on bioinformatics for bachelor students. Four answer choices, mark correct answer bold. Clear and unambiguous wording.",
     "dataset": "heldout",
-    "source": "heldout_unseen",
+    "source": "authored_by_builder",
     "discipline": "Science",
     "course": "Bioinformatics",
     "synthetic": 0
@@ -192,7 +192,7 @@
     "prompt_id": "HELD-22",
     "prompt": "Act as an experienced professor. Prepare 15 MCQs on immunology for medical students. Four choices labelled A, B, C, D. Single correct answer. Order from easiest to hardest.",
     "dataset": "heldout",
-    "source": "heldout_unseen",
+    "source": "authored_by_builder",
     "discipline": "Medical",
     "course": "Immunology",
     "synthetic": 0
@@ -201,7 +201,7 @@
     "prompt_id": "HELD-23",
     "prompt": "Act as an instructor. Create 12 MCQs on physiology for undergraduate students. Four options. Make questions very easy and test advanced research knowledge. Avoid basic questions.",
     "dataset": "heldout",
-    "source": "heldout_unseen",
+    "source": "authored_by_builder",
     "discipline": "Medical",
     "course": "Physiology",
     "synthetic": 0
@@ -210,7 +210,7 @@
     "prompt_id": "HELD-24",
     "prompt": "Act as a faculty member for bachelor students. Write 10 MCQs on marketing management. Four choices labelled A to D. Mark correct answer, but do not reveal answer to students. Show answer immediately after question.",
     "dataset": "heldout",
-    "source": "heldout_unseen",
+    "source": "authored_by_builder",
     "discipline": "Business",
     "course": "Marketing Management",
     "synthetic": 0
@@ -219,7 +219,7 @@
     "prompt_id": "HELD-25",
     "prompt": "Act as a university professor. Write 25 MCQs on macroeconomics. Four options. Use confusing language so students have to think carefully. Options with multiple interpretations.",
     "dataset": "heldout",
-    "source": "heldout_unseen",
+    "source": "authored_by_builder",
     "discipline": "Business",
     "course": "Macroeconomics",
     "synthetic": 0
@@ -228,7 +228,7 @@
     "prompt_id": "HELD-26",
     "prompt": "Act as a teacher. Create some multiple-choice questions for students about business law. Four options and provide the answers. Explain wherever necessary.",
     "dataset": "heldout",
-    "source": "heldout_unseen",
+    "source": "authored_by_builder",
     "discipline": "Business",
     "course": "Business Law",
     "synthetic": 0
@@ -237,7 +237,7 @@
     "prompt_id": "HELD-27",
     "prompt": "Act as an expert professor. Prepare MCQs on financial accounting. Four choices and mark the right answer. Include explanations. Arrange them properly.",
     "dataset": "heldout",
-    "source": "heldout_unseen",
+    "source": "authored_by_builder",
     "discipline": "Business",
     "course": "Financial Accounting",
     "synthetic": 0
@@ -246,7 +246,7 @@
     "prompt_id": "HELD-28",
     "prompt": "Act as an instructor for bachelor students. Create 10 MCQs on human anatomy. Four options labelled A to D. One correct answer. Detailed explanation for every question. Easiest to hardest.",
     "dataset": "heldout",
-    "source": "heldout_unseen",
+    "source": "authored_by_builder",
     "discipline": "Medical",
     "course": "Human Anatomy",
     "synthetic": 0
@@ -255,7 +255,7 @@
     "prompt_id": "HELD-29",
     "prompt": "Act as a faculty member for master students. Write 15 MCQs on linear control systems. Four choices. Do not include basic questions; test expert-level understanding. Progressive difficulty.",
     "dataset": "heldout",
-    "source": "heldout_unseen",
+    "source": "authored_by_builder",
     "discipline": "Engineering",
     "course": "Control Systems",
     "synthetic": 0
@@ -264,7 +264,7 @@
     "prompt_id": "HELD-30",
     "prompt": "Act as a university professor for undergraduate students. Create 20 MCQs on modern poetry. Four options labelled A to D. Keep the answers hidden until the end. Clear explanations.",
     "dataset": "heldout",
-    "source": "heldout_unseen",
+    "source": "authored_by_builder",
     "discipline": "Literature",
     "course": "Modern Poetry",
     "synthetic": 0
