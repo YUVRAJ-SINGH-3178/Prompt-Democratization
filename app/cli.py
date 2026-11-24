@@ -122,6 +122,9 @@ def main():
     sub.add_parser("extractor-report")
     sub.add_parser("eval")
     sub.add_parser("real-eval")
+    sub.add_parser("dev-eval")
+    froz = sub.add_parser("frozen-eval")
+    froz.add_argument("--force", action="store_true", default=False)
     args = parser.parse_args()
     if args.command == "reproduce":
         out = write_run(args.study, args.seed, args.repetitions)
@@ -143,6 +146,14 @@ def main():
         from app.real_eval import run_real_evaluation
 
         out = run_real_evaluation()
+    elif args.command == "dev-eval":
+        from app.extractor.eval import run_dev_eval
+
+        out = run_dev_eval()
+    elif args.command == "frozen-eval":
+        from app.extractor.eval import run_frozen_eval
+
+        out = run_frozen_eval(force=args.force)
     else:
         out = {"error": "unknown command"}
     print(json.dumps(out, indent=2))

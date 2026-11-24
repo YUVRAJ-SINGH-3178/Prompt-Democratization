@@ -1,0 +1,703 @@
+{
+  "metadata": {
+    "date": "2026-11-24T11:04:43.840204+00:00",
+    "model": "none",
+    "reader_enabled": false,
+    "rubric_version": "1.0.0",
+    "schema_version": "1.0.0",
+    "versions": {
+      "python": "3.13.5",
+      "numpy": "2.2.6",
+      "scipy": "1.15.3",
+      "scikit_learn": "1.6.1"
+    }
+  },
+  "provenance": {
+    "source": "authored_by_builder",
+    "synthetic": 1,
+    "total_prompts": 80,
+    "dev_68_n": 68,
+    "dev_12_n": 12
+  },
+  "splits": {
+    "dev_68": {
+      "rules_only": {
+        "status": "success",
+        "n_prompts": 68,
+        "review_rate": 0.0,
+        "total_review_items": 0,
+        "total_eval_items": 1224,
+        "slot_agreement": 0.9984,
+        "slot_agreement_ci_95": [
+          0.9908,
+          0.9997
+        ],
+        "slot_matches": 611,
+        "total_slots": 612,
+        "micro_precision": 1.0,
+        "micro_precision_ci_95": [
+          0.9493,
+          1.0
+        ],
+        "micro_recall": 1.0,
+        "micro_recall_ci_95": [
+          0.9493,
+          1.0
+        ],
+        "micro_f1": 1.0,
+        "per_atom": {
+          "very_easy": {
+            "gold_count": 8,
+            "pred_count": 8,
+            "tp": 8,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "precision_ci_95": [
+              0.6756,
+              1.0
+            ],
+            "recall": 1.0,
+            "recall_ci_95": [
+              0.6756,
+              1.0
+            ],
+            "f1": 1.0
+          },
+          "expert_level": {
+            "gold_count": 7,
+            "pred_count": 7,
+            "tp": 7,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "precision_ci_95": [
+              0.6457,
+              1.0
+            ],
+            "recall": 1.0,
+            "recall_ci_95": [
+              0.6457,
+              1.0
+            ],
+            "f1": 1.0
+          },
+          "no_basic": {
+            "gold_count": 8,
+            "pred_count": 8,
+            "tp": 8,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "precision_ci_95": [
+              0.6756,
+              1.0
+            ],
+            "recall": 1.0,
+            "recall_ci_95": [
+              0.6756,
+              1.0
+            ],
+            "f1": 1.0
+          },
+          "ordered_easy_to_hard": {
+            "gold_count": 10,
+            "pred_count": 10,
+            "tp": 10,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "precision_ci_95": [
+              0.7225,
+              1.0
+            ],
+            "recall": 1.0,
+            "recall_ci_95": [
+              0.7225,
+              1.0
+            ],
+            "f1": 1.0
+          },
+          "hidden_answers": {
+            "gold_count": 11,
+            "pred_count": 11,
+            "tp": 11,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "precision_ci_95": [
+              0.7412,
+              1.0
+            ],
+            "recall": 1.0,
+            "recall_ci_95": [
+              0.7412,
+              1.0
+            ],
+            "f1": 1.0
+          },
+          "answer_after_each_q": {
+            "gold_count": 8,
+            "pred_count": 8,
+            "tp": 8,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "precision_ci_95": [
+              0.6756,
+              1.0
+            ],
+            "recall": 1.0,
+            "recall_ci_95": [
+              0.6756,
+              1.0
+            ],
+            "f1": 1.0
+          },
+          "single_correct": {
+            "gold_count": 9,
+            "pred_count": 9,
+            "tp": 9,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "precision_ci_95": [
+              0.7009,
+              1.0
+            ],
+            "recall": 1.0,
+            "recall_ci_95": [
+              0.7009,
+              1.0
+            ],
+            "f1": 1.0
+          },
+          "multi_interp": {
+            "gold_count": 6,
+            "pred_count": 6,
+            "tp": 6,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "precision_ci_95": [
+              0.6097,
+              1.0
+            ],
+            "recall": 1.0,
+            "recall_ci_95": [
+              0.6097,
+              1.0
+            ],
+            "f1": 1.0
+          },
+          "confusing_language": {
+            "gold_count": 5,
+            "pred_count": 5,
+            "tp": 5,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "precision_ci_95": [
+              0.5655,
+              1.0
+            ],
+            "recall": 1.0,
+            "recall_ci_95": [
+              0.5655,
+              1.0
+            ],
+            "f1": 1.0
+          }
+        },
+        "wrong_energy_strict_count": 0,
+        "wrong_energy_strict_prompts": [],
+        "wrong_energy_range_count": 0,
+        "wrong_energy_range_prompts": []
+      },
+      "reader_only": {
+        "status": "not_run_no_api_key"
+      },
+      "combined": {
+        "status": "not_run_no_api_key"
+      }
+    },
+    "dev_12": {
+      "rules_only": {
+        "status": "success",
+        "n_prompts": 12,
+        "review_rate": 0.0,
+        "total_review_items": 0,
+        "total_eval_items": 216,
+        "slot_agreement": 0.5741,
+        "slot_agreement_ci_95": [
+          0.4799,
+          0.6632
+        ],
+        "slot_matches": 62,
+        "total_slots": 108,
+        "micro_precision": 1.0,
+        "micro_precision_ci_95": [
+          0.6756,
+          1.0
+        ],
+        "micro_recall": 0.3478,
+        "micro_recall_ci_95": [
+          0.1881,
+          0.5511
+        ],
+        "micro_f1": 0.5161,
+        "per_atom": {
+          "very_easy": {
+            "gold_count": 3,
+            "pred_count": 3,
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "precision_ci_95": [
+              0.4385,
+              1.0
+            ],
+            "recall": 1.0,
+            "recall_ci_95": [
+              0.4385,
+              1.0
+            ],
+            "f1": 1.0
+          },
+          "expert_level": {
+            "gold_count": 1,
+            "pred_count": 1,
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "precision_ci_95": [
+              0.2065,
+              1.0
+            ],
+            "recall": 1.0,
+            "recall_ci_95": [
+              0.2065,
+              1.0
+            ],
+            "f1": 1.0
+          },
+          "no_basic": {
+            "gold_count": 2,
+            "pred_count": 1,
+            "tp": 1,
+            "fp": 0,
+            "fn": 1,
+            "precision": 1.0,
+            "precision_ci_95": [
+              0.2065,
+              1.0
+            ],
+            "recall": 0.5,
+            "recall_ci_95": [
+              0.0945,
+              0.9055
+            ],
+            "f1": 0.6667
+          },
+          "ordered_easy_to_hard": {
+            "gold_count": 4,
+            "pred_count": 1,
+            "tp": 1,
+            "fp": 0,
+            "fn": 3,
+            "precision": 1.0,
+            "precision_ci_95": [
+              0.2065,
+              1.0
+            ],
+            "recall": 0.25,
+            "recall_ci_95": [
+              0.0456,
+              0.6994
+            ],
+            "f1": 0.4
+          },
+          "hidden_answers": {
+            "gold_count": 3,
+            "pred_count": 0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 3,
+            "precision": 0.0,
+            "precision_ci_95": [
+              0.0,
+              0.0
+            ],
+            "recall": 0.0,
+            "recall_ci_95": [
+              0.0,
+              0.5615
+            ],
+            "f1": 0.0
+          },
+          "answer_after_each_q": {
+            "gold_count": 2,
+            "pred_count": 0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 2,
+            "precision": 0.0,
+            "precision_ci_95": [
+              0.0,
+              0.0
+            ],
+            "recall": 0.0,
+            "recall_ci_95": [
+              0.0,
+              0.6576
+            ],
+            "f1": 0.0
+          },
+          "single_correct": {
+            "gold_count": 6,
+            "pred_count": 1,
+            "tp": 1,
+            "fp": 0,
+            "fn": 5,
+            "precision": 1.0,
+            "precision_ci_95": [
+              0.2065,
+              1.0
+            ],
+            "recall": 0.1667,
+            "recall_ci_95": [
+              0.0301,
+              0.5635
+            ],
+            "f1": 0.2858
+          },
+          "multi_interp": {
+            "gold_count": 1,
+            "pred_count": 0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "precision": 0.0,
+            "precision_ci_95": [
+              0.0,
+              0.0
+            ],
+            "recall": 0.0,
+            "recall_ci_95": [
+              0.0,
+              0.7935
+            ],
+            "f1": 0.0
+          },
+          "confusing_language": {
+            "gold_count": 1,
+            "pred_count": 1,
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "precision_ci_95": [
+              0.2065,
+              1.0
+            ],
+            "recall": 1.0,
+            "recall_ci_95": [
+              0.2065,
+              1.0
+            ],
+            "f1": 1.0
+          }
+        },
+        "wrong_energy_strict_count": 2,
+        "wrong_energy_strict_prompts": [
+          {
+            "prompt_id": "P05",
+            "true_energy": 1,
+            "predicted_energy": 0,
+            "energy_range": [
+              0,
+              0
+            ]
+          },
+          {
+            "prompt_id": "P09",
+            "true_energy": 1,
+            "predicted_energy": 0,
+            "energy_range": [
+              0,
+              0
+            ]
+          }
+        ],
+        "wrong_energy_range_count": 2,
+        "wrong_energy_range_prompts": [
+          {
+            "prompt_id": "P05",
+            "true_energy": 1,
+            "predicted_energy": 0,
+            "energy_range": [
+              0,
+              0
+            ]
+          },
+          {
+            "prompt_id": "P09",
+            "true_energy": 1,
+            "predicted_energy": 0,
+            "energy_range": [
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "reader_only": {
+        "status": "not_run_no_api_key"
+      },
+      "combined": {
+        "status": "not_run_no_api_key"
+      }
+    },
+    "combined_dev": {
+      "rules_only": {
+        "status": "success",
+        "n_prompts": 80,
+        "review_rate": 0.0,
+        "total_review_items": 0,
+        "total_eval_items": 1440,
+        "slot_agreement": 0.9347,
+        "slot_agreement_ci_95": [
+          0.9143,
+          0.9506
+        ],
+        "slot_matches": 673,
+        "total_slots": 720,
+        "micro_precision": 1.0,
+        "micro_precision_ci_95": [
+          0.9542,
+          1.0
+        ],
+        "micro_recall": 0.8421,
+        "micro_recall_ci_95": [
+          0.7557,
+          0.9019
+        ],
+        "micro_f1": 0.9143,
+        "per_atom": {
+          "very_easy": {
+            "gold_count": 11,
+            "pred_count": 11,
+            "tp": 11,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "precision_ci_95": [
+              0.7412,
+              1.0
+            ],
+            "recall": 1.0,
+            "recall_ci_95": [
+              0.7412,
+              1.0
+            ],
+            "f1": 1.0
+          },
+          "expert_level": {
+            "gold_count": 8,
+            "pred_count": 8,
+            "tp": 8,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "precision_ci_95": [
+              0.6756,
+              1.0
+            ],
+            "recall": 1.0,
+            "recall_ci_95": [
+              0.6756,
+              1.0
+            ],
+            "f1": 1.0
+          },
+          "no_basic": {
+            "gold_count": 10,
+            "pred_count": 9,
+            "tp": 9,
+            "fp": 0,
+            "fn": 1,
+            "precision": 1.0,
+            "precision_ci_95": [
+              0.7009,
+              1.0
+            ],
+            "recall": 0.9,
+            "recall_ci_95": [
+              0.5958,
+              0.9821
+            ],
+            "f1": 0.9474
+          },
+          "ordered_easy_to_hard": {
+            "gold_count": 14,
+            "pred_count": 11,
+            "tp": 11,
+            "fp": 0,
+            "fn": 3,
+            "precision": 1.0,
+            "precision_ci_95": [
+              0.7412,
+              1.0
+            ],
+            "recall": 0.7857,
+            "recall_ci_95": [
+              0.5241,
+              0.9243
+            ],
+            "f1": 0.88
+          },
+          "hidden_answers": {
+            "gold_count": 14,
+            "pred_count": 11,
+            "tp": 11,
+            "fp": 0,
+            "fn": 3,
+            "precision": 1.0,
+            "precision_ci_95": [
+              0.7412,
+              1.0
+            ],
+            "recall": 0.7857,
+            "recall_ci_95": [
+              0.5241,
+              0.9243
+            ],
+            "f1": 0.88
+          },
+          "answer_after_each_q": {
+            "gold_count": 10,
+            "pred_count": 8,
+            "tp": 8,
+            "fp": 0,
+            "fn": 2,
+            "precision": 1.0,
+            "precision_ci_95": [
+              0.6756,
+              1.0
+            ],
+            "recall": 0.8,
+            "recall_ci_95": [
+              0.4902,
+              0.9433
+            ],
+            "f1": 0.8889
+          },
+          "single_correct": {
+            "gold_count": 15,
+            "pred_count": 10,
+            "tp": 10,
+            "fp": 0,
+            "fn": 5,
+            "precision": 1.0,
+            "precision_ci_95": [
+              0.7225,
+              1.0
+            ],
+            "recall": 0.6667,
+            "recall_ci_95": [
+              0.4171,
+              0.8482
+            ],
+            "f1": 0.8
+          },
+          "multi_interp": {
+            "gold_count": 7,
+            "pred_count": 6,
+            "tp": 6,
+            "fp": 0,
+            "fn": 1,
+            "precision": 1.0,
+            "precision_ci_95": [
+              0.6097,
+              1.0
+            ],
+            "recall": 0.8571,
+            "recall_ci_95": [
+              0.4869,
+              0.9743
+            ],
+            "f1": 0.9231
+          },
+          "confusing_language": {
+            "gold_count": 6,
+            "pred_count": 6,
+            "tp": 6,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "precision_ci_95": [
+              0.6097,
+              1.0
+            ],
+            "recall": 1.0,
+            "recall_ci_95": [
+              0.6097,
+              1.0
+            ],
+            "f1": 1.0
+          }
+        },
+        "wrong_energy_strict_count": 2,
+        "wrong_energy_strict_prompts": [
+          {
+            "prompt_id": "P05",
+            "true_energy": 1,
+            "predicted_energy": 0,
+            "energy_range": [
+              0,
+              0
+            ]
+          },
+          {
+            "prompt_id": "P09",
+            "true_energy": 1,
+            "predicted_energy": 0,
+            "energy_range": [
+              0,
+              0
+            ]
+          }
+        ],
+        "wrong_energy_range_count": 2,
+        "wrong_energy_range_prompts": [
+          {
+            "prompt_id": "P05",
+            "true_energy": 1,
+            "predicted_energy": 0,
+            "energy_range": [
+              0,
+              0
+            ]
+          },
+          {
+            "prompt_id": "P09",
+            "true_energy": 1,
+            "predicted_energy": 0,
+            "energy_range": [
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "reader_only": {
+        "status": "not_run_no_api_key"
+      },
+      "combined": {
+        "status": "not_run_no_api_key"
+      }
+    }
+  }
+}

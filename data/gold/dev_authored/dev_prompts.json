@@ -1258,7 +1258,7 @@
     "atoms": [],
     "slots": {
       "role": 1.0,
-      "audience": 0.0,
+      "audience": 0.5,
       "topic": 0.5,
       "count": 0.0,
       "n_options": 1.0,

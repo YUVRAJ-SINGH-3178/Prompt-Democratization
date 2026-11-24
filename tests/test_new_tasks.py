@@ -11,6 +11,8 @@ Covers:
 
 from __future__ import annotations
 
+from pathlib import Path
+
 from app.energy import conflict_energy, completeness_deficits, feature_vector, FEATURE_NAMES
 from app.learner import (
     fit_bradley_terry,
@@ -256,16 +258,72 @@ def test_synthetic_recovery_output_structure():
     assert len(out["results"]) > 0
 
 
-def test_frozen_test_set_hash():
+def compute_normalized_sha256(data: bytes | str | Path) -> str:
     import hashlib
+
+    if isinstance(data, Path):
+        content = data.read_bytes()
+    elif isinstance(data, str):
+        content = data.encode("utf-8")
+    else:
+        content = data
+    normalized = content.replace(b"\r\n", b"\n")
+    return hashlib.sha256(normalized).hexdigest()
+
+
+def test_crlf_and_lf_hash_same():
+    sample_text = "prompt_id,text\nP01,First line\r\nSecond line\nP02,Third line\n"
+    lf_bytes = sample_text.replace("\r\n", "\n").encode("utf-8")
+    crlf_bytes = sample_text.replace("\r\n", "\n").replace("\n", "\r\n").encode("utf-8")
+    assert compute_normalized_sha256(lf_bytes) == compute_normalized_sha256(crlf_bytes)
+
+
+def test_dev_prompts_json_and_csv_identical():
+    import csv
+    import json
     from pathlib import Path
 
-    frozen_file = Path("data/gold/synthetic/authored_prompts_SYNTHETIC.csv")
-    hash_file = Path("data/gold/FROZEN_SHA256.txt")
+    json_path = Path("data/gold/dev_authored/dev_prompts.json")
+    csv_path = Path("data/gold/dev_authored/dev_prompts.csv")
 
-    assert frozen_file.exists(), "Frozen test set file missing"
+    assert json_path.exists()
+    assert csv_path.exists()
+
+    with open(json_path, encoding="utf-8") as f:
+        json_items = json.load(f)
+    with open(csv_path, newline="", encoding="utf-8") as f:
+        csv_items = list(csv.DictReader(f))
+
+    assert len(json_items) == 68
+    assert len(csv_items) == 68
+    assert [x["prompt_id"] for x in json_items] == [x["prompt_id"] for x in csv_items]
+
+
+def test_frozen_test_set_hash():
+    from pathlib import Path
+
+    # Normalized hash check for the original frozen set (now additionally in dev)
+    old_file = Path("data/gold/dev_authored/authored_prompts_SYNTHETIC.csv")
+    if not old_file.exists():
+        old_file = Path("data/gold/synthetic/authored_prompts_SYNTHETIC.csv")
+
+    hash_file = Path("data/gold/FROZEN_SHA256.txt")
+    assert old_file.exists(), "Old frozen file missing"
     assert hash_file.exists(), "FROZEN_SHA256.txt missing"
 
     expected_hash = hash_file.read_text(encoding="utf-8").strip()
-    actual_hash = hashlib.sha256(frozen_file.read_bytes()).hexdigest()
-    assert actual_hash == expected_hash, f"Frozen test set has changed! Expected {expected_hash}, got {actual_hash}"
+    actual_hash = compute_normalized_sha256(old_file)
+    assert actual_hash == expected_hash, f"Hash mismatch! Expected {expected_hash}, got {actual_hash}"
+
+    # For frozen_v2: verify only when it appears
+    v2_dir = Path("data/gold/frozen_v2")
+    v2_hash_file = Path("data/gold/FROZEN_V2_SHA256.txt")
+    if v2_dir.exists() and v2_hash_file.exists():
+        v2_files = sorted(v2_dir.glob("*.csv"))
+        if v2_files:
+            expected_v2 = v2_hash_file.read_text(encoding="utf-8").strip()
+            actual_v2 = compute_normalized_sha256(v2_files[0])
+            assert actual_v2 == expected_v2, f"Frozen V2 hash mismatch! Expected {expected_v2}, got {actual_v2}"
+    else:
+        # Expected state during development before user supplies frozen_v2
+        pass

@@ -77,6 +77,7 @@ async def access_control(request: Request, call_next):
             or path.startswith("/api/samples")
             or path.startswith("/api/real-prompts")
             or path.startswith("/api/prompts/")
+            or path.startswith("/api/reviews")
         ):
             required = "all"
         else:

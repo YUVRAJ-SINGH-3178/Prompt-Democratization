@@ -77,6 +77,13 @@ CREATE TABLE IF NOT EXISTS learner_fits(
  id INTEGER PRIMARY KEY AUTOINCREMENT, n_comparisons INTEGER NOT NULL, n_raters INTEGER NOT NULL,
  weights_json TEXT NOT NULL, intervals_json TEXT, versions_json TEXT NOT NULL,
  seed INTEGER NOT NULL, bootstrap_weights_json TEXT, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP);
+CREATE TABLE IF NOT EXISTS manual_reviews(
+ id INTEGER PRIMARY KEY AUTOINCREMENT, prompt_id TEXT NOT NULL, prompt_text TEXT NOT NULL,
+ item_type TEXT NOT NULL CHECK(item_type IN('atom','slot')), item_name TEXT NOT NULL,
+ verdict TEXT NOT NULL, quote TEXT, rule_opinion TEXT, reader_opinion TEXT,
+ status TEXT NOT NULL DEFAULT 'open' CHECK(status IN('open','confirmed','rejected')),
+ decision_value TEXT, decided_by TEXT, decided_at TEXT, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP);
+CREATE INDEX IF NOT EXISTS ix_manual_reviews_status ON manual_reviews(status,prompt_id);
 """
 
 

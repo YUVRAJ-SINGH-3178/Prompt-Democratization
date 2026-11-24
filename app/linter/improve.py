@@ -19,7 +19,7 @@ from dataclasses import dataclass
 from typing import Any
 
 from app.linter.core import CONFLICTS, evaluate, extract_atoms, score_slots
-from app.linter.lexicon import find_unclassified_clauses, split_clauses, split_sentences
+from app.linter.lexicon import split_clauses, split_sentences
 
 # Default mapping values aligned with Faculty builder
 MAPPING_DEFAULTS = {
@@ -79,6 +79,7 @@ class ImprovementResult:
     extractor_confidence: str = "high"
     unclassified_clauses: list[str] | None = None
     llm_metadata: dict[str, Any] | None = None
+    open_items: list[dict[str, Any]] | None = None
 
 
 def resolve_conflicts(
@@ -217,6 +218,8 @@ def build_improved_prompt_text(
     # include them under a dedicated Additional Requirements section
     retained_atoms = set(extract_atoms(" ".join(retained_sentences))) - set(dropped_atoms)
     extra_intents = []
+    if "very_easy" in retained_atoms:
+        extra_intents.append("All questions must be very easy.")
     if "expert_level" in retained_atoms:
         extra_intents.append("Test advanced research knowledge, critical thinking, and expert-level understanding.")
     if "no_basic" in retained_atoms:
@@ -309,10 +312,26 @@ def improve_prompt(
     use_llm: bool = False,
     api_key: str | None = None,
     model: str | None = None,
+    reader_output: dict[str, Any] | None = None,
+    combined_result: Any | None = None,
 ) -> ImprovementResult:
     """Main improvement entry point with contradiction resolution, slot filling, and code-enforced verification."""
-    orig_result = evaluate(prompt)
-    dropped_atoms, resolutions = resolve_conflicts(orig_result.atoms, user_choices=user_choices)
+    from app.extractor.combine import CombinedExtractionResult, combine_rules_and_reader
+
+    comb: CombinedExtractionResult
+    if combined_result is not None:
+        comb = combined_result
+    else:
+        comb = combine_rules_and_reader(
+            prompt,
+            reader_output=reader_output,
+            model=model,
+            api_key=api_key,
+            record_reviews=False,
+        )
+
+    # The improve gate uses the accepted atoms only
+    dropped_atoms, resolutions = resolve_conflicts(comb.accepted_atoms, user_choices=user_choices)
 
     llm_metadata: dict[str, Any] | None = None
     candidate_prompt: str
@@ -356,44 +375,53 @@ def improve_prompt(
             rejection_reason=verification.rejection_reason,
             verification_details=verification,
             before={
-                "completeness": orig_result.completeness,
-                "energy": orig_result.energy,
-                "atoms": orig_result.atoms,
-                "slots": orig_result.slot_scores,
+                "completeness": comb.completeness,
+                "energy": comb.energy,
+                "energy_range": comb.energy_range,
+                "atoms": comb.accepted_atoms,
+                "slots": comb.accepted_slots,
             },
             after=None,
             delta_completeness=None,
             delta_energy=None,
             resolutions=resolutions,
             dropped_atoms=dropped_atoms,
-            retained_atoms=sorted(set(orig_result.atoms) - set(dropped_atoms)),
+            retained_atoms=sorted(set(comb.accepted_atoms) - set(dropped_atoms)),
             filled_slots=[],
             text_diff="",
             mode=mode,
             llm_metadata=llm_metadata,
+            open_items=comb.open_items,
         )
 
     # Verification passed!
     imp_result = evaluate(candidate_prompt)
-    delta_comp = round(imp_result.completeness - orig_result.completeness, 3)
-    delta_energy = imp_result.energy - orig_result.energy
+    delta_comp = round(imp_result.completeness - comb.completeness, 3)
+    delta_energy = imp_result.energy - comb.energy
     diff = compute_diff(prompt, candidate_prompt)
 
-    unclassified = find_unclassified_clauses(prompt)
-    confidence = "high" if not unclassified else "medium"
-    verified_status: bool | str = "extractor_limited" if unclassified else True
+    # The improve gate uses accepted atoms only and returns verified only when no atom or slot
+    # is needs_review or unclassified. Otherwise it returns extractor_limited and lists open items.
+    if not comb.verified_ready:
+        verified_status: bool | str = "extractor_limited"
+        open_desc = [f"{item['item_type']}:{item['item_name']}" for item in comb.open_items]
+        rejection_reason = f"Extractor limited: open items require review ({', '.join(open_desc)})."
+    else:
+        verified_status = True
+        rejection_reason = None
 
     return ImprovementResult(
         original_prompt=prompt,
         improved_prompt=candidate_prompt,
         verified=verified_status,
-        rejection_reason=None,
+        rejection_reason=rejection_reason,
         verification_details=verification,
         before={
-            "completeness": orig_result.completeness,
-            "energy": orig_result.energy,
-            "atoms": orig_result.atoms,
-            "slots": orig_result.slot_scores,
+            "completeness": comb.completeness,
+            "energy": comb.energy,
+            "energy_range": comb.energy_range,
+            "atoms": comb.accepted_atoms,
+            "slots": comb.accepted_slots,
         },
         after={
             "completeness": imp_result.completeness,
@@ -405,13 +433,14 @@ def improve_prompt(
         delta_energy=delta_energy,
         resolutions=resolutions,
         dropped_atoms=dropped_atoms,
-        retained_atoms=sorted(set(orig_result.atoms) - set(dropped_atoms)),
+        retained_atoms=sorted(set(comb.accepted_atoms) - set(dropped_atoms)),
         filled_slots=filled_slots if mode == "rule_based" else [],
         text_diff=diff,
         mode=mode,
-        extractor_confidence=confidence,
-        unclassified_clauses=unclassified,
+        extractor_confidence="high" if comb.verified_ready else "medium",
+        unclassified_clauses=comb.unclassified_clauses,
         llm_metadata=llm_metadata,
+        open_items=comb.open_items,
     )
 
 

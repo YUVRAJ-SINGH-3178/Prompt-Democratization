@@ -19,5 +19,7 @@ credentials.local.txt
 data/local_auth.sqlite
 data/local_auth.sqlite-shm
 data/local_auth.sqlite-wal
+data/llm_logs/
+data/llm_cache/
 artifacts/*.log
 

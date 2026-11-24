@@ -12,8 +12,10 @@ Every data file in the repository carries an explicit provenance label. Data fil
 
 ### 2. Authored by Builder (Development & Frozen Test Sets)
 - `data/gold/dev_authored/dev_prompts.json` and `dev_prompts.csv`: 68 prompts across 9 voices (terse, verbose, non-native English, bulleted, numbered, negations, paraphrases, split conflicts, zero atoms) authored by the builder (`synthetic: 1`, `source: authored_by_builder`) for developing rule-based extractor logic.
-- `data/gold/synthetic/authored_prompts_SYNTHETIC.csv`: 12 prompts authored by the builder (`synthetic: 1`, `source: authored_by_builder`) designated as the frozen test set.
-- `data/gold/FROZEN_SHA256.txt`: SHA-256 hash (`e5bea36a5a7e0000e53fcc365e9db696ed8ddf6378b07fce27b245b9b98d2c71`) ensuring the frozen test set is immutable.
+- `data/gold/dev_authored/authored_prompts_SYNTHETIC.csv`: 12 prompts authored by the builder (`synthetic: 1`, `source: authored_by_builder`) moved from the previous frozen test set into development.
+- Total development dataset pool: 80 prompts (68 + 12).
+- `data/gold/frozen_v2/`: Location for new frozen test set (evaluated once by `make frozen-eval`).
+- `data/gold/FROZEN_SHA256.txt`: SHA-256 hash (line endings normalised CRLF to LF) for the legacy frozen set.
 - `data/gold/atoms_gold.json`: Authored prompt fixtures from the project brief used exclusively as logic regression tests.
 
 ### 3. Synthetic Benchmark & Simulation Data
@@ -53,9 +55,46 @@ Authentication uses Argon2id password hashes, opaque HttpOnly SameSite session c
 
 Demo departments, courses, topics, accounts, memberships, and templates are synthetic and labeled in the UI.
 
+## How Extraction Works
+
+Extraction combines a verifiable language-model reader with explainable lexical rules and routes all disagreements to a human review queue.
+
+### Verdict Table
+
+For each requirement atom and each specification slot, the hybrid system computes an explicit verdict:
+
+| Verdict | Condition | Action |
+|---|---|---|
+| `agree` | Reader and rules assert the same, and the reader's quote passed verbatim check. | Auto-accept. Included in accepted set. |
+| `reader_only` | Reader asserts with a valid verbatim quote, but rules do not assert. | Mark `needs_review`. Routed to human review queue. |
+| `rules_only` | Rules assert, but reader does not assert. | Mark `needs_review`. Routed to human review queue. |
+| `disagree_value` | Both reader and rules give a slot score and their scores differ. | Take neither (score = 0.0). Put in manual review queue. |
+| `unsupported` | Reader asserted without an exact verbatim substring quote. | Ignore claim and log. Discarded automatically by code. |
+
+### What is Checked by Code
+
+1. **Verbatim Substring Evidence**: Every evidence quote returned by the model is validated against the prompt text (after whitespace normalisation). If a quote is missing or not a verbatim substring, the claim is rejected. The model's word alone is never accepted.
+2. **Negation Scoping**: Any atom marked with `negated: true` or containing explicit negative phrasing (such as "not easy", "no very easy questions", "do not use tricky wording", "answers should not be hidden") is never asserted.
+3. **Exact Max-SAT Energy**: Energy is computed directly by exact Max-SAT from the accepted atoms. When any atom is in review (`needs_review`), an energy range `[energy_min, energy_max]` is returned: the value with those atoms excluded and the value with them included, instead of a single number.
+4. **Improvement Gate**: The improve engine uses accepted atoms only and returns `verified: True` only when zero atoms or slots are `needs_review` or unclassified. Otherwise, it returns `verified: "extractor_limited"` and lists all open items.
+
+### What Needs a Human
+
+- Disagreements (`reader_only`, `rules_only`, and `disagree_value`) appear in the manual review queue accessible to Faculty and Course Coordinators.
+- Confirming or rejecting stores a human decision record containing the username and timestamp.
+- Human decisions override both machines and become labeled examples for future evaluation (kept strictly separate from any frozen set).
+
+### What Cannot Be Measured Until Real Prompts and Two Annotators Exist
+
+- **True generalization**: Matching annotations on text authored by the builder is a regression check, not a measure of real faculty generalization.
+- **Inter-annotator agreement**: Cannot compute Cohen's kappa or double-annotation consistency without real prompts labeled independently by at least two human annotators.
+- **LLM generation quality**: The LLM question generation study is not run. We make no claims about the educational quality of questions produced by downstream models.
+
 ## Command Reference and Verification
 
-- `make test`: Run pytest suite.
+- `make test`: Run full pytest test suite.
+- `make dev-eval`: Evaluate rules only, reader only, and combined systems across 80 development prompts (68 authored dev prompts + 12 legacy synthetic prompts).
+- `make frozen-eval`: One-command frozen measurement on `data/gold/frozen_v2/` (verifies hash, runs once, refuses reruns without `--force`).
 - `make eval`: Run synthetic recovery benchmark across 5 seeds and 5 budgets.
 - `make extractor-report`: Generate extractor report on gold and inbox data.
 - `make real-eval`: Execute real-data evaluation pipeline (aborts honestly if real data is missing).

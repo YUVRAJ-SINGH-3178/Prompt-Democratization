@@ -1,0 +1,21 @@
+{
+  "label": "SYNTHETIC",
+  "SYNTHETIC": true,
+  "synthetic": "not a real-data result",
+  "covered": 184,
+  "n_datasets": 200,
+  "rate": 0.92,
+  "wilson_interval_95": [
+    0.874,
+    0.9502
+  ],
+  "seed": 123,
+  "true_p_preference": 0.6964,
+  "versions": {
+    "python": "3.13.5",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3",
+    "scikit_learn": "1.6.1"
+  },
+  "generated_at": "2026-11-24T10:26:37.994639+00:00"
+}

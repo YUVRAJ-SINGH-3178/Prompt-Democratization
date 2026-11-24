@@ -726,15 +726,21 @@ def admin_eval_results(request: Request):
         raise HTTPException(403, "University role required")
     eval_dir = Path(__file__).resolve().parent.parent / "data" / "eval"
     files = []
+    interval_coverage = None
     if eval_dir.exists():
         for f in sorted(eval_dir.glob("*.json")):
-            data = json.loads(f.read_text(encoding="utf-8"))
-            files.append(
-                {
-                    "file": f.name,
-                    "SYNTHETIC": data.get("SYNTHETIC", False),
-                    "label": data.get("label", "unknown"),
-                    "generated_at": data.get("generated_at"),
-                }
-            )
-    return {"files": files, "n": len(files)}
+            try:
+                data = json.loads(f.read_text(encoding="utf-8"))
+                files.append(
+                    {
+                        "file": f.name,
+                        "SYNTHETIC": data.get("SYNTHETIC", False),
+                        "label": data.get("label", "unknown"),
+                        "generated_at": data.get("generated_at"),
+                    }
+                )
+                if f.name == "interval_coverage.json":
+                    interval_coverage = data
+            except Exception:
+                continue
+    return {"files": files, "n": len(files), "interval_coverage": interval_coverage}

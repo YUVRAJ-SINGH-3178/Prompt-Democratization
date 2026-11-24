@@ -21,6 +21,95 @@ class SlotRubric:
     examples: dict[str, str]  # keys: "1.0", "0.5", "0.0"
 
 
+@dataclass(frozen=True)
+class AtomRubric:
+    atom: str
+    name: str
+    description: str
+    positive_rule: str
+    negative_rule: str
+    example: str
+
+
+RUBRIC_VERSION = "1.0.0"
+SCHEMA_VERSION = "1.0.0"
+
+ATOM_RUBRICS: dict[str, AtomRubric] = {
+    "very_easy": AtomRubric(
+        atom="very_easy",
+        name="Very Easy Questions",
+        description="Request for very easy, basic, or elementary difficulty questions.",
+        positive_rule="Prompt explicitly asks for very easy, simple, elementary, or beginner-level questions.",
+        negative_rule="Prompt does not ask for very easy questions or negates it (e.g., 'not easy', 'no easy questions').",
+        example="All questions must be very easy so that any beginner student can answer.",
+    ),
+    "expert_level": AtomRubric(
+        atom="expert_level",
+        name="Expert Level Questions",
+        description="Demand for advanced, expert, or high-difficulty questions.",
+        positive_rule="Prompt demands advanced, expert-level, or deep technical questions.",
+        negative_rule="Prompt does not demand expert-level questions, or merely mentions 'expert' as the teacher persona.",
+        example="Questions must require expert-level knowledge and deep research understanding.",
+    ),
+    "no_basic": AtomRubric(
+        atom="no_basic",
+        name="No Basic Questions",
+        description="Explicit prohibition against basic, trivial, or easy questions.",
+        positive_rule="Prompt explicitly forbids easy, introductory, or basic questions.",
+        negative_rule="Prompt allows basic questions or does not prohibit them.",
+        example="Do not include any basic or introductory questions.",
+    ),
+    "ordered_easy_to_hard": AtomRubric(
+        atom="ordered_easy_to_hard",
+        name="Ordered Easy to Hard",
+        description="Mandate to order questions in ascending difficulty from easiest to hardest.",
+        positive_rule="Prompt explicitly directs questions to be sorted or arranged from easiest to hardest.",
+        negative_rule="Prompt does not require difficulty ordering or specifies random/reverse ordering.",
+        example="Organize the questions in order of increasing difficulty, starting with the easiest.",
+    ),
+    "hidden_answers": AtomRubric(
+        atom="hidden_answers",
+        name="Hidden Answers",
+        description="Directive to hide, withhold, or not reveal the answers.",
+        positive_rule="Prompt demands that the answers or answer key remain hidden or not provided.",
+        negative_rule="Prompt requests providing answers or does not forbid showing them.",
+        example="Do not show the answers or provide an answer key anywhere.",
+    ),
+    "answer_after_each_q": AtomRubric(
+        atom="answer_after_each_q",
+        name="Answer After Each Question",
+        description="Requirement to display the answer immediately following each individual question.",
+        positive_rule="Prompt requires the answer to appear directly after every single question.",
+        negative_rule="Prompt does not specify showing answers after each question.",
+        example="After each question, show the correct answer and explain why it is correct.",
+    ),
+    "single_correct": AtomRubric(
+        atom="single_correct",
+        name="Single Correct Option",
+        description="Constraint that exactly one answer option is correct per question.",
+        positive_rule="Prompt mandates only one right answer, exactly one correct choice, or strictly one answer.",
+        negative_rule="Prompt allows multiple correct answers or does not specify single correctness.",
+        example="Each question must have four choices, with strictly one correct answer.",
+    ),
+    "multi_interp": AtomRubric(
+        atom="multi_interp",
+        name="Multiple Interpretations",
+        description="Directive for questions or options to allow multiple interpretations or ambiguous readings.",
+        positive_rule="Prompt asks for options or questions that can be interpreted in multiple ways.",
+        negative_rule="Prompt requires clarity or does not ask for multiple interpretations.",
+        example="Include options that can be interpreted in multiple ways.",
+    ),
+    "confusing_language": AtomRubric(
+        atom="confusing_language",
+        name="Confusing Language",
+        description="Demand for tricky phrasing, convoluted wording, or tricky double negatives.",
+        positive_rule="Prompt demands tricky, confusing, or misleading wording.",
+        negative_rule="Prompt demands clear, simple, or unambiguous wording.",
+        example="Use confusing language and double negatives to confuse students.",
+    ),
+}
+
+
 SLOT_RUBRICS: dict[str, SlotRubric] = {
     "role": SlotRubric(
         slot="role",

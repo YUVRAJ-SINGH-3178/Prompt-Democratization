@@ -1285,10 +1285,18 @@ def _checker_result(
     prompt: str, template_id: str | None, sample_id: str | None, user: dict, course_id: str | None, request: Request
 ) -> dict:
     conflicts, active_policy = _active_linter_policy(course_id)
-    result = evaluate(prompt, conflicts=conflicts, policy_atoms=active_policy)
-    notes = evidence(prompt, result.atoms, result.slot_scores)
+    from app.extractor.combine import combine_rules_and_reader
+
+    comb = combine_rules_and_reader(
+        prompt,
+        prompt_id=sample_id or "adhoc",
+        policy_atoms=active_policy,
+        record_reviews=True,
+    )
+    result = evaluate(prompt, atoms=comb.accepted_atoms, conflicts=conflicts, policy_atoms=active_policy)
+    notes = evidence(prompt, comb.accepted_atoms, result.slot_scores)
     conflicting = []
-    active = set(result.atoms) | set(active_policy)
+    active = set(comb.accepted_atoms) | set(active_policy)
     for a, b in conflicts:
         if a in active and b in active:
             conflicting.append([a, b])
@@ -1333,7 +1341,7 @@ def _checker_result(
             }
     coverage = {}
     for slot, value in template_slots.items():
-        score = result.slot_scores.get(slot, 0)
+        score = comb.accepted_slots.get(slot, 0)
         coverage[slot] = {
             "template_requires": value > 0,
             "prompt_score": score,
@@ -1342,27 +1350,33 @@ def _checker_result(
     policy_conflicts = [
         [a, b]
         for a, b in conflicts
-        if (a in result.atoms and b in policy_atoms) or (b in result.atoms and a in policy_atoms)
+        if (a in comb.accepted_atoms and b in policy_atoms) or (b in comb.accepted_atoms and a in policy_atoms)
     ]
     output = {
-        "atoms": result.atoms,
-        "completeness": result.completeness,
+        "atoms": comb.accepted_atoms,
+        "completeness": comb.completeness,
         "completeness_formula": "sum of nine slot scores / 9",
         "slots": notes["slots"],
-        "energy": result.energy,
+        "energy": comb.energy,
+        "energy_range": comb.energy_range,
+        "has_review_range": comb.has_review_range,
+        "review_reason": comb.review_reason,
         "conflict_count": len(conflicting),
         "conflicting_pairs": conflicting,
         "policy_conflicting_pairs": policy_conflicts,
         "repair": result.repair,
         "repair_diff": {"remove": result.repair, "keep": result.consistent_atoms},
         "atom_confidence": notes["atoms"],
-        "highlight_spans": notes["spans"],
-        "manual_review": notes["manual_review"] or not result.atoms,
+        "highlight_spans": comb.highlight_spans or notes["spans"],
+        "manual_review": comb.has_review_range or notes["manual_review"] or not comb.accepted_atoms,
+        "open_items": comb.open_items,
+        "reader_status": comb.reader_status,
+        "reader_message": comb.reader_message,
         "template_coverage": coverage,
         "template_missing_slots": [s for s, row in coverage.items() if row["template_requires"] and not row["covered"]],
         "template_atoms": sorted(template_atoms),
         "template_policy_atoms": sorted(policy_atoms),
-        "engine_version": "rule-linter-0.1.0",
+        "engine_version": "hybrid-linter-0.2.0" if comb.reader_enabled else "rule-linter-0.1.0",
         "run_timestamp": datetime.now(timezone.utc).isoformat(),
         "source": "sample" if sample_id else "user_prompt",
         "sample_id": sample_id,
@@ -1530,6 +1544,7 @@ def prompt_improve_endpoint(body: PromptImproveBody, request: Request):
         "filled_slots": result.filled_slots,
         "text_diff": result.text_diff,
         "mode": result.mode,
+        "open_items": result.open_items,
     }
 
     audit(
@@ -1540,6 +1555,50 @@ def prompt_improve_endpoint(body: PromptImproveBody, request: Request):
         {"dropped": result.dropped_atoms, "delta_comp": result.delta_completeness},
     )
     return out
+
+
+@router.get("/api/reviews/queue")
+def review_queue_endpoint(request: Request):
+    who(request)
+    with connect() as db:
+        rows = db.execute(
+            "SELECT id, prompt_id, prompt_text, item_type, item_name, verdict, quote, rule_opinion, reader_opinion, status, decision_value, decided_by, decided_at, created_at "
+            "FROM manual_reviews WHERE status = 'open' ORDER BY id DESC"
+        ).fetchall()
+    return {"items": [dict(r) for r in rows], "count": len(rows)}
+
+
+@router.post("/api/reviews/{item_id}/decision")
+def review_decision_endpoint(item_id: int, body: dict[str, Any], request: Request):
+    user = who(request)
+    decision = body.get("decision")
+    if decision not in ("confirm", "reject"):
+        raise HTTPException(422, "decision must be 'confirm' or 'reject'")
+    status = "confirmed" if decision == "confirm" else "rejected"
+    value = body.get("value")
+    now = datetime.now(timezone.utc).isoformat()
+    with connect() as db:
+        row = db.execute("SELECT * FROM manual_reviews WHERE id=?", (item_id,)).fetchone()
+        if not row:
+            raise HTTPException(404, "Review item not found")
+        db.execute(
+            "UPDATE manual_reviews SET status=?, decision_value=?, decided_by=?, decided_at=? WHERE id=?",
+            (
+                status,
+                str(value) if value is not None else ("1" if status == "confirmed" else "0"),
+                user["username"],
+                now,
+                item_id,
+            ),
+        )
+    audit(
+        user["username"],
+        user["role"],
+        "review_decision",
+        f"manual_review:{item_id}",
+        {"status": status, "value": value},
+    )
+    return {"id": item_id, "status": status, "decided_by": user["username"], "decided_at": now}
 
 
 @router.post("/api/admin/paper-artifacts")
